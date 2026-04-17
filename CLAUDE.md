@@ -82,5 +82,5 @@ The marketing came first; the product must deliver on each angle:
 Each angle maps to a real product feature. No bait-and-switch.
 
 ## Links
-- GitHub: https://github.com/RuvixLabs/Chaos
+- GitHub: https://github.com/GymStreak-Labs/Chaos
 - Slack: #chaos
