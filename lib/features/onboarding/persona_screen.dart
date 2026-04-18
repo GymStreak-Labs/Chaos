@@ -7,8 +7,7 @@ import '../../design/components/grid_background.dart';
 import '../../design/components/stencil_button.dart';
 import '../../design/components/status_marker.dart';
 import '../../design/tokens.dart';
-
-const String prefsKeyPersona = 'chaos.persona';
+import 'onboarding_prefs.dart';
 
 class PersonaScreen extends StatefulWidget {
   const PersonaScreen({super.key});
@@ -30,9 +29,9 @@ class _PersonaScreenState extends State<PersonaScreen> {
   Future<void> _save() async {
     if (_selected == null) return;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(prefsKeyPersona, _selected!);
+    await prefs.setString(OnboardingPrefs.persona, _selected!);
     if (!mounted) return;
-    context.go(ChaosRoutes.onboardingAvoiding);
+    context.go(ChaosRoutes.personaIntro);
   }
 
   @override
@@ -45,7 +44,7 @@ class _PersonaScreenState extends State<PersonaScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('STEP 01 / 03', style: ChaosTypography.label()),
+                Text('STEP 04 / 06', style: ChaosTypography.label()),
                 const SizedBox(height: ChaosSpacing.sm),
                 Text('PICK YOUR VOICE.', style: ChaosTypography.headline()),
                 const SizedBox(height: ChaosSpacing.md),

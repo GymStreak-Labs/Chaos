@@ -37,8 +37,7 @@ class SplashScreen extends StatelessWidget {
                   label: 'ENLIST',
                   trailing: '▸',
                   expand: true,
-                  onPressed: () =>
-                      context.go(ChaosRoutes.onboardingPersona),
+                  onPressed: () => context.go(ChaosRoutes.intro01),
                 ),
                 const SizedBox(height: ChaosSpacing.lg),
                 Text(
