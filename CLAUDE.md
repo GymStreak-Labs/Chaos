@@ -47,7 +47,46 @@ The anti-Calm. A weaponised audio app that drags users out of bed instead of tuc
 - **Attribution**: AppRefer + Facebook SDK
 
 ## Project Structure
-_To be filled as the project develops._
+```
+lib/
+├── app/                  # router, env, services wiring
+├── design/               # brutalist-military design system
+│   ├── tokens.dart       # ChaosColors / ChaosTypography / ChaosSpacing
+│   ├── theme.dart
+│   └── components/       # AsciiBox, StencilButton (supports `filled:`),
+│                         # StatusMarker, GridBackground, OptionRow
+└── features/
+    ├── onboarding/       # 20-screen enlistment flow (see below)
+    │   ├── onboarding_prefs.dart          # SharedPreferences keys
+    │   └── components/value_screen_scaffold.dart
+    ├── home/
+    └── paywall/
+```
+
+### Onboarding flow (20 screens, 4 acts)
+Order matches roadmap tone rules — confrontational, never cruel.
+
+1. **Splash** (`/splash`) — existing brand promise.
+2. **Act 1 — Confrontation** (value screens): `intro-01` → `intro-02` → `intro-03` → `intro-04`. Three facts framing Chaos as a draft notice. Ends with amber-filled `ENLIST ▸`.
+3. **Act 2 — Diagnostic** (inputs + reflections): `avoiding` → `avoiding-reflection` → `duration` → `duration-reflection` → `lie` → `lie-reflection`. Every input is echoed back at the user with a gut-punch.
+4. **Act 3 — Assignment**: `persona` → `persona-intro` → `mode` → `deal` → `notifications` → `cadence`. The notifications screen stores a pref only (real permission API is Stage 3+).
+5. **Act 4 — Enlistment**: `commit` → `/paywall`. Amber-filled `I AGREE ▸`. Secondary `BACK OUT` routes to `/splash`.
+
+### Onboarding data
+All keys live in `OnboardingPrefs`:
+- `chaos.onboarding.avoiding` — free-text
+- `chaos.onboarding.duration` — `AvoidanceDuration` enum name (`oneWeek`, `oneMonth`, `sixMonths`, `oneYearPlus`, `threeYearsPlus`, `lostCount`)
+- `chaos.onboarding.lie` — preset or user-written string
+- `chaos.persona` — `drill_sergeant` / `cold_mentor` / `street_general` / `the_monk` (locked)
+- `chaos.onboarding.mode` — `wake_up` / `lock_in` / `workout` / `reset`
+- `chaos.onboarding.notifications` — `granted` / `declined`
+
+### Debug shortcut
+`CHAOS_INITIAL_ROUTE` (dart-define or env var, debug only) jumps to any route. Examples:
+```
+flutter run --dart-define=CHAOS_INITIAL_ROUTE=/onboarding/intro-04
+flutter run --dart-define=CHAOS_INITIAL_ROUTE=/onboarding/duration-reflection
+```
 
 ## Commands
 ```bash

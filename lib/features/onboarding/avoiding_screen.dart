@@ -7,8 +7,7 @@ import '../../design/components/ascii_box.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/stencil_button.dart';
 import '../../design/tokens.dart';
-
-const String prefsKeyAvoiding = 'chaos.avoiding';
+import 'onboarding_prefs.dart';
 
 class AvoidingScreen extends StatefulWidget {
   const AvoidingScreen({super.key});
@@ -30,9 +29,9 @@ class _AvoidingScreenState extends State<AvoidingScreen> {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(prefsKeyAvoiding, text);
+    await prefs.setString(OnboardingPrefs.avoiding, text);
     if (!mounted) return;
-    context.go(ChaosRoutes.onboardingMode);
+    context.go(ChaosRoutes.avoidingReflection);
   }
 
   @override
@@ -46,7 +45,7 @@ class _AvoidingScreenState extends State<AvoidingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('STEP 02 / 03', style: ChaosTypography.label()),
+                Text('STEP 01 / 06', style: ChaosTypography.label()),
                 const SizedBox(height: ChaosSpacing.sm),
                 Text('WHAT ARE YOU\nAVOIDING?',
                     style: ChaosTypography.headline()),

@@ -7,8 +7,7 @@ import '../../app/router.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/stencil_button.dart';
 import '../../design/tokens.dart';
-
-const String prefsKeyMode = 'chaos.mode';
+import 'onboarding_prefs.dart';
 
 class ModeScreen extends StatefulWidget {
   const ModeScreen({super.key});
@@ -30,9 +29,9 @@ class _ModeScreenState extends State<ModeScreen> {
   Future<void> _save() async {
     if (_selected == null) return;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(prefsKeyMode, _selected!);
+    await prefs.setString(OnboardingPrefs.mode, _selected!);
     if (!mounted) return;
-    context.go(ChaosRoutes.home);
+    context.go(ChaosRoutes.deal);
   }
 
   @override
@@ -45,7 +44,7 @@ class _ModeScreenState extends State<ModeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('STEP 03 / 03', style: ChaosTypography.label()),
+                Text('STEP 05 / 06', style: ChaosTypography.label()),
                 const SizedBox(height: ChaosSpacing.sm),
                 Text('PICK YOUR FRONT.',
                     style: ChaosTypography.headline()),
