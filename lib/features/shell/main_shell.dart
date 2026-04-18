@@ -2,13 +2,14 @@ import 'dart:io' show Platform;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../design/components/grid_background.dart';
 import '../../design/tokens.dart';
+import 'bottom_tab_bar.dart';
 import 'sections/profile_section.dart';
 import 'sections/record_section.dart';
 import 'sections/today_section.dart';
-import 'top_nav_label.dart';
 
 /// Debug-only: pick which shell section to land on at startup.
 /// `CHAOS_INITIAL_SECTION=0|1|2` (today|record|profile). Ignored in release.
@@ -27,12 +28,13 @@ int _debugInitialSection() {
   return 0;
 }
 
-/// Main app shell — three swipeable sections with a minimal top nav.
+/// Main app shell — three sections behind a brutalist bottom tab bar.
 ///
-/// [ TODAY ]   RECORD   PROFILE
+///   [■] TODAY    [□] RECORD    [□] PROFILE
 ///
-/// Swipe left/right or tap a label to navigate. No bottom nav, no
-/// hamburger, no drawer. See docs/plans/roadmap.md §2 + §7.D.
+/// Tabs are backed by an [IndexedStack] so each section keeps its own
+/// scroll + widget state across switches. No swipe, no top strip.
+/// See docs/plans/roadmap.md §2 + §7.D.
 class MainShell extends StatefulWidget {
   const MainShell({super.key});
 
@@ -41,79 +43,34 @@ class MainShell extends StatefulWidget {
 }
 
 class _MainShellState extends State<MainShell> {
-  late final int _initialIndex = _debugInitialSection();
-  late final PageController _controller =
-      PageController(initialPage: _initialIndex);
-  late int _index = _initialIndex;
+  late int _index = _debugInitialSection();
 
-  static const _labels = <String>['TODAY', 'RECORD', 'PROFILE'];
-  static const _transitionDuration = Duration(milliseconds: 150);
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  void _jumpTo(int i) {
+  void _setIndex(int i) {
     if (i == _index) return;
-    _controller.animateToPage(
-      i,
-      duration: _transitionDuration,
-      curve: Curves.linear,
-    );
+    HapticFeedback.selectionClick();
+    setState(() => _index = i);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ChaosColors.background,
       body: GridBackground(
         child: SafeArea(
           bottom: false,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(
-                  ChaosSpacing.lg,
-                  ChaosSpacing.md,
-                  ChaosSpacing.lg,
-                  ChaosSpacing.md,
-                ),
-                child: Row(
-                  children: [
-                    for (var i = 0; i < _labels.length; i++) ...[
-                      TopNavLabel(
-                        label: _labels[i],
-                        active: _index == i,
-                        onTap: () => _jumpTo(i),
-                      ),
-                      if (i < _labels.length - 1)
-                        const SizedBox(width: ChaosSpacing.md),
-                    ],
-                  ],
-                ),
-              ),
-              const Divider(
-                height: 1,
-                thickness: 1,
-                color: ChaosColors.grid,
-              ),
-              Expanded(
-                child: PageView(
-                  controller: _controller,
-                  physics: const PageScrollPhysics(),
-                  onPageChanged: (i) => setState(() => _index = i),
-                  children: const [
-                    _SectionPadding(child: TodaySection()),
-                    _SectionPadding(child: RecordSection()),
-                    _SectionPadding(child: ProfileSection()),
-                  ],
-                ),
-              ),
+          child: IndexedStack(
+            index: _index,
+            children: const [
+              _SectionPadding(child: TodaySection()),
+              _SectionPadding(child: RecordSection()),
+              _SectionPadding(child: ProfileSection()),
             ],
           ),
         ),
+      ),
+      bottomNavigationBar: ChaosBottomTabBar(
+        index: _index,
+        onTap: _setIndex,
       ),
     );
   }

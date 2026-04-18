@@ -59,9 +59,11 @@ lib/
     ├── onboarding/       # 20-screen enlistment flow (see below)
     │   ├── onboarding_prefs.dart          # SharedPreferences keys
     │   └── components/value_screen_scaffold.dart
-    ├── shell/            # Stage 2A main app shell — 3 swipeable sections
-    │   ├── main_shell.dart                # PageView + top nav strip
-    │   ├── top_nav_label.dart             # single `[ LABEL ]` slot
+    ├── shell/            # Stage 2A main app shell — 3 sections behind a
+    │   │                                  # brutalist bottom tab bar,
+    │   │                                  # IndexedStack preserving per-tab state.
+    │   ├── main_shell.dart                # Scaffold + IndexedStack
+    │   ├── bottom_tab_bar.dart            # custom 3-tab brutalist bar
     │   ├── mock_record.dart               # mock streak/adherence data
     │   └── sections/                      # today / record / profile
     ├── home/             # session + streak-break (reached from shell)
@@ -88,17 +90,17 @@ All keys live in `OnboardingPrefs`:
 - `chaos.operative_id` — stable 16-char hex ID (first 8 shown on profile). Generated once by the PROFILE section on first render. Stage 2A mock.
 
 ### Main app shell (Stage 2A)
-`/home` renders `MainShell` — three swipeable sections with a minimal top nav:
+`/home` renders `MainShell` — three sections behind a brutalist bottom tab bar, `IndexedStack` preserving per-tab state:
 
 ```
-[ TODAY ]   RECORD   PROFILE
+[■] TODAY    [□] RECORD    [□] PROFILE
 ```
 
 - `TodaySection` — today's brief, giant amber-filled `LOCK IN ▸` CTA, last-session block, ghost `REGENERATE`.
 - `RecordSection` — monospace adherence readout + 30-day ✓/✗/· grid.
 - `ProfileSection` — operative dossier, tier ladder (Recruit → Forged), earned-peace placeholder, and the `DEBUG · STREAK BREAK` button.
 
-Navigation: swipe or tap a label. 150ms linear transition. No bottom nav, no drawer. All data is mock (`MockRecord`) until Stage 3 wires real session history.
+Navigation: tap a tab. No swipe, no top strip, no drawer. The bottom bar is a custom widget (`ChaosBottomTabBar`) — matte-black background, 1px olive hairline across the top, a 2px amber indicator segment animating above the active tab over 120ms linear. No icons, no badges, no ripple. Tabs trigger `HapticFeedback.selectionClick()`. All data is mock (`MockRecord`) until Stage 3 wires real session history.
 
 ### Debug shortcut
 `CHAOS_INITIAL_ROUTE` (dart-define or env var, debug only) jumps to any route. Examples:
