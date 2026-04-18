@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../design/components/chaos_page_header.dart';
 import '../../../design/components/grid_background.dart';
 import '../../../design/components/stencil_button.dart';
 import '../../../design/tokens.dart';
@@ -17,16 +19,23 @@ class ValueScreenScaffold extends StatelessWidget {
     required this.ctaLabel,
     required this.onContinue,
     this.label,
+    this.subtitle,
     this.body,
     this.footer,
     this.ctaFilled = false,
     this.secondaryLabel,
     this.onSecondary,
+    this.currentStep,
+    this.totalSteps,
+    this.backRoute,
     super.key,
   });
 
   /// Amber stencil step / section label (e.g. "FACT 01 / 03").
   final String? label;
+
+  /// Short explanation clarifying the purpose of the screen.
+  final String? subtitle;
 
   /// Main headline. Caller passes a [Text] with display()/headline().
   final Widget title;
@@ -50,6 +59,9 @@ class ValueScreenScaffold extends StatelessWidget {
   final String? secondaryLabel;
 
   final VoidCallback? onSecondary;
+  final int? currentStep;
+  final int? totalSteps;
+  final String? backRoute;
 
   @override
   Widget build(BuildContext context) {
@@ -61,15 +73,31 @@ class ValueScreenScaffold extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (label != null) ...[
-                  Text(label!, style: ChaosTypography.label()),
-                  const SizedBox(height: ChaosSpacing.md),
-                ],
-                const SizedBox(height: ChaosSpacing.md),
+                ChaosPageHeader(
+                  eyebrow: label ?? 'CHAOS',
+                  title: null,
+                  currentStep: currentStep,
+                  totalSteps: totalSteps,
+                  onBack: backRoute == null
+                      ? null
+                      : () => context.go(backRoute!),
+                ),
+                if (title is! SizedBox) const SizedBox(height: ChaosSpacing.md),
                 DefaultTextStyle.merge(
                   style: ChaosTypography.headline(),
                   child: title,
                 ),
+                if (subtitle != null) ...[
+                  const SizedBox(height: ChaosSpacing.sm),
+                  Text(
+                    subtitle!,
+                    style: ChaosTypography.body().copyWith(
+                      color: ChaosColors.textMuted,
+                      fontSize: 16,
+                      height: 1.45,
+                    ),
+                  ),
+                ],
                 if (body != null) ...[
                   const SizedBox(height: ChaosSpacing.xl),
                   body!,
@@ -88,10 +116,7 @@ class ValueScreenScaffold extends StatelessWidget {
                 ),
                 if (secondaryLabel != null) ...[
                   const SizedBox(height: ChaosSpacing.md),
-                  _SecondaryLink(
-                    label: secondaryLabel!,
-                    onTap: onSecondary,
-                  ),
+                  _SecondaryLink(label: secondaryLabel!, onTap: onSecondary),
                 ],
               ],
             ),
@@ -122,9 +147,7 @@ class _SecondaryLink extends StatelessWidget {
         splashColor: Colors.transparent,
         highlightColor: Colors.transparent,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: ChaosSpacing.sm,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: ChaosSpacing.sm),
           child: Text(
             label.toUpperCase(),
             style: ChaosTypography.data().copyWith(

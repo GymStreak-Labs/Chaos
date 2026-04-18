@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../design/components/chaos_page_header.dart';
 import '../../../design/components/ascii_box.dart';
 import '../../../design/tokens.dart';
 import '../mock_record.dart';
@@ -22,12 +23,15 @@ class RecordSection extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.only(bottom: ChaosSpacing.xxl),
       children: [
-        Text('FIELD RECORD', style: ChaosTypography.label()),
-        const SizedBox(height: ChaosSpacing.xs),
-        Text('ADHERENCE.', style: ChaosTypography.headline()),
+        const ChaosPageHeader(
+          eyebrow: 'RECORD',
+          title: 'YOUR STREAK AND HISTORY',
+          subtitle:
+              'Use this tab to see whether you showed up, how consistent you have been, and where you broke the streak.',
+        ),
         const SizedBox(height: ChaosSpacing.lg),
         AsciiBox(
-          label: 'METRICS',
+          label: 'SUMMARY',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -40,8 +44,10 @@ class RecordSection extends StatelessWidget {
                 style: ChaosTypography.data(),
               ),
               Text(
-                _pad('SHOWED UP',
-                    '${MockRecord.showedUp}/${MockRecord.last30.length}'),
+                _pad(
+                  'SHOWED UP',
+                  '${MockRecord.showedUp}/${MockRecord.last30.length}',
+                ),
                 style: ChaosTypography.data(),
               ),
               Text(
@@ -71,9 +77,7 @@ class RecordSection extends StatelessWidget {
         const SizedBox(height: ChaosSpacing.lg),
         Text(
           yesterdayLine,
-          style: ChaosTypography.data().copyWith(
-            color: ChaosColors.textMuted,
-          ),
+          style: ChaosTypography.data().copyWith(color: ChaosColors.textMuted),
         ),
       ],
     );
@@ -120,10 +124,7 @@ class _MonthGrid extends StatelessWidget {
         );
         if (c < columns - 1) {
           children.add(
-            TextSpan(
-              text: '  ',
-              style: ChaosTypography.dataLarge(),
-            ),
+            TextSpan(text: '  ', style: ChaosTypography.dataLarge()),
           );
         }
       }

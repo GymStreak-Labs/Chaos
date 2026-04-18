@@ -46,60 +46,57 @@ class ChaosTypography {
 
   /// Massive stencil headline. E.g. "CHAOS", "LOCK IN".
   static TextStyle display() => GoogleFonts.oswald(
-        fontSize: 96,
-        height: 1.0,
-        letterSpacing: 4,
-        fontWeight: FontWeight.w700,
-        color: ChaosColors.text,
-      );
+    fontSize: 96,
+    height: 1.0,
+    letterSpacing: 4,
+    fontWeight: FontWeight.w700,
+    color: ChaosColors.text,
+  );
 
   /// Section headline. E.g. "MISSION BRIEF".
   static TextStyle headline() => GoogleFonts.oswald(
-        fontSize: 36,
-        height: 1.05,
-        letterSpacing: 2,
-        fontWeight: FontWeight.w700,
-        color: ChaosColors.text,
-      );
+    fontSize: 36,
+    height: 1.05,
+    letterSpacing: 2,
+    fontWeight: FontWeight.w700,
+    color: ChaosColors.text,
+  );
 
   /// Stencil label. E.g. "DAY 23 OF OPERATION".
   static TextStyle label() => GoogleFonts.oswald(
-        fontSize: 16,
-        height: 1.2,
-        letterSpacing: 2,
-        fontWeight: FontWeight.w600,
-        color: ChaosColors.amber,
-      );
+    fontSize: 16,
+    height: 1.2,
+    letterSpacing: 2,
+    fontWeight: FontWeight.w600,
+    color: ChaosColors.amber,
+  );
 
   /// Monospace data readout. E.g. "ADHERENCE .... 78%".
   static TextStyle data() => GoogleFonts.shareTechMono(
-        fontSize: 14,
-        height: 1.4,
-        letterSpacing: 1,
-        color: ChaosColors.text,
-      );
+    fontSize: 14,
+    height: 1.4,
+    letterSpacing: 1,
+    color: ChaosColors.text,
+  );
 
   /// Monospace input / body-mono.
   static TextStyle dataLarge() => GoogleFonts.shareTechMono(
-        fontSize: 18,
-        height: 1.4,
-        letterSpacing: 1,
-        color: ChaosColors.text,
-      );
+    fontSize: 18,
+    height: 1.4,
+    letterSpacing: 1,
+    color: ChaosColors.text,
+  );
 
   /// Utilitarian body copy.
-  static TextStyle body() => GoogleFonts.inter(
-        fontSize: 14,
-        height: 1.4,
-        color: ChaosColors.text,
-      );
+  static TextStyle body() =>
+      GoogleFonts.inter(fontSize: 14, height: 1.4, color: ChaosColors.text);
 
   /// Button text — stencil, uppercase, amber.
   static TextStyle button() => GoogleFonts.oswald(
-        fontSize: 18,
-        height: 1.0,
-        letterSpacing: 3,
-        fontWeight: FontWeight.w700,
-        color: ChaosColors.amber,
-      );
+    fontSize: 18,
+    height: 1.0,
+    letterSpacing: 3,
+    fontWeight: FontWeight.w700,
+    color: ChaosColors.amber,
+  );
 }

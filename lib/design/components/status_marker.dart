@@ -6,11 +6,7 @@ enum StatusMarkerState { active, incomplete, failed }
 
 /// Renders `[■ ACTIVE]` / `[□ INCOMPLETE]` / `[✗ FAILED]`.
 class StatusMarker extends StatelessWidget {
-  const StatusMarker({
-    required this.state,
-    this.labelOverride,
-    super.key,
-  });
+  const StatusMarker({required this.state, this.labelOverride, super.key});
 
   final StatusMarkerState state;
   final String? labelOverride;
@@ -22,7 +18,8 @@ class StatusMarker extends StatelessWidget {
       StatusMarkerState.incomplete => '□',
       StatusMarkerState.failed => '✗',
     };
-    final label = labelOverride ??
+    final label =
+        labelOverride ??
         switch (state) {
           StatusMarkerState.active => 'ACTIVE',
           StatusMarkerState.incomplete => 'INCOMPLETE',

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/router.dart';
+import '../../design/components/chaos_page_header.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/stencil_button.dart';
 import '../../design/components/status_marker.dart';
@@ -18,9 +19,17 @@ class PersonaScreen extends StatefulWidget {
 
 class _PersonaScreenState extends State<PersonaScreen> {
   static const _options = <_PersonaOption>[
-    _PersonaOption(id: 'drill_sergeant', label: 'DRILL SERGEANT', locked: false),
+    _PersonaOption(
+      id: 'drill_sergeant',
+      label: 'DRILL SERGEANT',
+      locked: false,
+    ),
     _PersonaOption(id: 'cold_mentor', label: 'COLD MENTOR', locked: false),
-    _PersonaOption(id: 'street_general', label: 'STREET GENERAL', locked: false),
+    _PersonaOption(
+      id: 'street_general',
+      label: 'STREET GENERAL',
+      locked: false,
+    ),
     _PersonaOption(id: 'the_monk', label: 'THE MONK', locked: true),
   ];
 
@@ -44,15 +53,14 @@ class _PersonaScreenState extends State<PersonaScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('STEP 04 / 06', style: ChaosTypography.label()),
-                const SizedBox(height: ChaosSpacing.sm),
-                Text('PICK YOUR VOICE.', style: ChaosTypography.headline()),
-                const SizedBox(height: ChaosSpacing.md),
-                Text(
-                  'THE ONE IN YOUR HEAD FROM NOW ON.',
-                  style: ChaosTypography.data().copyWith(
-                    color: ChaosColors.textMuted,
-                  ),
+                ChaosPageHeader(
+                  eyebrow: 'ASSIGNMENT',
+                  title: 'CHOOSE THE VOICE YOU WANT IN YOUR HEAD.',
+                  subtitle:
+                      'This voice will deliver your sessions and your reminders.',
+                  currentStep: 12,
+                  totalSteps: 20,
+                  onBack: () => context.go(ChaosRoutes.lieReflection),
                 ),
                 const SizedBox(height: ChaosSpacing.xl),
                 Expanded(
@@ -78,6 +86,7 @@ class _PersonaScreenState extends State<PersonaScreen> {
                   label: 'CONFIRM',
                   trailing: '▸',
                   expand: true,
+                  filled: true,
                   onPressed: _selected == null ? null : _save,
                 ),
               ],

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/router.dart';
+import '../../design/components/chaos_page_header.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/stencil_button.dart';
 import '../../design/tokens.dart';
@@ -60,23 +61,18 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('STEP 06 / 06', style: ChaosTypography.label()),
-                const SizedBox(height: ChaosSpacing.sm),
-                Text(
-                  '$_personaName NEEDS\nTO REACH YOU.',
-                  style: ChaosTypography.headline(),
-                ),
-                const SizedBox(height: ChaosSpacing.md),
-                Text(
-                  "OR YOU WON'T HEAR\nFROM HIM. WHICH DEFEATS\nTHE WHOLE POINT.",
-                  style: ChaosTypography.data().copyWith(
-                    color: ChaosColors.textMuted,
-                    fontSize: 16,
-                  ),
+                ChaosPageHeader(
+                  eyebrow: 'ASSIGNMENT',
+                  title: 'ALLOW REMINDERS FROM $_personaName?',
+                  subtitle:
+                      'You can change this later. Turning reminders on lets Chaos bring you back for your next session.',
+                  currentStep: 16,
+                  totalSteps: 20,
+                  onBack: () => context.go(ChaosRoutes.deal),
                 ),
                 const Spacer(),
                 StencilButton(
-                  label: 'ALLOW NOTIFICATIONS',
+                  label: 'TURN REMINDERS ON',
                   trailing: '▸',
                   expand: true,
                   filled: true,
@@ -85,21 +81,20 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                 const SizedBox(height: ChaosSpacing.md),
                 Align(
                   alignment: Alignment.centerLeft,
-                  child: InkWell(
-                    onTap: () => _record('declined'),
-                    splashColor: Colors.transparent,
-                    highlightColor: Colors.transparent,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                        vertical: ChaosSpacing.sm,
-                      ),
-                      child: Text(
-                        'DESERTER',
-                        style: ChaosTypography.data().copyWith(
-                          color: ChaosColors.textMuted,
-                          decoration: TextDecoration.underline,
-                          decorationColor: ChaosColors.textMuted,
-                        ),
+                  child: TextButton(
+                    onPressed: () => _record('declined'),
+                    style: TextButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      minimumSize: const Size(0, 0),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      foregroundColor: ChaosColors.textMuted,
+                    ),
+                    child: Text(
+                      'SKIP FOR NOW',
+                      style: ChaosTypography.data().copyWith(
+                        color: ChaosColors.textMuted,
+                        decoration: TextDecoration.underline,
+                        decorationColor: ChaosColors.textMuted,
                       ),
                     ),
                   ),

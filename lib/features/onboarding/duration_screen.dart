@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/router.dart';
+import '../../design/components/chaos_page_header.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/option_row.dart';
 import '../../design/components/stencil_button.dart';
@@ -19,10 +20,7 @@ enum AvoidanceDuration {
   threeYearsPlus(label: '3+ YEARS', approximateDays: 1200),
   lostCount(label: "I'VE LOST COUNT", approximateDays: 1825);
 
-  const AvoidanceDuration({
-    required this.label,
-    required this.approximateDays,
-  });
+  const AvoidanceDuration({required this.label, required this.approximateDays});
 
   final String label;
   final int approximateDays;
@@ -65,15 +63,14 @@ class _DurationScreenState extends State<DurationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('STEP 02 / 06', style: ChaosTypography.label()),
-                const SizedBox(height: ChaosSpacing.sm),
-                Text('HOW LONG?', style: ChaosTypography.headline()),
-                const SizedBox(height: ChaosSpacing.md),
-                Text(
-                  'SINCE YOU STARTED AVOIDING IT.',
-                  style: ChaosTypography.data().copyWith(
-                    color: ChaosColors.textMuted,
-                  ),
+                ChaosPageHeader(
+                  eyebrow: 'DIAGNOSTIC',
+                  title: 'HOW LONG HAS THIS BEEN GOING ON?',
+                  subtitle:
+                      'Pick the closest answer. We use this to set the tone of your first session.',
+                  currentStep: 8,
+                  totalSteps: 20,
+                  onBack: () => context.go(ChaosRoutes.avoidingReflection),
                 ),
                 const SizedBox(height: ChaosSpacing.xl),
                 Expanded(
@@ -96,6 +93,7 @@ class _DurationScreenState extends State<DurationScreen> {
                   label: 'CONTINUE',
                   trailing: '▸',
                   expand: true,
+                  filled: true,
                   onPressed: _selected == null ? null : _save,
                 ),
               ],

@@ -13,6 +13,10 @@ class DealScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueScreenScaffold(
       label: 'THE DEAL.',
+      subtitle: 'Chaos is simple: one session, then one yes-or-no check-in.',
+      currentStep: 15,
+      totalSteps: 20,
+      backRoute: ChaosRoutes.onboardingMode,
       title: Text(
         'EVERY MORNING.\n'
         'ONE SESSION.\n'
@@ -23,9 +27,7 @@ class DealScreen extends StatelessWidget {
       ),
       footer: Text(
         'YES OR NO. NO THIRD OPTION.',
-        style: ChaosTypography.data().copyWith(
-          color: ChaosColors.textMuted,
-        ),
+        style: ChaosTypography.data().copyWith(color: ChaosColors.textMuted),
       ),
       ctaLabel: 'UNDERSTOOD',
       onContinue: () => context.go(ChaosRoutes.notifications),

@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../app/router.dart';
+import '../../../design/components/chaos_page_header.dart';
 import '../../../design/components/ascii_box.dart';
 import '../../../design/components/stencil_button.dart';
 import '../../../design/tokens.dart';
@@ -51,18 +52,23 @@ class _TodaySectionState extends State<TodaySection> {
     return ListView(
       padding: const EdgeInsets.only(bottom: ChaosSpacing.xxl),
       children: [
-        Text(dateStr, style: ChaosTypography.label()),
-        const SizedBox(height: ChaosSpacing.xs),
-        Text(
-          'DAY $day OF OPERATION',
-          style: ChaosTypography.headline(),
+        ChaosPageHeader(
+          eyebrow: 'TODAY',
+          title: 'YOUR NEXT SESSION',
+          subtitle:
+              'Open this tab when you want to start today’s session or review what happened last time.',
         ),
         const SizedBox(height: ChaosSpacing.lg),
         AsciiBox(
-          label: "TODAY'S BRIEF",
+          label: "TODAY'S PLAN",
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              Text(_pad('DATE', dateStr), style: ChaosTypography.data()),
+              Text(
+                _pad('DAY', '$day OF OPERATION'),
+                style: ChaosTypography.data(),
+              ),
               Text(_pad('MODE', _mode), style: ChaosTypography.data()),
               Text(_pad('PERSONA', _persona), style: ChaosTypography.data()),
               Text(_pad('LENGTH', '7 MIN'), style: ChaosTypography.data()),
@@ -71,16 +77,21 @@ class _TodaySectionState extends State<TodaySection> {
         ),
         const SizedBox(height: ChaosSpacing.xl),
         StencilButton(
-          label: 'LOCK IN',
+          label: 'START TODAY’S SESSION',
           trailing: '▸',
           expand: true,
           filled: true,
-          height: 140,
+          height: 96,
           onPressed: () => context.go(ChaosRoutes.session),
+        ),
+        const SizedBox(height: ChaosSpacing.sm),
+        Text(
+          'This opens the player and takes you into your session.',
+          style: ChaosTypography.body().copyWith(color: ChaosColors.textMuted),
         ),
         const SizedBox(height: ChaosSpacing.xl),
         AsciiBox(
-          label: 'LAST SESSION',
+          label: 'LAST CHECK-IN',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -91,9 +102,7 @@ class _TodaySectionState extends State<TodaySection> {
               Text(
                 _pad('VERDICT', yesterdayWon ? 'YES' : 'NO'),
                 style: ChaosTypography.data().copyWith(
-                  color: yesterdayWon
-                      ? ChaosColors.amber
-                      : ChaosColors.alert,
+                  color: yesterdayWon ? ChaosColors.amber : ChaosColors.alert,
                 ),
               ),
             ],
@@ -101,7 +110,7 @@ class _TodaySectionState extends State<TodaySection> {
         ),
         const SizedBox(height: ChaosSpacing.lg),
         StencilButton(
-          label: 'REGENERATE',
+          label: 'MAKE A DIFFERENT VERSION',
           expand: true,
           onPressed: () {
             // Stage 3 will hook this to the generation pipeline.
@@ -151,8 +160,18 @@ class _TodaySectionState extends State<TodaySection> {
 
   String _formatDate(DateTime d) {
     const months = [
-      'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
-      'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC',
+      'JAN',
+      'FEB',
+      'MAR',
+      'APR',
+      'MAY',
+      'JUN',
+      'JUL',
+      'AUG',
+      'SEP',
+      'OCT',
+      'NOV',
+      'DEC',
     ];
     final dd = d.day.toString().padLeft(2, '0');
     return '$dd ${months[d.month - 1]} ${d.year}';

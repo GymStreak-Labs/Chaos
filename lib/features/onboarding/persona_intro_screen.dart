@@ -18,21 +18,24 @@ class _PersonaBio {
 const _personaBios = <String, _PersonaBio>{
   'drill_sergeant': _PersonaBio(
     name: 'DRILL SERGEANT',
-    bio: 'HE DOES NOT CARE ABOUT\n'
+    bio:
+        'HE DOES NOT CARE ABOUT\n'
         'YOUR FEELINGS.\n\n'
         'HE CARES ABOUT\n'
         'WHETHER YOU SHOWED UP.',
   ),
   'cold_mentor': _PersonaBio(
     name: 'COLD MENTOR',
-    bio: 'SHE WILL NOT RAISE HER VOICE.\n\n'
+    bio:
+        'SHE WILL NOT RAISE HER VOICE.\n\n'
         'SHE WILL MAKE YOU\n'
         'UNCOMFORTABLE\n'
         'WITH THE TRUTH.',
   ),
   'street_general': _PersonaBio(
     name: 'STREET GENERAL',
-    bio: "HE'S BEEN WHERE YOU ARE.\n\n"
+    bio:
+        "HE'S BEEN WHERE YOU ARE.\n\n"
         'HE GOT OUT.\n\n'
         "HE'LL DRAG YOU WITH HIM.",
   ),
@@ -60,11 +63,9 @@ class _PersonaIntroScreenState extends State<PersonaIntroScreen> {
     final key = prefs.getString(OnboardingPrefs.persona);
     if (!mounted) return;
     setState(() {
-      _bio = _personaBios[key] ??
-          const _PersonaBio(
-            name: 'YOUR VOICE',
-            bio: 'READY TO GO.',
-          );
+      _bio =
+          _personaBios[key] ??
+          const _PersonaBio(name: 'YOUR VOICE', bio: 'READY TO GO.');
     });
   }
 
@@ -74,20 +75,20 @@ class _PersonaIntroScreenState extends State<PersonaIntroScreen> {
 
     return ValueScreenScaffold(
       label: 'VOICE LOCKED.',
+      subtitle:
+          'This is the voice Chaos will use to push you through your sessions.',
+      currentStep: 13,
+      totalSteps: 20,
+      backRoute: ChaosRoutes.onboardingPersona,
       title: Text(
         bio?.name ?? '—',
-        style: ChaosTypography.headline().copyWith(
-          color: ChaosColors.amber,
-        ),
+        style: ChaosTypography.headline().copyWith(color: ChaosColors.amber),
       ),
       body: bio == null
           ? const SizedBox.shrink()
           : AsciiBox(
               label: 'BIO',
-              child: Text(
-                bio.bio,
-                style: ChaosTypography.dataLarge(),
-              ),
+              child: Text(bio.bio, style: ChaosTypography.dataLarge()),
             ),
       ctaLabel: 'CONTINUE',
       onContinue: () => context.go(ChaosRoutes.onboardingMode),

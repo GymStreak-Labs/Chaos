@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/router.dart';
+import '../../design/components/chaos_page_header.dart';
 import '../../design/components/ascii_box.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/stencil_button.dart';
@@ -45,20 +46,18 @@ class _AvoidingScreenState extends State<AvoidingScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('STEP 01 / 06', style: ChaosTypography.label()),
-                const SizedBox(height: ChaosSpacing.sm),
-                Text('WHAT ARE YOU\nAVOIDING?',
-                    style: ChaosTypography.headline()),
-                const SizedBox(height: ChaosSpacing.md),
-                Text(
-                  'NO MOOD TRACKER. NO FEELINGS. JUST THE THING.',
-                  style: ChaosTypography.data().copyWith(
-                    color: ChaosColors.textMuted,
-                  ),
+                ChaosPageHeader(
+                  eyebrow: 'DIAGNOSTIC',
+                  title: 'WHAT ARE YOU AVOIDING?',
+                  subtitle:
+                      'Type the one thing you keep putting off. This answer shapes your first session.',
+                  currentStep: 6,
+                  totalSteps: 20,
+                  onBack: () => context.go(ChaosRoutes.intro04),
                 ),
                 const SizedBox(height: ChaosSpacing.xl),
                 AsciiBox(
-                  label: 'TARGET',
+                  label: 'YOUR ANSWER',
                   child: TextField(
                     controller: _controller,
                     style: ChaosTypography.dataLarge(),
@@ -71,7 +70,8 @@ class _AvoidingScreenState extends State<AvoidingScreen> {
                       border: InputBorder.none,
                       focusedBorder: InputBorder.none,
                       enabledBorder: InputBorder.none,
-                      hintText: 'THE CALL. THE WORKOUT. THE DRAFT.',
+                      hintText:
+                          'CALLING MY DAD BACK. SHIPPING THE THING. STARTING THE CUT.',
                       hintStyle: ChaosTypography.dataLarge().copyWith(
                         color: ChaosColors.textMuted,
                       ),
@@ -82,9 +82,10 @@ class _AvoidingScreenState extends State<AvoidingScreen> {
                 ),
                 const Spacer(),
                 StencilButton(
-                  label: 'LOG IT',
+                  label: 'CONTINUE',
                   trailing: '▸',
                   expand: true,
+                  filled: true,
                   onPressed: _controller.text.trim().isEmpty ? null : _save,
                 ),
               ],

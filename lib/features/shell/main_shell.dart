@@ -68,10 +68,7 @@ class _MainShellState extends State<MainShell> {
           ),
         ),
       ),
-      bottomNavigationBar: ChaosBottomTabBar(
-        index: _index,
-        onTap: _setIndex,
-      ),
+      bottomNavigationBar: ChaosBottomTabBar(index: _index, onTap: _setIndex),
     );
   }
 }

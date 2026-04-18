@@ -14,6 +14,11 @@ class Intro03Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueScreenScaffold(
       label: 'FACT 02 / 03',
+      subtitle:
+          'This app is about recovering wasted time and turning it into action.',
+      currentStep: 4,
+      totalSteps: 20,
+      backRoute: ChaosRoutes.intro02,
       title: Text(
         'YOU HAVE 16\nWAKING HOURS.',
         style: ChaosTypography.headline(),

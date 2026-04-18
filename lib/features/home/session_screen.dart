@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/router.dart';
+import '../../design/components/chaos_page_header.dart';
 import '../../design/components/ascii_box.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/stencil_button.dart';
@@ -20,35 +21,52 @@ class SessionScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('SESSION 001', style: ChaosTypography.label()),
-                const SizedBox(height: ChaosSpacing.sm),
-                Text('RAGE-UP / 7 MIN',
-                    style: ChaosTypography.headline().copyWith(fontSize: 28)),
+                ChaosPageHeader(
+                  eyebrow: 'SESSION',
+                  title: 'RAGE-UP / 7 MIN',
+                  subtitle:
+                      'Listen to your session, then answer the one check-in question below.',
+                  onBack: () => context.go(ChaosRoutes.home),
+                ),
                 const SizedBox(height: ChaosSpacing.lg),
                 AsciiBox(
                   label: 'AUDIO',
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('[SESSION WILL GENERATE HERE]',
-                          style: ChaosTypography.data().copyWith(
-                            color: ChaosColors.amber,
-                          )),
+                      Text(
+                        '[SESSION WILL GENERATE HERE]',
+                        style: ChaosTypography.data().copyWith(
+                          color: ChaosColors.amber,
+                        ),
+                      ),
                       const SizedBox(height: ChaosSpacing.sm),
-                      Text('TTS STUB — GEMINI WIRING IS STAGE 3.',
-                          style: ChaosTypography.data().copyWith(
-                            color: ChaosColors.textMuted,
-                          )),
+                      Text(
+                        'TTS STUB — GEMINI WIRING IS STAGE 3.',
+                        style: ChaosTypography.data().copyWith(
+                          color: ChaosColors.textMuted,
+                        ),
+                      ),
                     ],
                   ),
                 ),
                 const Spacer(),
-                Text('DID YOU DO THE HARD THING?',
-                    style: ChaosTypography.headline().copyWith(fontSize: 26)),
+                Text(
+                  'DID YOU DO THE HARD THING?',
+                  style: ChaosTypography.headline().copyWith(fontSize: 26),
+                ),
+                const SizedBox(height: ChaosSpacing.sm),
+                Text(
+                  'Tap YES if you followed through. Tap NO if you didn’t.',
+                  style: ChaosTypography.body().copyWith(
+                    color: ChaosColors.textMuted,
+                  ),
+                ),
                 const SizedBox(height: ChaosSpacing.lg),
                 StencilButton(
                   label: 'YES',
                   expand: true,
+                  filled: true,
                   onPressed: () => context.go(ChaosRoutes.home),
                 ),
                 const SizedBox(height: ChaosSpacing.sm),

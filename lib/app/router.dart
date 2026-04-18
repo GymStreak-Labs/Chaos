@@ -81,10 +81,7 @@ String _resolveInitialLocation() {
 final GoRouter chaosRouter = GoRouter(
   initialLocation: _resolveInitialLocation(),
   routes: [
-    GoRoute(
-      path: ChaosRoutes.splash,
-      builder: (_, _) => const SplashScreen(),
-    ),
+    GoRoute(path: ChaosRoutes.splash, builder: (_, _) => const SplashScreen()),
 
     // Act 1
     GoRoute(
@@ -121,10 +118,7 @@ final GoRouter chaosRouter = GoRouter(
       path: ChaosRoutes.durationReflection,
       builder: (_, _) => const DurationReflectionScreen(),
     ),
-    GoRoute(
-      path: ChaosRoutes.lie,
-      builder: (_, _) => const LieScreen(),
-    ),
+    GoRoute(path: ChaosRoutes.lie, builder: (_, _) => const LieScreen()),
     GoRoute(
       path: ChaosRoutes.lieReflection,
       builder: (_, _) => const LieReflectionScreen(),
@@ -143,10 +137,7 @@ final GoRouter chaosRouter = GoRouter(
       path: ChaosRoutes.onboardingMode,
       builder: (_, _) => const ModeScreen(),
     ),
-    GoRoute(
-      path: ChaosRoutes.deal,
-      builder: (_, _) => const DealScreen(),
-    ),
+    GoRoute(path: ChaosRoutes.deal, builder: (_, _) => const DealScreen()),
     GoRoute(
       path: ChaosRoutes.notifications,
       builder: (_, _) => const NotificationsScreen(),
@@ -157,16 +148,10 @@ final GoRouter chaosRouter = GoRouter(
     ),
 
     // Act 4
-    GoRoute(
-      path: ChaosRoutes.commit,
-      builder: (_, _) => const CommitScreen(),
-    ),
+    GoRoute(path: ChaosRoutes.commit, builder: (_, _) => const CommitScreen()),
 
     // Core app
-    GoRoute(
-      path: ChaosRoutes.home,
-      builder: (_, _) => const MainShell(),
-    ),
+    GoRoute(path: ChaosRoutes.home, builder: (_, _) => const MainShell()),
     GoRoute(
       path: ChaosRoutes.session,
       builder: (_, _) => const SessionScreen(),
@@ -180,9 +165,6 @@ final GoRouter chaosRouter = GoRouter(
       builder: (_, _) => const StreakBreakScreen(),
     ),
   ],
-  errorBuilder: (_, state) => Scaffold(
-    body: Center(
-      child: Text('ROUTE ERROR: ${state.uri}'),
-    ),
-  ),
+  errorBuilder: (_, state) =>
+      Scaffold(body: Center(child: Text('ROUTE ERROR: ${state.uri}'))),
 );

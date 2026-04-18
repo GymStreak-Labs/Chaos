@@ -13,10 +13,11 @@ class CommitScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueScreenScaffold(
       label: 'FINAL STEP.',
-      title: Text(
-        "YOU'RE ABOUT TO ENLIST.",
-        style: ChaosTypography.headline(),
-      ),
+      subtitle: 'You are about to finish onboarding and enter the app.',
+      currentStep: 18,
+      totalSteps: 20,
+      backRoute: ChaosRoutes.cadence,
+      title: Text("YOU'RE ABOUT TO ENLIST.", style: ChaosTypography.headline()),
       body: Text(
         'BY CONTINUING YOU AGREE\n'
         'THAT FROM TOMORROW\n'

@@ -39,13 +39,15 @@ class _AvoidingReflectionScreenState extends State<AvoidingReflectionScreen> {
 
     return ValueScreenScaffold(
       label: 'CONFIRMED.',
+      subtitle:
+          'We are going to build your sessions around the exact thing you entered.',
+      currentStep: 7,
+      totalSteps: 20,
+      backRoute: ChaosRoutes.onboardingAvoiding,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "SO YOU'RE AVOIDING",
-            style: ChaosTypography.headline(),
-          ),
+          Text("SO YOU'RE AVOIDING", style: ChaosTypography.headline()),
           const SizedBox(height: ChaosSpacing.md),
           Text(
             echo,
@@ -58,9 +60,7 @@ class _AvoidingReflectionScreenState extends State<AvoidingReflectionScreen> {
       ),
       body: Text(
         "HOW'S THAT WORKING OUT?",
-        style: ChaosTypography.data().copyWith(
-          color: ChaosColors.textMuted,
-        ),
+        style: ChaosTypography.data().copyWith(color: ChaosColors.textMuted),
       ),
       ctaLabel: 'GO ON',
       onContinue: () => context.go(ChaosRoutes.duration),

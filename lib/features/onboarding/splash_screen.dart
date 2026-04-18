@@ -20,10 +20,7 @@ class SplashScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Spacer(),
-                Text(
-                  'CHAOS',
-                  style: ChaosTypography.display(),
-                ),
+                Text('CHAOS', style: ChaosTypography.display()),
                 const SizedBox(height: ChaosSpacing.md),
                 Text(
                   'WHO NEEDS CALM\nWHEN YOU CAN HAVE CHAOS',
@@ -32,10 +29,20 @@ class SplashScreen extends StatelessWidget {
                     fontSize: 18,
                   ),
                 ),
+                const SizedBox(height: ChaosSpacing.md),
+                Text(
+                  'A discipline app that generates aggressive audio to help you wake up, lock in, and do the hard thing.',
+                  style: ChaosTypography.body().copyWith(
+                    color: ChaosColors.textMuted,
+                    fontSize: 16,
+                    height: 1.45,
+                  ),
+                ),
                 const Spacer(),
                 StencilButton(
-                  label: 'ENLIST',
+                  label: 'START ONBOARDING',
                   trailing: '▸',
+                  filled: true,
                   expand: true,
                   onPressed: () => context.go(ChaosRoutes.intro01),
                 ),

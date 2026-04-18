@@ -13,15 +13,19 @@ class CadenceScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueScreenScaffold(
       label: 'TOMORROW.',
+      subtitle: 'Here is when Chaos will check in with you first.',
+      currentStep: 17,
+      totalSteps: 20,
+      backRoute: ChaosRoutes.notifications,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('0600.', style: ChaosTypography.display().copyWith(fontSize: 112)),
-          const SizedBox(height: ChaosSpacing.lg),
           Text(
-            'FIRST CHECK-IN.',
-            style: ChaosTypography.dataLarge(),
+            '0600.',
+            style: ChaosTypography.display().copyWith(fontSize: 112),
           ),
+          const SizedBox(height: ChaosSpacing.lg),
+          Text('FIRST CHECK-IN.', style: ChaosTypography.dataLarge()),
           const SizedBox(height: ChaosSpacing.md),
           Text(
             'NO SNOOZE.\nNO EXCUSE.',

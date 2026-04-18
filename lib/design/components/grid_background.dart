@@ -5,11 +5,7 @@ import '../tokens.dart';
 /// Faint olive grid lines on matte black.
 /// Tactical planning board / graph paper feel. No animation.
 class GridBackground extends StatelessWidget {
-  const GridBackground({
-    required this.child,
-    this.cellSize = 32,
-    super.key,
-  });
+  const GridBackground({required this.child, this.cellSize = 32, super.key});
 
   final Widget child;
   final double cellSize;

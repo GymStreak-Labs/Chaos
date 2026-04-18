@@ -13,9 +13,7 @@ Future<void> main() async {
   // See `lib/app/services.dart` + `docs/ops/stage-2-manual-steps.md`.
   await bootServices();
 
-  await SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,

@@ -12,6 +12,12 @@ class Intro01Screen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ValueScreenScaffold(
+      label: 'WELCOME',
+      subtitle:
+          'Before you answer anything, here is what this app is and who it is for.',
+      currentStep: 2,
+      totalSteps: 20,
+      backRoute: ChaosRoutes.splash,
       title: Text(
         'BEFORE WE START.\nTHREE FACTS.',
         style: ChaosTypography.headline(),

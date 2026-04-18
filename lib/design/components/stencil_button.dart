@@ -32,8 +32,9 @@ class StencilButton extends StatelessWidget {
     final disabled = onPressed == null;
 
     // Border / background / text colour are all driven by [filled] + [disabled].
-    final Color borderColor =
-        disabled ? ChaosColors.textMuted : ChaosColors.amber;
+    final Color borderColor = disabled
+        ? ChaosColors.textMuted
+        : ChaosColors.amber;
     final Color backgroundColor = filled && !disabled
         ? ChaosColors.amber
         : Colors.transparent;
@@ -68,10 +69,22 @@ class StencilButton extends StatelessWidget {
           mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text(
-              label.toUpperCase(),
-              style: ChaosTypography.button().copyWith(color: textColor),
-            ),
+            if (expand)
+              Expanded(
+                child: Text(
+                  label.toUpperCase(),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: ChaosTypography.button().copyWith(color: textColor),
+                ),
+              )
+            else
+              Text(
+                label.toUpperCase(),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                style: ChaosTypography.button().copyWith(color: textColor),
+              ),
             if (trailing != null) ...[
               const SizedBox(width: ChaosSpacing.md),
               Text(
@@ -84,8 +97,6 @@ class StencilButton extends StatelessWidget {
       ),
     );
 
-    return expand
-        ? SizedBox(width: double.infinity, child: button)
-        : button;
+    return expand ? SizedBox(width: double.infinity, child: button) : button;
   }
 }

@@ -84,7 +84,9 @@ Future<void> _initRevenueCat() async {
   }
   try {
     await Purchases.setLogLevel(LogLevel.warn);
-    final key = Platform.isIOS ? Env.revenueCatIosKey : Env.revenueCatAndroidKey;
+    final key = Platform.isIOS
+        ? Env.revenueCatIosKey
+        : Env.revenueCatAndroidKey;
     if (key.isEmpty) {
       debugPrint('[Chaos] RevenueCat key missing for platform');
       return;

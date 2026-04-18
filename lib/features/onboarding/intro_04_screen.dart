@@ -14,6 +14,10 @@ class Intro04Screen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ValueScreenScaffold(
       label: 'FACT 03 / 03',
+      subtitle: 'If this sounds like you, keep going. If not, back out now.',
+      currentStep: 5,
+      totalSteps: 20,
+      backRoute: ChaosRoutes.intro03,
       title: Text(
         'CHAOS IS NOT\nA MEDITATION APP.\n'
         'CHAOS IS NOT\nA THERAPIST.\n\n'

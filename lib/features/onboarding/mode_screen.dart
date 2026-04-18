@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/router.dart';
+import '../../design/components/chaos_page_header.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/stencil_button.dart';
 import '../../design/tokens.dart';
@@ -44,16 +45,14 @@ class _ModeScreenState extends State<ModeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('STEP 05 / 06', style: ChaosTypography.label()),
-                const SizedBox(height: ChaosSpacing.sm),
-                Text('PICK YOUR FRONT.',
-                    style: ChaosTypography.headline()),
-                const SizedBox(height: ChaosSpacing.md),
-                Text(
-                  'WHERE THE PRESSURE HITS HARDEST.',
-                  style: ChaosTypography.data().copyWith(
-                    color: ChaosColors.textMuted,
-                  ),
+                ChaosPageHeader(
+                  eyebrow: 'ASSIGNMENT',
+                  title: 'WHAT DO YOU WANT CHAOS TO HELP WITH FIRST?',
+                  subtitle:
+                      'Pick the mode you expect to use most often when you open the app.',
+                  currentStep: 14,
+                  totalSteps: 20,
+                  onBack: () => context.go(ChaosRoutes.personaIntro),
                 ),
                 const SizedBox(height: ChaosSpacing.xl),
                 Expanded(
@@ -77,9 +76,10 @@ class _ModeScreenState extends State<ModeScreen> {
                 ),
                 const SizedBox(height: ChaosSpacing.lg),
                 StencilButton(
-                  label: 'DEPLOY',
+                  label: 'CONTINUE',
                   trailing: '▸',
                   expand: true,
+                  filled: true,
                   onPressed: _selected == null ? null : _save,
                 ),
               ],

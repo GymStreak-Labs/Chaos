@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../app/router.dart';
+import '../../../design/components/chaos_page_header.dart';
 import '../../../design/components/ascii_box.dart';
 import '../../../design/components/stencil_button.dart';
 import '../../../design/tokens.dart';
@@ -62,44 +63,40 @@ class _ProfileSectionState extends State<ProfileSection> {
   @override
   Widget build(BuildContext context) {
     final tierIdx = MockRecord.tierIndex;
-    final tiers = const [
-      'RECRUIT',
-      'SAVAGE',
-      'LEGION',
-      'FORGED',
-    ];
+    final tiers = const ['RECRUIT', 'SAVAGE', 'LEGION', 'FORGED'];
 
     return ListView(
       padding: const EdgeInsets.only(bottom: ChaosSpacing.xxl),
       children: [
-        Text('OPERATIVE', style: ChaosTypography.label()),
-        const SizedBox(height: ChaosSpacing.xs),
+        const ChaosPageHeader(
+          eyebrow: 'PROFILE',
+          title: 'YOUR VOICE AND PROGRESSION',
+          subtitle:
+              'This tab shows the voice you chose, your current tier, and what you unlock by staying consistent.',
+        ),
+        const SizedBox(height: ChaosSpacing.lg),
         Text(_personaLabel, style: ChaosTypography.headline()),
         const SizedBox(height: ChaosSpacing.lg),
         AsciiBox(
-          label: 'DOSSIER',
+          label: 'ACCOUNT',
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(_pad('ID', _operativeId), style: ChaosTypography.data()),
-              Text(_pad('ENLISTED', _enlistedDate()),
-                  style: ChaosTypography.data()),
-              Text(_pad('VOICE', _personaLabel),
-                  style: ChaosTypography.data()),
-              Text(_pad('FRONT', _modeLabel),
-                  style: ChaosTypography.data()),
+              Text(
+                _pad('ENLISTED', _enlistedDate()),
+                style: ChaosTypography.data(),
+              ),
+              Text(_pad('VOICE', _personaLabel), style: ChaosTypography.data()),
+              Text(_pad('FRONT', _modeLabel), style: ChaosTypography.data()),
             ],
           ),
         ),
         const SizedBox(height: ChaosSpacing.xl),
-        Text('TIERS', style: ChaosTypography.label()),
+        Text('PROGRESSION', style: ChaosTypography.label()),
         const SizedBox(height: ChaosSpacing.sm),
         for (var i = 0; i < tiers.length; i++) ...[
-          _TierRow(
-            name: tiers[i],
-            active: i == tierIdx,
-            passed: i < tierIdx,
-          ),
+          _TierRow(name: tiers[i], active: i == tierIdx, passed: i < tierIdx),
           if (i < tiers.length - 1) const SizedBox(height: ChaosSpacing.xs),
         ],
         const SizedBox(height: ChaosSpacing.xl),
@@ -142,8 +139,18 @@ class _ProfileSectionState extends State<ProfileSection> {
     // Mock: 12 days ago from today.
     final d = DateTime.now().subtract(const Duration(days: 12));
     const months = [
-      'JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN',
-      'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC',
+      'JAN',
+      'FEB',
+      'MAR',
+      'APR',
+      'MAY',
+      'JUN',
+      'JUL',
+      'AUG',
+      'SEP',
+      'OCT',
+      'NOV',
+      'DEC',
     ];
     final dd = d.day.toString().padLeft(2, '0');
     return '$dd ${months[d.month - 1]} ${d.year}';
@@ -219,10 +226,7 @@ class _TierRow extends StatelessWidget {
               ),
             ),
           ),
-          Text(
-            marker,
-            style: ChaosTypography.data().copyWith(color: color),
-          ),
+          Text(marker, style: ChaosTypography.data().copyWith(color: color)),
         ],
       ),
     );

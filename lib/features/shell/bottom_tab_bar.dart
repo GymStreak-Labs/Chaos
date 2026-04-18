@@ -7,7 +7,7 @@ import '../../design/tokens.dart';
 ///
 /// Three equal-width tap targets:
 ///
-///   [■] TODAY    [□] RECORD    [□] PROFILE
+///   TODAY    RECORD    PROFILE
 ///
 /// - Matte black background, 1px olive hairline across the top edge.
 /// - A 2px amber indicator segment sits above the active tab (inset 16pt
@@ -28,7 +28,7 @@ class ChaosBottomTabBar extends StatelessWidget {
   final ValueChanged<int> onTap;
 
   static const _labels = <String>['TODAY', 'RECORD', 'PROFILE'];
-  static const double _height = 72;
+  static const double _height = 80;
   static const double _indicatorInset = 16;
   static const double _indicatorThickness = 2;
   static const Duration _indicatorDuration = Duration(milliseconds: 120);
@@ -47,8 +47,10 @@ class ChaosBottomTabBar extends StatelessWidget {
             builder: (context, constraints) {
               final tabWidth = constraints.maxWidth / _labels.length;
               final indicatorLeft = tabWidth * index + _indicatorInset;
-              final indicatorWidth =
-                  (tabWidth - (_indicatorInset * 2)).clamp(0.0, double.infinity);
+              final indicatorWidth = (tabWidth - (_indicatorInset * 2)).clamp(
+                0.0,
+                double.infinity,
+              );
 
               return Stack(
                 children: [
@@ -116,25 +118,25 @@ class _TabItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final color = active ? ChaosColors.amber : ChaosColors.textMuted;
-    final markerStyle = ChaosTypography.data().copyWith(
-      fontSize: 14,
+    final labelStyle = ChaosTypography.label().copyWith(
+      fontSize: 13,
+      letterSpacing: 1.5,
       color: color,
     );
-    final labelStyle = ChaosTypography.label().copyWith(
-      fontSize: 14,
-      letterSpacing: 2,
+    final helperStyle = ChaosTypography.data().copyWith(
+      fontSize: 11,
       color: color,
     );
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
-      child: Row(
+      child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(active ? '[■]' : '[□]', style: markerStyle),
-          const SizedBox(width: 6),
           Text(label, style: labelStyle),
+          const SizedBox(height: 4),
+          Text(active ? 'CURRENT TAB' : ' ', style: helperStyle),
         ],
       ),
     );

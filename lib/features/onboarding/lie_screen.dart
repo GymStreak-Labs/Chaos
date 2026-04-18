@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/router.dart';
+import '../../design/components/chaos_page_header.dart';
 import '../../design/components/ascii_box.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/option_row.dart';
@@ -67,18 +68,14 @@ class _LieScreenState extends State<LieScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('STEP 03 / 06', style: ChaosTypography.label()),
-                const SizedBox(height: ChaosSpacing.sm),
-                Text(
-                  'THE LIE YOU\nTELL YOURSELF.',
-                  style: ChaosTypography.headline(),
-                ),
-                const SizedBox(height: ChaosSpacing.md),
-                Text(
-                  'PICK ONE. OR WRITE YOUR OWN.',
-                  style: ChaosTypography.data().copyWith(
-                    color: ChaosColors.textMuted,
-                  ),
+                ChaosPageHeader(
+                  eyebrow: 'DIAGNOSTIC',
+                  title: 'WHAT DO YOU TELL YOURSELF TO DELAY IT?',
+                  subtitle:
+                      'Choose the excuse you use most often, or write your own.',
+                  currentStep: 10,
+                  totalSteps: 20,
+                  onBack: () => context.go(ChaosRoutes.durationReflection),
                 ),
                 const SizedBox(height: ChaosSpacing.xl),
                 Expanded(
@@ -113,16 +110,14 @@ class _LieScreenState extends State<LieScreen> {
                             cursorColor: ChaosColors.amber,
                             cursorWidth: 2,
                             maxLines: 3,
-                            textCapitalization:
-                                TextCapitalization.characters,
+                            textCapitalization: TextCapitalization.characters,
                             onChanged: (_) => setState(() {}),
                             decoration: InputDecoration(
                               border: InputBorder.none,
                               focusedBorder: InputBorder.none,
                               enabledBorder: InputBorder.none,
                               hintText: 'SAY IT OUT LOUD.',
-                              hintStyle:
-                                  ChaosTypography.dataLarge().copyWith(
+                              hintStyle: ChaosTypography.dataLarge().copyWith(
                                 color: ChaosColors.textMuted,
                               ),
                               contentPadding: EdgeInsets.zero,
@@ -139,6 +134,7 @@ class _LieScreenState extends State<LieScreen> {
                   label: 'CONTINUE',
                   trailing: '▸',
                   expand: true,
+                  filled: true,
                   onPressed: _effectiveLie == null ? null : _save,
                 ),
               ],

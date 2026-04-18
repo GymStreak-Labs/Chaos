@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../app/router.dart';
+import '../../design/components/chaos_page_header.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/stencil_button.dart';
 import '../../design/tokens.dart';
@@ -20,21 +21,18 @@ class PaywallScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('PAYWALL — STUB', style: ChaosTypography.label()),
-                const SizedBox(height: ChaosSpacing.sm),
-                Text('ENLIST FULLY.',
-                    style: ChaosTypography.headline().copyWith(fontSize: 36)),
-                const SizedBox(height: ChaosSpacing.md),
-                Text(
-                  'REVENUECAT OFFERINGS WIRE IN STAGE 3.',
-                  style: ChaosTypography.data().copyWith(
-                    color: ChaosColors.textMuted,
-                  ),
+                ChaosPageHeader(
+                  eyebrow: 'UPGRADE',
+                  title: 'UNLOCK THE FULL PRODUCT',
+                  subtitle:
+                      'This is a placeholder paywall. Pricing and plans will replace this screen once RevenueCat is connected.',
+                  onBack: () => context.go(ChaosRoutes.commit),
                 ),
                 const Spacer(),
                 StencilButton(
-                  label: 'BACK',
+                  label: 'CONTINUE TO APP',
                   expand: true,
+                  filled: true,
                   onPressed: () => context.go(ChaosRoutes.home),
                 ),
               ],

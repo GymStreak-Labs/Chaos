@@ -18,10 +18,12 @@ class Env {
   // No Env entry needed for it.
 
   static const String appReferKey = String.fromEnvironment('APPREFER_KEY');
-  static const String revenueCatIosKey =
-      String.fromEnvironment('REVENUECAT_IOS_KEY');
-  static const String revenueCatAndroidKey =
-      String.fromEnvironment('REVENUECAT_ANDROID_KEY');
+  static const String revenueCatIosKey = String.fromEnvironment(
+    'REVENUECAT_IOS_KEY',
+  );
+  static const String revenueCatAndroidKey = String.fromEnvironment(
+    'REVENUECAT_ANDROID_KEY',
+  );
   static const String gleapSdkKey = String.fromEnvironment('GLEAP_SDK_KEY');
 
   static bool get hasAppRefer => appReferKey.isNotEmpty;

@@ -14,9 +14,36 @@ class MockRecord {
   /// Pattern: 2 days of no-data, then 2 misses (pre-enlistment slump),
   /// then mostly showed up with a few ✗, today = showed up.
   static const List<bool?> last30 = [
-    null, null, false, false, true, true, true, true, false, true,
-    true, true, true, true, true, false, true, true, true, true,
-    true, true, true, false, true, true, true, true, true, true,
+    null,
+    null,
+    false,
+    false,
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
   ];
 
   /// Count trailing `true` values — today's streak.
@@ -48,12 +75,10 @@ class MockRecord {
   }
 
   /// Days the user showed up (true).
-  static int get showedUp =>
-      last30.where((v) => v == true).length;
+  static int get showedUp => last30.where((v) => v == true).length;
 
   /// Days the user missed (false).
-  static int get missed =>
-      last30.where((v) => v == false).length;
+  static int get missed => last30.where((v) => v == false).length;
 
   /// Total logged days (showedUp + missed), ignoring nulls.
   static int get totalLogged => showedUp + missed;

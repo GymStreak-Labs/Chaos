@@ -36,19 +36,19 @@ class _LieReflectionScreenState extends State<LieReflectionScreen> {
     final echo = (_lie ?? '').toUpperCase();
 
     return ValueScreenScaffold(
-      title: Text(
-        'ON THE RECORD.',
-        style: ChaosTypography.headline(),
-      ),
+      label: 'LOGGED',
+      subtitle:
+          'Good. We can be direct because you have already said it out loud.',
+      currentStep: 11,
+      totalSteps: 20,
+      backRoute: ChaosRoutes.lie,
+      title: Text('ON THE RECORD.', style: ChaosTypography.headline()),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AsciiBox(
             label: 'LOG',
-            child: Text(
-              '"$echo"',
-              style: ChaosTypography.dataLarge(),
-            ),
+            child: Text('"$echo"', style: ChaosTypography.dataLarge()),
           ),
           const SizedBox(height: ChaosSpacing.xl),
           Text(

@@ -51,10 +51,7 @@ class AsciiBox extends StatelessWidget {
                 children: [
                   Text('║', style: borderStyle),
                   Expanded(
-                    child: Padding(
-                      padding: padding,
-                      child: child,
-                    ),
+                    child: Padding(padding: padding, child: child),
                   ),
                   Text('║', style: borderStyle),
                 ],
@@ -67,7 +64,12 @@ class AsciiBox extends StatelessWidget {
     );
   }
 
-  String _buildEdge(String left, String right, int interiorCount, String? label) {
+  String _buildEdge(
+    String left,
+    String right,
+    int interiorCount,
+    String? label,
+  ) {
     if (label == null || label.isEmpty) {
       return '$left${'═' * interiorCount}$right';
     }
