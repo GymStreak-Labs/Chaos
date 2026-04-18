@@ -1,3 +1,6 @@
+import 'dart:io' show Platform;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../design/components/grid_background.dart';
@@ -6,6 +9,23 @@ import 'sections/profile_section.dart';
 import 'sections/record_section.dart';
 import 'sections/today_section.dart';
 import 'top_nav_label.dart';
+
+/// Debug-only: pick which shell section to land on at startup.
+/// `CHAOS_INITIAL_SECTION=0|1|2` (today|record|profile). Ignored in release.
+int _debugInitialSection() {
+  if (kReleaseMode) return 0;
+  const dartDefine = String.fromEnvironment('CHAOS_INITIAL_SECTION');
+  if (dartDefine.isNotEmpty) {
+    return int.tryParse(dartDefine)?.clamp(0, 2) ?? 0;
+  }
+  try {
+    final env = Platform.environment['CHAOS_INITIAL_SECTION'];
+    if (env != null && env.isNotEmpty) {
+      return int.tryParse(env)?.clamp(0, 2) ?? 0;
+    }
+  } catch (_) {}
+  return 0;
+}
 
 /// Main app shell — three swipeable sections with a minimal top nav.
 ///
@@ -21,8 +41,10 @@ class MainShell extends StatefulWidget {
 }
 
 class _MainShellState extends State<MainShell> {
-  final PageController _controller = PageController(initialPage: 0);
-  int _index = 0;
+  late final int _initialIndex = _debugInitialSection();
+  late final PageController _controller =
+      PageController(initialPage: _initialIndex);
+  late int _index = _initialIndex;
 
   static const _labels = <String>['TODAY', 'RECORD', 'PROFILE'];
   static const _transitionDuration = Duration(milliseconds: 150);
