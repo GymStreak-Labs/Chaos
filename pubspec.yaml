@@ -48,6 +48,10 @@ dependencies:
   firebase_auth: ^6.4.0
   purchases_flutter: ^10.0.1
   gleap_sdk: ^15.2.7
+  apprefer:
+    git:
+      url: https://github.com/AppAgentic/apprefer-flutter-sdk.git
+      ref: 0.4.1
 
 dev_dependencies:
   flutter_test:

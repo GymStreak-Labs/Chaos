@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'app/router.dart';
+import 'app/services.dart';
 import 'design/theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // TODO: Firebase.initializeApp() once google-services files are wired (Stage 2).
-  // TODO: Purchases.configure() for RevenueCat once keys are wired (Stage 3).
-  // TODO: Gleap.initialize() once Gleap API key is wired (Stage 4).
-  // TODO: apprefer integration — package not yet confirmed on pub.dev.
+  // All third-party services are best-effort: a missing key or missing
+  // `firebase_options.dart` logs a warning but does not crash the app.
+  // See `lib/app/services.dart` + `docs/ops/stage-2-manual-steps.md`.
+  await bootServices();
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
