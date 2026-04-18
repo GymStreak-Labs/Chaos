@@ -59,7 +59,12 @@ lib/
     ├── onboarding/       # 20-screen enlistment flow (see below)
     │   ├── onboarding_prefs.dart          # SharedPreferences keys
     │   └── components/value_screen_scaffold.dart
-    ├── home/
+    ├── shell/            # Stage 2A main app shell — 3 swipeable sections
+    │   ├── main_shell.dart                # PageView + top nav strip
+    │   ├── top_nav_label.dart             # single `[ LABEL ]` slot
+    │   ├── mock_record.dart               # mock streak/adherence data
+    │   └── sections/                      # today / record / profile
+    ├── home/             # session + streak-break (reached from shell)
     └── paywall/
 ```
 
@@ -80,6 +85,20 @@ All keys live in `OnboardingPrefs`:
 - `chaos.persona` — `drill_sergeant` / `cold_mentor` / `street_general` / `the_monk` (locked)
 - `chaos.onboarding.mode` — `wake_up` / `lock_in` / `workout` / `reset`
 - `chaos.onboarding.notifications` — `granted` / `declined`
+- `chaos.operative_id` — stable 16-char hex ID (first 8 shown on profile). Generated once by the PROFILE section on first render. Stage 2A mock.
+
+### Main app shell (Stage 2A)
+`/home` renders `MainShell` — three swipeable sections with a minimal top nav:
+
+```
+[ TODAY ]   RECORD   PROFILE
+```
+
+- `TodaySection` — today's brief, giant amber-filled `LOCK IN ▸` CTA, last-session block, ghost `REGENERATE`.
+- `RecordSection` — monospace adherence readout + 30-day ✓/✗/· grid.
+- `ProfileSection` — operative dossier, tier ladder (Recruit → Forged), earned-peace placeholder, and the `DEBUG · STREAK BREAK` button.
+
+Navigation: swipe or tap a label. 150ms linear transition. No bottom nav, no drawer. All data is mock (`MockRecord`) until Stage 3 wires real session history.
 
 ### Debug shortcut
 `CHAOS_INITIAL_ROUTE` (dart-define or env var, debug only) jumps to any route. Examples:
