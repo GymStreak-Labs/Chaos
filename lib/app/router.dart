@@ -4,7 +4,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../features/home/home_screen.dart';
 import '../features/home/session_screen.dart';
 import '../features/home/streak_break_screen.dart';
 import '../features/onboarding/avoiding_reflection_screen.dart';
@@ -26,6 +25,7 @@ import '../features/onboarding/persona_intro_screen.dart';
 import '../features/onboarding/persona_screen.dart';
 import '../features/onboarding/splash_screen.dart';
 import '../features/paywall/paywall_screen.dart';
+import '../features/shell/main_shell.dart';
 
 /// Route constants for the 20-screen onboarding flow + core app.
 class ChaosRoutes {
@@ -165,7 +165,7 @@ final GoRouter chaosRouter = GoRouter(
     // Core app
     GoRoute(
       path: ChaosRoutes.home,
-      builder: (_, _) => const HomeScreen(),
+      builder: (_, _) => const MainShell(),
     ),
     GoRoute(
       path: ChaosRoutes.session,
