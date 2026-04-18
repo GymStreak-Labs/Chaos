@@ -1,3 +1,6 @@
+import 'dart:io' show Platform;
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,8 +27,21 @@ class ChaosRoutes {
   static const streakBreak = '/streak-break';
 }
 
+/// Internal: lets us jump straight to a screen for screenshot / QA runs.
+/// Ignored in release builds. Takes precedence: dart-define → platform env.
+String _resolveInitialLocation() {
+  if (kReleaseMode) return ChaosRoutes.splash;
+  const dartDefine = String.fromEnvironment('CHAOS_INITIAL_ROUTE');
+  if (dartDefine.isNotEmpty) return dartDefine;
+  try {
+    final env = Platform.environment['CHAOS_INITIAL_ROUTE'];
+    if (env != null && env.isNotEmpty) return env;
+  } catch (_) {}
+  return ChaosRoutes.splash;
+}
+
 final GoRouter chaosRouter = GoRouter(
-  initialLocation: ChaosRoutes.splash,
+  initialLocation: _resolveInitialLocation(),
   routes: [
     GoRoute(
       path: ChaosRoutes.splash,
