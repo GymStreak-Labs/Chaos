@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 
 import '../features/home/session_screen.dart';
 import '../features/home/streak_break_screen.dart';
+import '../features/home/strike_screen.dart';
 import '../features/onboarding/avoiding_reflection_screen.dart';
 import '../features/onboarding/avoiding_screen.dart';
 import '../features/onboarding/cadence_screen.dart';
@@ -63,6 +64,7 @@ class ChaosRoutes {
   static const session = '/session';
   static const paywall = '/paywall';
   static const streakBreak = '/streak-break';
+  static const strike = '/strike';
 }
 
 /// Internal: lets us jump straight to a screen for screenshot / QA runs.
@@ -160,6 +162,7 @@ final GoRouter chaosRouter = GoRouter(
       path: ChaosRoutes.paywall,
       builder: (_, _) => const PaywallScreen(),
     ),
+    GoRoute(path: ChaosRoutes.strike, builder: (_, _) => const StrikeScreen()),
     GoRoute(
       path: ChaosRoutes.streakBreak,
       builder: (_, _) => const StreakBreakScreen(),

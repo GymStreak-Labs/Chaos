@@ -279,6 +279,66 @@ Required blocks:
 4. reminder cadence
 5. tone/intensity setting later for safety/App Store review
 
+
+---
+
+## Multiplayer extension
+
+Multiplayer should extend the loop, not turn Chaos into a feed.
+
+The multiplayer loop is:
+
+```text
+DECLARE MISSION -> ENTER SQUAD ROOM -> LISTEN TOGETHER -> STRIKE TOGETHER -> SUBMIT PROOF -> SQUAD RECORD UPDATES
+```
+
+### Recommended MVP multiplayer shape: squads
+
+Small private groups of **2-5 people**. Friends, gym partners, founder circles, sales teams, study groups. Not public followers.
+
+Required mechanics:
+
+1. each member declares one mission
+2. room starts one shared pressure hit
+3. everyone enters the same strike timer
+4. each member submits `DONE` or `FAILED`
+5. squad streak and individual streaks update
+
+### Why squads beat a social feed
+
+- small-group accountability is felt; public feeds become performative
+- private cells avoid moderation complexity early
+- synchronous starts create the cult moment without needing a massive network
+- failure has social weight without needing public shame
+
+### Multiplayer formats to test
+
+1. **2-person duel** - seven-day challenge against one friend
+2. **Squad strike** - 2-5 people start a 20-minute strike together
+3. **5am global lock-in** - everyone hears the same opener and starts the same window
+4. **Creator squads** - invite-only rooms around a coach / founder / fitness creator
+
+### Tone guardrail
+
+Multiplayer can create pressure, but it must not create harassment.
+
+Allowed:
+
+- `3/5 showed up.`
+- `Squad streak survived.`
+- `Joe missed. Re-enlist tomorrow.`
+
+Not allowed:
+
+- pile-ons
+- public humiliation
+- comments on bodies, worth, mental health, or identity
+- open chat in MVP unless moderation is solved
+
+The multiplayer promise:
+
+> **Don't fight avoidance alone. Enlist a squad. Start together. Prove it together.**
+
 ---
 
 ## Metrics that prove the loop

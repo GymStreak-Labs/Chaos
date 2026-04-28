@@ -103,41 +103,33 @@ class SessionScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: ChaosSpacing.lg),
                 Text(
-                  'Did you do the hard thing?',
-                  style: ChaosTypography.headline().copyWith(fontSize: 26),
+                  'Now move.',
+                  style: ChaosTypography.headline().copyWith(fontSize: 32),
                 ),
                 const SizedBox(height: ChaosSpacing.sm),
                 Text(
-                  'Tap YES if you followed through. Tap NO if you didn’t.',
+                  'Listening is ignition. The strike window is where the work happens.',
                   style: ChaosTypography.body().copyWith(
                     color: ChaosColors.textMuted,
                   ),
                 ),
                 const SizedBox(height: ChaosSpacing.md),
-                Row(
-                  children: [
-                    Expanded(
-                      child: StencilButton(
-                        label: 'YES',
-                        expand: true,
-                        filled: true,
-                        height: 56,
-                        leadingIcon: Icons.check_rounded,
-                        onPressed: () => context.go(ChaosRoutes.home),
-                      ),
-                    ),
-                    const SizedBox(width: ChaosSpacing.sm),
-                    Expanded(
-                      child: StencilButton(
-                        label: 'NO',
-                        expand: true,
-                        height: 56,
-                        accentColor: ChaosColors.alert,
-                        leadingIcon: Icons.close_rounded,
-                        onPressed: () => context.go(ChaosRoutes.streakBreak),
-                      ),
-                    ),
-                  ],
+                StencilButton(
+                  label: 'START 20-MIN STRIKE',
+                  trailing: '›',
+                  expand: true,
+                  filled: true,
+                  height: 58,
+                  leadingIcon: Icons.flag_outlined,
+                  onPressed: () => context.go(ChaosRoutes.strike),
+                ),
+                const SizedBox(height: ChaosSpacing.sm),
+                StencilButton(
+                  label: 'I DID IT ALREADY',
+                  expand: true,
+                  height: 54,
+                  leadingIcon: Icons.check_rounded,
+                  onPressed: () => context.go(ChaosRoutes.home),
                 ),
               ],
             ),

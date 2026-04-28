@@ -25,6 +25,7 @@ class TodaySection extends StatefulWidget {
 class _TodaySectionState extends State<TodaySection> {
   String _persona = 'CHAOS';
   String _mode = 'RAGE-UP';
+  String _mission = 'CALL DAD BACK';
 
   @override
   void initState() {
@@ -36,10 +37,14 @@ class _TodaySectionState extends State<TodaySection> {
     final prefs = await SharedPreferences.getInstance();
     final personaKey = prefs.getString(OnboardingPrefs.persona);
     final modeKey = prefs.getString(OnboardingPrefs.mode);
+    final mission = prefs.getString(OnboardingPrefs.avoiding)?.trim();
     if (!mounted) return;
     setState(() {
       _persona = _personaLabel(personaKey);
       _mode = _modeLabel(modeKey);
+      if (mission != null && mission.isNotEmpty) {
+        _mission = mission.toUpperCase();
+      }
     });
   }
 
@@ -56,8 +61,8 @@ class _TodaySectionState extends State<TodaySection> {
         const SizedBox(height: ChaosSpacing.lg),
         ChaosPageHeader(
           eyebrow: 'TODAY',
-          title: 'LOCK-IN SESSION',
-          subtitle: 'Drill Sergeant. 20 min. Focus, execute, finish strong.',
+          title: "TODAY'S MISSION",
+          subtitle: 'One target. One pressure hit. One proof.',
         ),
         const SizedBox(height: ChaosSpacing.lg),
         ChaosCard(
@@ -80,21 +85,16 @@ class _TodaySectionState extends State<TodaySection> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            _mode,
-                            style: ChaosTypography.label().copyWith(
-                              color: ChaosColors.text,
+                            _mission,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: ChaosTypography.headline().copyWith(
+                              fontSize: 26,
                             ),
                           ),
                           const SizedBox(height: ChaosSpacing.xs),
                           Text(
-                            _persona,
-                            style: ChaosTypography.body().copyWith(
-                              color: ChaosColors.textMuted,
-                            ),
-                          ),
-                          const SizedBox(height: ChaosSpacing.xs),
-                          Text(
-                            '20 min',
+                            '$_mode · $_persona · 20 min',
                             style: ChaosTypography.body().copyWith(
                               color: ChaosColors.textMuted,
                               fontWeight: FontWeight.w600,
@@ -118,7 +118,7 @@ class _TodaySectionState extends State<TodaySection> {
                   ChaosSpacing.md,
                 ),
                 child: StencilButton(
-                  label: 'START SESSION',
+                  label: 'START PRESSURE HIT',
                   leadingIcon: Icons.play_arrow_rounded,
                   trailing: '›',
                   expand: true,
