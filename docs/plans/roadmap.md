@@ -1,6 +1,6 @@
 # Chaos Roadmap
 
-_Last updated: 2026-04-18 (revised with #general context)_
+_Last updated: 2026-04-28 (core loop refined)_
 
 > Source material: #general concept thread (ts 1776291937), Gemini TTS ideation thread (ts 1776374647), naming / marketing-first pivot ("Who needs Calm when you can have Chaos"), and Calm-sized-library cost math ($3.6k raw / ~$5k all-in English vs Calm's ~$2M+). The app is the *inversion* of Calm, designed marketing-first, with brutalist-military aesthetic locked in.
 
@@ -25,7 +25,17 @@ _Last updated: 2026-04-18 (revised with #general context)_
 
 ## 1) Goal
 
-Ship a credible **v1 of Chaos** that delivers on the anti-Calm promise with a tight product loop:
+Ship a credible **v1 of Chaos** that proves one narrow behaviour-change loop: **turn avoidance into action.**
+
+The core loop is now defined in [`docs/plans/core-loop.md`](core-loop.md):
+
+```text
+DECLARE TARGET → CHOOSE PRESSURE → PERSONALISED AUDIO HIT → START THE STRIKE → BINARY PROOF → IDENTITY / CONSEQUENCE → RETURN TOMORROW
+```
+
+Ship the app around that loop before widening the content library. Chaos is not “lots of aggressive audio”; it is an activation ritual for the moment the user is about to avoid something.
+
+V1 must deliver on the anti-Calm promise with a tight product loop:
 
 1. User installs because the positioning is sharp, differentiated, and viral.
 2. Onboarding identifies the user's avoided hard thing + selected voice persona.
@@ -35,9 +45,12 @@ Ship a credible **v1 of Chaos** that delivers on the anti-Calm promise with a ti
 
 Success for v1 is not feature breadth. It is proving that users will:
 - complete onboarding,
-- listen to generated audio repeatedly,
+- declare a real target,
+- listen to generated audio,
+- start a concrete action window,
+- submit binary proof,
 - return daily for the streak,
-- convert on the promise of personalised pressure audio.
+- convert on the promise of personalised pressure audio that creates action.
 
 ---
 
@@ -148,9 +161,10 @@ Focus:
    - Primary use case: wake up / lock in / workout / reset
 4. Generate first personalised session
 5. Listen immediately
-6. Mark whether they did the hard thing (Yes / No)
-7. See streak + locked premium value
-8. Hit paywall before deeper usage
+6. Start a concrete action window (`START THE STRIKE`)
+7. Mark whether they did the hard thing (Yes / No)
+8. See streak + locked premium value
+9. Hit paywall after the first proof moment or on day two
 
 ### MVP content formats (strongest value density)
 1. **Rage-up alarms** — strongest differentiation vs Calm
@@ -252,6 +266,9 @@ Implication: the library doesn't need to exist before launch. Generate on demand
 - Paywall
 
 ### Core mechanics
+- Active mission: the hard thing the user is avoiding today
+- Personalised pressure audio attached to that mission
+- Strike window after audio: 5 / 20 minutes depending on mode
 - Single daily check-in: *did you do the hard thing?* Yes / No
 - Visible streak, visible tier
 - Session history
@@ -283,7 +300,7 @@ Every screen answers exactly one question:
 - AppRefer + Facebook SDK
 
 ### Key events
-`onboarding_started`, `onboarding_completed`, `persona_selected`, `first_session_generated`, `session_played`, `session_completed`, `hard_thing_yes`, `hard_thing_no`, `paywall_viewed`, `trial_started`, `purchase_completed`, `streak_broken`
+`onboarding_started`, `target_declared`, `onboarding_completed`, `persona_selected`, `first_session_generated`, `session_played`, `session_completed`, `strike_started`, `strike_completed`, `proof_submitted`, `hard_thing_yes`, `hard_thing_no`, `paywall_viewed`, `trial_started`, `purchase_completed`, `streak_broken`
 
 ### Reliability checks
 - Generation failure rate
@@ -385,12 +402,13 @@ Recommended sequence (both in series, not in parallel):
 4. Define script templates for alarms / lock-in / workout.
 5. Build generation service + session creation flow.
 6. Build player + session state.
-7. Build streak tracking + daily check-in.
-8. Add paywall + RevenueCat.
-9. Add analytics / crash / feedback integrations (Firebase, Crashlytics, Gleap, AppRefer, Facebook SDK).
-10. Internal dogfooding (on real alarms, real gym sessions, real lock-ins — not synthetic).
-11. Beta test with ~50 seeded creators from the ad target profile.
-12. Tighten launch messaging + store assets.
+7. Build the strike window that turns listening into action.
+8. Build streak tracking + daily check-in.
+9. Add paywall + RevenueCat.
+10. Add analytics / crash / feedback integrations (Firebase, Crashlytics, Gleap, AppRefer, Facebook SDK).
+11. Internal dogfooding (on real alarms, real gym sessions, real lock-ins — not synthetic).
+12. Beta test with ~50 seeded creators from the ad target profile.
+13. Tighten launch messaging + store assets.
 
 ---
 
@@ -421,8 +439,8 @@ Recommended sequence (both in series, not in parallel):
 
 ## 13) Short Version
 
-- **MVP = onboarding + persona pick + 3 audio modes + daily streak + paywall.**
+- **MVP = declare target + persona pick + 3 pressure modes + personalised audio + strike window + binary proof + streak + paywall.**
 - **Design = brutalist-military, locked.**
 - **Each ad angle is a forced product feature — no bait-and-switch.**
-- **Build order: shell → onboarding → TTS spike → player → streak → paywall.**
-- **Win by making the first personalised session hit hard enough that the user comes back tomorrow.**
+- **Build order: shell → onboarding → TTS spike → player → strike window → streak → paywall.**
+- **Win by making the first personalised session create action, not just listening.**
