@@ -5,8 +5,8 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../app/router.dart';
+import '../../../design/components/chaos_card.dart';
 import '../../../design/components/chaos_page_header.dart';
-import '../../../design/components/ascii_box.dart';
 import '../../../design/components/stencil_button.dart';
 import '../../../design/tokens.dart';
 import '../../onboarding/onboarding_prefs.dart';
@@ -70,50 +70,91 @@ class _ProfileSectionState extends State<ProfileSection> {
       children: [
         const ChaosPageHeader(
           eyebrow: 'PROFILE',
-          title: 'YOUR VOICE AND PROGRESSION',
-          subtitle:
-              'This tab shows the voice you chose, your current tier, and what you unlock by staying consistent.',
+          title: 'VOICE AND PROGRESSION',
+          subtitle: 'Your current coach, tier, and locked rewards.',
         ),
         const SizedBox(height: ChaosSpacing.lg),
-        Text(_personaLabel, style: ChaosTypography.headline()),
-        const SizedBox(height: ChaosSpacing.lg),
-        AsciiBox(
-          label: 'ACCOUNT',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        ChaosCard(
+          child: Row(
             children: [
-              Text(_pad('ID', _operativeId), style: ChaosTypography.data()),
-              Text(
-                _pad('ENLISTED', _enlistedDate()),
-                style: ChaosTypography.data(),
+              const ChaosIconTile(icon: Icons.record_voice_over_rounded),
+              const SizedBox(width: ChaosSpacing.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _personaLabel,
+                      style: ChaosTypography.headline().copyWith(fontSize: 30),
+                    ),
+                    Text(
+                      'Current voice. Current standard.',
+                      style: ChaosTypography.body().copyWith(
+                        color: ChaosColors.textMuted,
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              Text(_pad('VOICE', _personaLabel), style: ChaosTypography.data()),
-              Text(_pad('FRONT', _modeLabel), style: ChaosTypography.data()),
             ],
           ),
         ),
-        const SizedBox(height: ChaosSpacing.xl),
-        Text('PROGRESSION', style: ChaosTypography.label()),
-        const SizedBox(height: ChaosSpacing.sm),
-        for (var i = 0; i < tiers.length; i++) ...[
-          _TierRow(name: tiers[i], active: i == tierIdx, passed: i < tierIdx),
-          if (i < tiers.length - 1) const SizedBox(height: ChaosSpacing.xs),
-        ],
-        const SizedBox(height: ChaosSpacing.xl),
-        AsciiBox(
-          label: 'EARNED PEACE',
+        const SizedBox(height: ChaosSpacing.md),
+        ChaosCard(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'LOCKED — UNLOCKS AT TIER 3 (LEGION).',
-                style: ChaosTypography.data(),
+              const ChaosSectionLabel('Account'),
+              const SizedBox(height: ChaosSpacing.md),
+              _ProfileRow(label: 'ID', value: _operativeId),
+              _ProfileRow(label: 'Enlisted', value: _enlistedDate()),
+              _ProfileRow(label: 'Front', value: _modeLabel),
+            ],
+          ),
+        ),
+        const SizedBox(height: ChaosSpacing.md),
+        ChaosCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ChaosSectionLabel('Tier progression'),
+              const SizedBox(height: ChaosSpacing.md),
+              for (var i = 0; i < tiers.length; i++)
+                _TierRow(
+                  name: tiers[i],
+                  active: i == tierIdx,
+                  passed: i < tierIdx,
+                ),
+            ],
+          ),
+        ),
+        const SizedBox(height: ChaosSpacing.md),
+        ChaosCard(
+          child: Row(
+            children: [
+              const ChaosIconTile(
+                icon: Icons.lock_outline_rounded,
+                color: ChaosColors.textMuted,
               ),
-              const SizedBox(height: ChaosSpacing.xs),
-              Text(
-                'YOU WILL EARN IT. NOT RECEIVE IT.',
-                style: ChaosTypography.data().copyWith(
-                  color: ChaosColors.textMuted,
+              const SizedBox(width: ChaosSpacing.md),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Earned peace',
+                      style: ChaosTypography.label().copyWith(
+                        color: ChaosColors.text,
+                      ),
+                    ),
+                    const SizedBox(height: ChaosSpacing.xs),
+                    Text(
+                      'Locked until Legion. Peace is the prize.',
+                      style: ChaosTypography.body().copyWith(
+                        color: ChaosColors.textMuted,
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -127,12 +168,6 @@ class _ProfileSectionState extends State<ProfileSection> {
         ),
       ],
     );
-  }
-
-  String _pad(String key, String value) {
-    const totalWidth = 28;
-    final filler = (totalWidth - key.length - value.length).clamp(3, 99);
-    return '$key ${'.' * filler} $value';
   }
 
   String _enlistedDate() {
@@ -187,6 +222,41 @@ class _ProfileSectionState extends State<ProfileSection> {
   }
 }
 
+class _ProfileRow extends StatelessWidget {
+  const _ProfileRow({required this.label, required this.value});
+
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: ChaosSpacing.sm),
+      child: Row(
+        children: [
+          Expanded(
+            child: Text(
+              label.toUpperCase(),
+              style: ChaosTypography.body().copyWith(
+                color: ChaosColors.textMuted,
+                fontSize: 12,
+                fontWeight: FontWeight.w700,
+              ),
+            ),
+          ),
+          Text(
+            value.toUpperCase(),
+            style: ChaosTypography.body().copyWith(
+              color: ChaosColors.text,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
 class _TierRow extends StatelessWidget {
   const _TierRow({
     required this.name,
@@ -201,32 +271,42 @@ class _TierRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Color color;
-    final String marker;
+    final IconData icon;
     if (active) {
       color = ChaosColors.amber;
-      marker = '[■ ACTIVE]';
+      icon = Icons.keyboard_double_arrow_up_rounded;
     } else if (passed) {
       color = ChaosColors.text;
-      marker = '[■ CLEARED]';
+      icon = Icons.check_rounded;
     } else {
       color = ChaosColors.textMuted;
-      marker = '[□ LOCKED]';
+      icon = Icons.lock_outline_rounded;
     }
 
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: ChaosSpacing.xs),
+      padding: const EdgeInsets.only(bottom: ChaosSpacing.sm),
       child: Row(
         children: [
+          Icon(icon, color: color, size: 22),
+          const SizedBox(width: ChaosSpacing.sm),
           Expanded(
             child: Text(
               name,
-              style: ChaosTypography.headline().copyWith(
-                color: color,
-                fontSize: 24,
-              ),
+              style: ChaosTypography.label().copyWith(color: color),
             ),
           ),
-          Text(marker, style: ChaosTypography.data().copyWith(color: color)),
+          Text(
+            active
+                ? 'YOU ARE HERE'
+                : passed
+                ? 'CLEARED'
+                : 'LOCKED',
+            style: ChaosTypography.body().copyWith(
+              color: color,
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
         ],
       ),
     );

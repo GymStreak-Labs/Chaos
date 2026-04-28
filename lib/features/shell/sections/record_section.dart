@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../design/components/chaos_card.dart';
 import '../../../design/components/chaos_page_header.dart';
-import '../../../design/components/ascii_box.dart';
 import '../../../design/tokens.dart';
 import '../mock_record.dart';
 
@@ -15,78 +15,260 @@ class RecordSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final adherence = MockRecord.adherencePct;
-    final gapStatus = adherence >= 75 ? 'CLOSING' : 'WIDENING';
-    final yesterdayLine = MockRecord.yesterdayWon
-        ? 'YESTERDAY: SHOWED UP.'
-        : "YESTERDAY: DIDN'T.";
-
     return ListView(
       padding: const EdgeInsets.only(bottom: ChaosSpacing.xxl),
       children: [
         const ChaosPageHeader(
           eyebrow: 'RECORD',
-          title: 'YOUR STREAK AND HISTORY',
-          subtitle:
-              'Use this tab to see whether you showed up, how consistent you have been, and where you broke the streak.',
+          title: 'RECORD',
+          subtitle: 'Truth in the numbers. No excuses in the data.',
         ),
         const SizedBox(height: ChaosSpacing.lg),
-        AsciiBox(
-          label: 'SUMMARY',
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+        ChaosCard(
+          child: Row(
             children: [
-              Text(
-                _pad('CURRENT STREAK', '${MockRecord.currentStreak}'),
-                style: ChaosTypography.data(),
-              ),
-              Text(
-                _pad('LONGEST STREAK', '${MockRecord.longestStreak}'),
-                style: ChaosTypography.data(),
-              ),
-              Text(
-                _pad(
-                  'SHOWED UP',
-                  '${MockRecord.showedUp}/${MockRecord.last30.length}',
+              Expanded(
+                child: _MetricBlock(
+                  label: 'Current streak',
+                  value: '${MockRecord.currentStreak}',
+                  unit: 'days',
                 ),
-                style: ChaosTypography.data(),
               ),
-              Text(
-                _pad('MISSED', '${MockRecord.missed}'),
-                style: ChaosTypography.data(),
+              SizedBox(
+                width: 112,
+                height: 112,
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    SizedBox(
+                      width: 104,
+                      height: 104,
+                      child: CircularProgressIndicator(
+                        value: adherence / 100,
+                        strokeWidth: 9,
+                        backgroundColor: ChaosColors.surfaceRaised,
+                        color: ChaosColors.amber,
+                        strokeCap: StrokeCap.round,
+                      ),
+                    ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          '$adherence%',
+                          style: ChaosTypography.headline().copyWith(
+                            fontSize: 28,
+                            color: ChaosColors.text,
+                          ),
+                        ),
+                        Text(
+                          'adherence',
+                          style: ChaosTypography.body().copyWith(
+                            color: ChaosColors.textMuted,
+                            fontSize: 11,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-              Text(
-                _pad('ADHERENCE', '$adherence%'),
-                style: ChaosTypography.data(),
-              ),
-              Text(
-                _pad('GAP STATUS', gapStatus),
-                style: ChaosTypography.data().copyWith(
-                  color: gapStatus == 'CLOSING'
-                      ? ChaosColors.amber
-                      : ChaosColors.alert,
+              Expanded(
+                child: _MetricBlock(
+                  label: 'Longest',
+                  value: '${MockRecord.longestStreak}',
+                  unit: 'days',
+                  alignEnd: true,
                 ),
               ),
             ],
           ),
         ),
-        const SizedBox(height: ChaosSpacing.lg),
-        AsciiBox(
-          label: 'LAST 30 DAYS',
-          child: _MonthGrid(entries: MockRecord.last30),
+        const SizedBox(height: ChaosSpacing.md),
+        ChaosCard(
+          padding: const EdgeInsets.all(ChaosSpacing.lg),
+          backgroundColor: ChaosColors.surface,
+          borderColor: ChaosColors.border,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ChaosSectionLabel('Last 30 days'),
+              const SizedBox(height: ChaosSpacing.md),
+              _MonthGrid(entries: MockRecord.last30),
+              const SizedBox(height: ChaosSpacing.md),
+              Row(
+                children: [
+                  _LegendDot(color: ChaosColors.amber, label: 'Showed up'),
+                  const SizedBox(width: ChaosSpacing.md),
+                  _LegendDot(color: ChaosColors.alert, label: 'Missed'),
+                  const SizedBox(width: ChaosSpacing.md),
+                  _LegendDot(color: ChaosColors.textMuted, label: 'No data'),
+                ],
+              ),
+            ],
+          ),
         ),
-        const SizedBox(height: ChaosSpacing.lg),
-        Text(
-          yesterdayLine,
-          style: ChaosTypography.data().copyWith(color: ChaosColors.textMuted),
+        const SizedBox(height: ChaosSpacing.md),
+        ChaosCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ChaosSectionLabel('Tier progression'),
+              const SizedBox(height: ChaosSpacing.md),
+              const _TierProgressRow(
+                label: 'Recruit',
+                active: true,
+                requirement: 'You are here',
+              ),
+              const _TierProgressRow(
+                label: 'Savage',
+                requirement: '20 day streak',
+              ),
+              const _TierProgressRow(
+                label: 'Legion',
+                requirement: '50 day streak',
+              ),
+              const _TierProgressRow(
+                label: 'Forged',
+                requirement: '100 day streak',
+              ),
+            ],
+          ),
         ),
       ],
     );
   }
+}
 
-  String _pad(String key, String value) {
-    const totalWidth = 28;
-    final filler = (totalWidth - key.length - value.length).clamp(3, 99);
-    return '$key ${'.' * filler} $value';
+class _MetricBlock extends StatelessWidget {
+  const _MetricBlock({
+    required this.label,
+    required this.value,
+    required this.unit,
+    this.alignEnd = false,
+  });
+
+  final String label;
+  final String value;
+  final String unit;
+  final bool alignEnd;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: alignEnd
+          ? CrossAxisAlignment.end
+          : CrossAxisAlignment.start,
+      children: [
+        Text(
+          label.toUpperCase(),
+          textAlign: alignEnd ? TextAlign.end : TextAlign.start,
+          style: ChaosTypography.body().copyWith(
+            color: ChaosColors.textMuted,
+            fontSize: 11,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+        const SizedBox(height: ChaosSpacing.xs),
+        Text(
+          value,
+          style: ChaosTypography.headline().copyWith(
+            color: ChaosColors.amber,
+            fontSize: 34,
+          ),
+        ),
+        Text(
+          unit.toUpperCase(),
+          style: ChaosTypography.body().copyWith(
+            color: ChaosColors.textMuted,
+            fontSize: 11,
+            fontWeight: FontWeight.w700,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _LegendDot extends StatelessWidget {
+  const _LegendDot({required this.color, required this.label});
+
+  final Color color;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          width: 9,
+          height: 9,
+          decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+        ),
+        const SizedBox(width: ChaosSpacing.xs),
+        Text(
+          label,
+          style: ChaosTypography.body().copyWith(
+            color: ChaosColors.textMuted,
+            fontSize: 11,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _TierProgressRow extends StatelessWidget {
+  const _TierProgressRow({
+    required this.label,
+    required this.requirement,
+    this.active = false,
+  });
+
+  final String label;
+  final String requirement;
+  final bool active;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = active ? ChaosColors.amber : ChaosColors.textMuted;
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: ChaosSpacing.sm),
+      padding: const EdgeInsets.all(ChaosSpacing.md),
+      decoration: BoxDecoration(
+        color: active
+            ? ChaosColors.amber.withValues(alpha: 0.08)
+            : Colors.transparent,
+        border: Border.all(
+          color: active ? ChaosColors.amber : ChaosColors.border,
+        ),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Row(
+        children: [
+          Icon(Icons.keyboard_double_arrow_up_rounded, color: color, size: 26),
+          const SizedBox(width: ChaosSpacing.md),
+          Expanded(
+            child: Text(
+              label.toUpperCase(),
+              style: ChaosTypography.label().copyWith(
+                color: active ? ChaosColors.text : ChaosColors.textMuted,
+              ),
+            ),
+          ),
+          Text(
+            requirement.toUpperCase(),
+            style: ChaosTypography.body().copyWith(
+              color: active ? ChaosColors.amber : ChaosColors.textMuted,
+              fontSize: 11,
+              fontWeight: FontWeight.w700,
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
 
@@ -97,48 +279,40 @@ class _MonthGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 5 rows of 6 columns = 30 glyphs.
-    const columns = 6;
-    const rows = 5;
-    final glyphRows = <Widget>[];
-    for (var r = 0; r < rows; r++) {
-      final children = <InlineSpan>[];
-      for (var c = 0; c < columns; c++) {
-        final i = r * columns + c;
-        final v = i < entries.length ? entries[i] : null;
-        final glyph = switch (v) {
-          true => '✓',
-          false => '✗',
-          null => '·',
-        };
-        final color = switch (v) {
-          true => ChaosColors.amber,
-          false => ChaosColors.alert,
-          null => ChaosColors.textMuted,
-        };
-        children.add(
-          TextSpan(
-            text: glyph,
-            style: ChaosTypography.dataLarge().copyWith(color: color),
-          ),
-        );
-        if (c < columns - 1) {
-          children.add(
-            TextSpan(text: '  ', style: ChaosTypography.dataLarge()),
-          );
-        }
-      }
-      glyphRows.add(
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 2),
-          child: Text.rich(TextSpan(children: children)),
-        ),
-      );
-    }
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
+      children: [for (final v in entries) _DayMark(value: v)],
+    );
+  }
+}
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: glyphRows,
+class _DayMark extends StatelessWidget {
+  const _DayMark({required this.value});
+
+  final bool? value;
+
+  @override
+  Widget build(BuildContext context) {
+    final icon = switch (value) {
+      true => Icons.check_rounded,
+      false => Icons.close_rounded,
+      null => null,
+    };
+    final color = switch (value) {
+      true => ChaosColors.amber,
+      false => ChaosColors.alert,
+      null => ChaosColors.textMuted,
+    };
+
+    return Container(
+      width: 30,
+      height: 30,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all(color: color),
+      ),
+      child: icon == null ? null : Icon(icon, color: color, size: 15),
     );
   }
 }

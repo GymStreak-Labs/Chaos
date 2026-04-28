@@ -43,9 +43,10 @@ class ChaosPageHeader extends StatelessWidget {
                   foregroundColor: ChaosColors.textMuted,
                 ),
                 child: Text(
-                  '← BACK',
-                  style: ChaosTypography.data().copyWith(
+                  'BACK',
+                  style: ChaosTypography.body().copyWith(
                     color: ChaosColors.textMuted,
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
@@ -60,8 +61,10 @@ class ChaosPageHeader extends StatelessWidget {
           const SizedBox(height: ChaosSpacing.md),
           Text(
             'STEP $currentStep OF $totalSteps',
-            style: ChaosTypography.data().copyWith(
+            style: ChaosTypography.body().copyWith(
               color: ChaosColors.textMuted,
+              fontSize: 12,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ] else
@@ -76,7 +79,7 @@ class ChaosPageHeader extends StatelessWidget {
             subtitle!,
             style: ChaosTypography.body().copyWith(
               color: ChaosColors.textMuted,
-              fontSize: 16,
+              fontSize: 15,
               height: 1.45,
             ),
           ),
@@ -96,15 +99,18 @@ class _ProgressBar extends StatelessWidget {
   Widget build(BuildContext context) {
     final progress = (currentStep / totalSteps).clamp(0.0, 1.0);
     return SizedBox(
-      height: 6,
-      child: Stack(
-        children: [
-          Container(color: ChaosColors.grid),
-          FractionallySizedBox(
-            widthFactor: progress,
-            child: Container(color: ChaosColors.amber),
-          ),
-        ],
+      height: 5,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(8),
+        child: Stack(
+          children: [
+            Container(color: ChaosColors.border),
+            FractionallySizedBox(
+              widthFactor: progress,
+              child: Container(color: ChaosColors.amber),
+            ),
+          ],
+        ),
       ),
     );
   }

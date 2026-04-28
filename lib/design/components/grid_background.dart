@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../tokens.dart';
 
-/// Faint olive grid lines on matte black.
-/// Tactical planning board / graph paper feel. No animation.
+/// Faint planning texture on matte black.
 class GridBackground extends StatelessWidget {
-  const GridBackground({required this.child, this.cellSize = 32, super.key});
+  const GridBackground({required this.child, this.cellSize = 40, super.key});
 
   final Widget child;
   final double cellSize;
@@ -31,7 +30,7 @@ class _GridPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = ChaosColors.grid
-      ..strokeWidth = 1;
+      ..strokeWidth = 0.7;
 
     for (double x = 0; x <= size.width; x += cellSize) {
       canvas.drawLine(Offset(x, 0), Offset(x, size.height), paint);

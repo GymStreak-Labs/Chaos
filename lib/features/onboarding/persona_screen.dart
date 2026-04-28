@@ -3,10 +3,10 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/router.dart';
+import '../../design/components/chaos_card.dart';
 import '../../design/components/chaos_page_header.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/stencil_button.dart';
-import '../../design/components/status_marker.dart';
 import '../../design/tokens.dart';
 import 'onboarding_prefs.dart';
 
@@ -22,18 +22,34 @@ class _PersonaScreenState extends State<PersonaScreen> {
     _PersonaOption(
       id: 'drill_sergeant',
       label: 'DRILL SERGEANT',
+      description: 'No excuses. Only execution.',
+      icon: Icons.military_tech_rounded,
       locked: false,
     ),
-    _PersonaOption(id: 'cold_mentor', label: 'COLD MENTOR', locked: false),
+    _PersonaOption(
+      id: 'cold_mentor',
+      label: 'COLD MENTOR',
+      description: 'Discipline over feelings.',
+      icon: Icons.psychology_alt_rounded,
+      locked: false,
+    ),
     _PersonaOption(
       id: 'street_general',
       label: 'STREET GENERAL',
+      description: 'Real talk. Results or get left.',
+      icon: Icons.groups_rounded,
       locked: false,
     ),
-    _PersonaOption(id: 'the_monk', label: 'THE MONK', locked: true),
+    _PersonaOption(
+      id: 'the_monk',
+      label: 'THE MONK',
+      description: 'Earn peace. Unlocks at Forged.',
+      icon: Icons.self_improvement_rounded,
+      locked: true,
+    ),
   ];
 
-  String? _selected;
+  String? _selected = 'drill_sergeant';
 
   Future<void> _save() async {
     if (_selected == null) return;
@@ -55,9 +71,9 @@ class _PersonaScreenState extends State<PersonaScreen> {
               children: [
                 ChaosPageHeader(
                   eyebrow: 'ASSIGNMENT',
-                  title: 'CHOOSE THE VOICE YOU WANT IN YOUR HEAD.',
+                  title: 'CHOOSE YOUR VOICE',
                   subtitle:
-                      'This voice will deliver your sessions and your reminders.',
+                      "Your voice. Your standard. It's not motivation. It's enforcement.",
                   currentStep: 12,
                   totalSteps: 20,
                   onBack: () => context.go(ChaosRoutes.lieReflection),
@@ -102,11 +118,15 @@ class _PersonaOption {
   const _PersonaOption({
     required this.id,
     required this.label,
+    required this.description,
+    required this.icon,
     required this.locked,
   });
 
   final String id;
   final String label;
+  final String description;
+  final IconData icon;
   final bool locked;
 }
 
@@ -125,56 +145,79 @@ class _PersonaTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final color = option.locked
         ? ChaosColors.textMuted
-        : (selected ? ChaosColors.amber : ChaosColors.text);
+        : selected
+        ? ChaosColors.amber
+        : ChaosColors.text;
 
-    return InkWell(
+    return ChaosCard(
       onTap: onTap,
-      splashColor: Colors.transparent,
-      highlightColor: const Color(0x22C4A000),
-      child: Container(
-        padding: const EdgeInsets.all(ChaosSpacing.md),
-        decoration: BoxDecoration(
-          border: Border.all(
-            color: selected ? ChaosColors.amber : ChaosColors.grid,
-            width: selected ? 2 : 1,
-          ),
-        ),
-        child: Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
+      borderColor: selected ? ChaosColors.amber : ChaosColors.border,
+      backgroundColor: selected
+          ? ChaosColors.amber.withValues(alpha: 0.08)
+          : ChaosColors.surface,
+      child: Row(
+        children: [
+          ChaosIconTile(icon: option.icon, color: color, size: 68),
+          const SizedBox(width: ChaosSpacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  option.label,
+                  style: ChaosTypography.headline().copyWith(
+                    color: color,
+                    fontSize: 24,
+                  ),
+                ),
+                const SizedBox(height: ChaosSpacing.xs),
+                Text(
+                  option.description,
+                  style: ChaosTypography.body().copyWith(
+                    color: option.locked
+                        ? ChaosColors.textMuted
+                        : ChaosColors.text,
+                  ),
+                ),
+                if (option.locked) ...[
+                  const SizedBox(height: ChaosSpacing.xs),
                   Text(
-                    option.label,
-                    style: ChaosTypography.headline().copyWith(
-                      color: color,
-                      fontSize: 24,
+                    'LOCKED',
+                    style: ChaosTypography.body().copyWith(
+                      color: ChaosColors.textMuted,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w700,
                     ),
                   ),
-                  if (option.locked) ...[
-                    const SizedBox(height: ChaosSpacing.xs),
-                    Text(
-                      'LOCKED — UNLOCKS AT TIER 3',
-                      style: ChaosTypography.data().copyWith(
-                        color: ChaosColors.textMuted,
-                      ),
-                    ),
-                  ],
                 ],
-              ),
+              ],
             ),
-            if (option.locked)
-              const StatusMarker(
-                state: StatusMarkerState.failed,
-                labelOverride: 'LOCKED',
-              )
-            else if (selected)
-              const StatusMarker(state: StatusMarkerState.active)
-            else
-              const StatusMarker(state: StatusMarkerState.incomplete),
-          ],
-        ),
+          ),
+          const SizedBox(width: ChaosSpacing.md),
+          if (option.locked)
+            const Icon(Icons.lock_outline_rounded, color: ChaosColors.textMuted)
+          else
+            Container(
+              width: 26,
+              height: 26,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(
+                  color: selected ? ChaosColors.amber : ChaosColors.textMuted,
+                  width: 2,
+                ),
+              ),
+              child: selected
+                  ? const Center(
+                      child: Icon(
+                        Icons.circle,
+                        size: 12,
+                        color: ChaosColors.amber,
+                      ),
+                    )
+                  : null,
+            ),
+        ],
       ),
     );
   }

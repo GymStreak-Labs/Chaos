@@ -3,8 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'tokens.dart';
 
-/// Dark-only brutalist-military ThemeData.
-/// No rounding, no elevation, no ripple softness.
+/// Dark-only premium performance ThemeData.
 class ChaosTheme {
   ChaosTheme._();
 
@@ -52,10 +51,11 @@ class ChaosTheme {
         bodyMedium: ChaosTypography.body(),
       ),
       dividerTheme: const DividerThemeData(
-        color: ChaosColors.grid,
+        color: ChaosColors.border,
         thickness: 1,
         space: 1,
       ),
+      iconTheme: const IconThemeData(color: ChaosColors.text),
     );
   }
 }

@@ -14,6 +14,7 @@ class StencilButton extends StatelessWidget {
     required this.label,
     required this.onPressed,
     this.trailing,
+    this.leadingIcon,
     this.expand = false,
     this.filled = false,
     this.height = 64,
@@ -23,6 +24,7 @@ class StencilButton extends StatelessWidget {
   final String label;
   final VoidCallback? onPressed;
   final String? trailing;
+  final IconData? leadingIcon;
   final bool expand;
   final bool filled;
   final double height;
@@ -64,6 +66,7 @@ class StencilButton extends StatelessWidget {
         decoration: BoxDecoration(
           border: Border.all(color: borderColor, width: 2),
           color: backgroundColor,
+          borderRadius: BorderRadius.circular(8),
         ),
         child: Row(
           mainAxisSize: expand ? MainAxisSize.max : MainAxisSize.min,
@@ -71,20 +74,37 @@ class StencilButton extends StatelessWidget {
           children: [
             if (expand)
               Expanded(
-                child: Text(
-                  label.toUpperCase(),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  style: ChaosTypography.button().copyWith(color: textColor),
+                child: Row(
+                  children: [
+                    if (leadingIcon != null) ...[
+                      Icon(leadingIcon, color: textColor, size: 22),
+                      const SizedBox(width: ChaosSpacing.sm),
+                    ],
+                    Expanded(
+                      child: Text(
+                        label.toUpperCase(),
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: ChaosTypography.button().copyWith(
+                          color: textColor,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               )
-            else
+            else ...[
+              if (leadingIcon != null) ...[
+                Icon(leadingIcon, color: textColor, size: 22),
+                const SizedBox(width: ChaosSpacing.sm),
+              ],
               Text(
                 label.toUpperCase(),
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: ChaosTypography.button().copyWith(color: textColor),
               ),
+            ],
             if (trailing != null) ...[
               const SizedBox(width: ChaosSpacing.md),
               Text(
