@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/router.dart';
+import '../../design/components/chaos_card.dart';
 import '../../design/components/chaos_page_header.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/stencil_button.dart';
@@ -63,16 +64,57 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
               children: [
                 ChaosPageHeader(
                   eyebrow: 'ASSIGNMENT',
-                  title: 'ALLOW REMINDERS FROM $_personaName?',
+                  title: 'STAY ACCOUNTABLE',
                   subtitle:
-                      'You can change this later. Turning reminders on lets Chaos bring you back for your next session.',
-                  currentStep: 16,
-                  totalSteps: 20,
+                      'Let $_personaName reach you when it is time to show up.',
+                  currentStep: 5,
+                  totalSteps: 6,
                   onBack: () => context.go(ChaosRoutes.deal),
+                ),
+                const SizedBox(height: ChaosSpacing.xl),
+                Center(
+                  child: Container(
+                    width: 132,
+                    height: 132,
+                    decoration: BoxDecoration(
+                      color: ChaosColors.amber.withValues(alpha: 0.1),
+                      shape: BoxShape.circle,
+                      border: Border.all(color: ChaosColors.amber),
+                    ),
+                    child: const Icon(
+                      Icons.notifications_active_outlined,
+                      color: ChaosColors.amber,
+                      size: 68,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: ChaosSpacing.xl),
+                const ChaosCard(
+                  child: Column(
+                    children: [
+                      _ReminderFeature(
+                        icon: Icons.schedule_rounded,
+                        title: 'Smart reminders',
+                        subtitle: 'Right time. Right pressure.',
+                      ),
+                      SizedBox(height: ChaosSpacing.md),
+                      _ReminderFeature(
+                        icon: Icons.shield_outlined,
+                        title: 'Streak protection',
+                        subtitle: 'Never miss a day by accident.',
+                      ),
+                      SizedBox(height: ChaosSpacing.md),
+                      _ReminderFeature(
+                        icon: Icons.check_circle_outline_rounded,
+                        title: 'No excuses',
+                        subtitle: 'You chose this. Now lock it in.',
+                      ),
+                    ],
+                  ),
                 ),
                 const Spacer(),
                 StencilButton(
-                  label: 'TURN REMINDERS ON',
+                  label: 'ALLOW NOTIFICATIONS',
                   trailing: '▸',
                   expand: true,
                   filled: true,
@@ -104,6 +146,54 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class _ReminderFeature extends StatelessWidget {
+  const _ReminderFeature({
+    required this.icon,
+    required this.title,
+    required this.subtitle,
+  });
+
+  final IconData icon;
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        ChaosIconTile(icon: icon, size: 42),
+        const SizedBox(width: ChaosSpacing.md),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title.toUpperCase(),
+                style: ChaosTypography.label().copyWith(
+                  color: ChaosColors.text,
+                  fontSize: 13,
+                ),
+              ),
+              Text(
+                subtitle,
+                style: ChaosTypography.body().copyWith(
+                  color: ChaosColors.textMuted,
+                  fontSize: 13,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const Icon(
+          Icons.check_circle_rounded,
+          color: ChaosColors.amber,
+          size: 20,
+        ),
+      ],
     );
   }
 }

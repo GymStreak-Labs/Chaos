@@ -15,6 +15,7 @@ class StencilButton extends StatelessWidget {
     required this.onPressed,
     this.trailing,
     this.leadingIcon,
+    this.accentColor = ChaosColors.amber,
     this.expand = false,
     this.filled = false,
     this.height = 64,
@@ -25,6 +26,7 @@ class StencilButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final String? trailing;
   final IconData? leadingIcon;
+  final Color accentColor;
   final bool expand;
   final bool filled;
   final double height;
@@ -34,11 +36,9 @@ class StencilButton extends StatelessWidget {
     final disabled = onPressed == null;
 
     // Border / background / text colour are all driven by [filled] + [disabled].
-    final Color borderColor = disabled
-        ? ChaosColors.textMuted
-        : ChaosColors.amber;
+    final Color borderColor = disabled ? ChaosColors.textMuted : accentColor;
     final Color backgroundColor = filled && !disabled
-        ? ChaosColors.amber
+        ? accentColor
         : Colors.transparent;
     final Color textColor;
     if (disabled) {
@@ -46,7 +46,7 @@ class StencilButton extends StatelessWidget {
     } else if (filled) {
       textColor = ChaosColors.background;
     } else {
-      textColor = ChaosColors.amber;
+      textColor = accentColor;
     }
 
     final button = InkWell(
@@ -59,7 +59,7 @@ class StencilButton extends StatelessWidget {
       splashColor: Colors.transparent,
       highlightColor: filled
           ? const Color(0x22000000)
-          : const Color(0x22C4A000),
+          : accentColor.withValues(alpha: 0.14),
       child: Container(
         height: height,
         padding: const EdgeInsets.symmetric(horizontal: ChaosSpacing.lg),

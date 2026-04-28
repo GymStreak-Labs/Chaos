@@ -14,8 +14,8 @@ class CommitScreen extends StatelessWidget {
     return ValueScreenScaffold(
       label: 'FINAL STEP.',
       subtitle: 'You are about to finish onboarding and enter the app.',
-      currentStep: 18,
-      totalSteps: 20,
+      currentStep: 6,
+      totalSteps: 6,
       backRoute: ChaosRoutes.cadence,
       title: Text("YOU'RE ABOUT TO ENLIST.", style: ChaosTypography.headline()),
       body: Text(

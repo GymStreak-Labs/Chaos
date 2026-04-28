@@ -19,8 +19,8 @@ class PaywallScreen extends StatelessWidget {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(ChaosSpacing.lg),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
+              padding: EdgeInsets.zero,
               children: [
                 ChaosPageHeader(
                   eyebrow: 'UPGRADE',
@@ -77,9 +77,10 @@ class PaywallScreen extends StatelessWidget {
                     ),
                   ],
                 ),
-                const Spacer(),
+                const SizedBox(height: ChaosSpacing.xl),
                 StencilButton(
                   label: 'UNLOCK CHAOS',
+                  leadingIcon: Icons.lock_open_rounded,
                   expand: true,
                   filled: true,
                   onPressed: () => context.go(ChaosRoutes.home),
@@ -172,12 +173,37 @@ class _PriceCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title.toUpperCase(),
-            style: ChaosTypography.label().copyWith(
-              color: active ? ChaosColors.amber : ChaosColors.textMuted,
-              fontSize: 13,
-            ),
+          Row(
+            children: [
+              Expanded(
+                child: Text(
+                  title.toUpperCase(),
+                  style: ChaosTypography.label().copyWith(
+                    color: active ? ChaosColors.amber : ChaosColors.textMuted,
+                    fontSize: 13,
+                  ),
+                ),
+              ),
+              if (!active)
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: ChaosSpacing.xs,
+                    vertical: 2,
+                  ),
+                  decoration: BoxDecoration(
+                    color: ChaosColors.amber,
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text(
+                    'SAVE',
+                    style: ChaosTypography.body().copyWith(
+                      color: ChaosColors.background,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                ),
+            ],
           ),
           const SizedBox(height: ChaosSpacing.sm),
           Text(price, style: ChaosTypography.headline().copyWith(fontSize: 30)),

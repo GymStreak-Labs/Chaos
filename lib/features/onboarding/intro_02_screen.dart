@@ -15,8 +15,8 @@ class Intro02Screen extends StatelessWidget {
       label: 'FACT 01 / 03',
       subtitle:
           'Chaos is built for people who need pressure and action, not calm and reflection.',
-      currentStep: 3,
-      totalSteps: 20,
+      currentStep: 1,
+      totalSteps: 6,
       backRoute: ChaosRoutes.intro01,
       title: Text(
         'CALM USERS ARE\n70% WOMEN.',

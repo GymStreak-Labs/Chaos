@@ -1,13 +1,10 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../../app/router.dart';
 import '../../../design/components/chaos_card.dart';
 import '../../../design/components/chaos_page_header.dart';
-import '../../../design/components/stencil_button.dart';
 import '../../../design/tokens.dart';
 import '../../onboarding/onboarding_prefs.dart';
 import '../mock_record.dart';
@@ -159,12 +156,6 @@ class _ProfileSectionState extends State<ProfileSection> {
               ),
             ],
           ),
-        ),
-        const SizedBox(height: ChaosSpacing.xl),
-        StencilButton(
-          label: 'DEBUG · STREAK BREAK',
-          expand: true,
-          onPressed: () => context.go(ChaosRoutes.streakBreak),
         ),
       ],
     );

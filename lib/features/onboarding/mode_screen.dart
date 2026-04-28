@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/router.dart';
+import '../../design/components/chaos_card.dart';
 import '../../design/components/chaos_page_header.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/stencil_button.dart';
@@ -19,13 +20,33 @@ class ModeScreen extends StatefulWidget {
 
 class _ModeScreenState extends State<ModeScreen> {
   static const _modes = <_Mode>[
-    _Mode(id: 'wake_up', label: 'WAKE UP'),
-    _Mode(id: 'lock_in', label: 'LOCK IN'),
-    _Mode(id: 'workout', label: 'WORKOUT'),
-    _Mode(id: 'reset', label: 'RESET'),
+    _Mode(
+      id: 'wake_up',
+      label: 'WAKE UP',
+      description: 'Start the day. No snooze. No softness.',
+      icon: Icons.wb_sunny_outlined,
+    ),
+    _Mode(
+      id: 'lock_in',
+      label: 'LOCK IN',
+      description: 'Focus, eliminate noise, get to work.',
+      icon: Icons.gps_fixed_rounded,
+    ),
+    _Mode(
+      id: 'workout',
+      label: 'WORKOUT',
+      description: 'Train harder. Push through limits.',
+      icon: Icons.fitness_center_rounded,
+    ),
+    _Mode(
+      id: 'reset',
+      label: 'RESET',
+      description: 'Clear the mental noise and move.',
+      icon: Icons.refresh_rounded,
+    ),
   ];
 
-  String? _selected;
+  String? _selected = 'wake_up';
 
   Future<void> _save() async {
     if (_selected == null) return;
@@ -47,31 +68,30 @@ class _ModeScreenState extends State<ModeScreen> {
               children: [
                 ChaosPageHeader(
                   eyebrow: 'ASSIGNMENT',
-                  title: 'WHAT DO YOU WANT CHAOS TO HELP WITH FIRST?',
+                  title: 'CHOOSE YOUR MODE',
                   subtitle:
-                      'Pick the mode you expect to use most often when you open the app.',
-                  currentStep: 14,
-                  totalSteps: 20,
+                      'What do you need right now? You can change this later.',
+                  currentStep: 4,
+                  totalSteps: 6,
                   onBack: () => context.go(ChaosRoutes.personaIntro),
                 ),
                 const SizedBox(height: ChaosSpacing.xl),
                 Expanded(
-                  child: GridView.count(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: ChaosSpacing.sm,
-                    mainAxisSpacing: ChaosSpacing.sm,
-                    childAspectRatio: 1.1,
-                    children: [
-                      for (final mode in _modes)
-                        _ModeTile(
-                          mode: mode,
-                          selected: _selected == mode.id,
-                          onTap: () {
-                            HapticFeedback.selectionClick();
-                            setState(() => _selected = mode.id);
-                          },
-                        ),
-                    ],
+                  child: ListView.separated(
+                    itemCount: _modes.length,
+                    separatorBuilder: (_, _) =>
+                        const SizedBox(height: ChaosSpacing.sm),
+                    itemBuilder: (context, index) {
+                      final mode = _modes[index];
+                      return _ModeTile(
+                        mode: mode,
+                        selected: _selected == mode.id,
+                        onTap: () {
+                          HapticFeedback.selectionClick();
+                          setState(() => _selected = mode.id);
+                        },
+                      );
+                    },
                   ),
                 ),
                 const SizedBox(height: ChaosSpacing.lg),
@@ -92,9 +112,17 @@ class _ModeScreenState extends State<ModeScreen> {
 }
 
 class _Mode {
-  const _Mode({required this.id, required this.label});
+  const _Mode({
+    required this.id,
+    required this.label,
+    required this.description,
+    required this.icon,
+  });
+
   final String id;
   final String label;
+  final String description;
+  final IconData icon;
 }
 
 class _ModeTile extends StatelessWidget {
@@ -111,34 +139,58 @@ class _ModeTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final border = selected ? ChaosColors.amber : ChaosColors.grid;
-    final color = selected ? ChaosColors.amber : ChaosColors.text;
-    return InkWell(
+    final color = selected ? ChaosColors.amber : ChaosColors.textMuted;
+    return ChaosCard(
       onTap: onTap,
-      splashColor: Colors.transparent,
-      highlightColor: const Color(0x22C4A000),
-      child: Container(
-        alignment: Alignment.bottomLeft,
-        padding: const EdgeInsets.all(ChaosSpacing.md),
-        decoration: BoxDecoration(
-          border: Border.all(color: border, width: selected ? 2 : 1),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              selected ? '[■]' : '[□]',
-              style: ChaosTypography.data().copyWith(color: color),
+      borderColor: border,
+      backgroundColor: selected
+          ? ChaosColors.amber.withValues(alpha: 0.08)
+          : ChaosColors.surface,
+      child: Row(
+        children: [
+          ChaosIconTile(icon: mode.icon, color: color, size: 58),
+          const SizedBox(width: ChaosSpacing.md),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  mode.label,
+                  style: ChaosTypography.label().copyWith(
+                    color: selected ? ChaosColors.amber : ChaosColors.text,
+                  ),
+                ),
+                const SizedBox(height: ChaosSpacing.xs),
+                Text(
+                  mode.description,
+                  style: ChaosTypography.body().copyWith(
+                    color: ChaosColors.textMuted,
+                  ),
+                ),
+              ],
             ),
-            Text(
-              mode.label,
-              style: ChaosTypography.headline().copyWith(
-                color: color,
-                fontSize: 28,
+          ),
+          Container(
+            width: 24,
+            height: 24,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: selected ? ChaosColors.amber : ChaosColors.textMuted,
+                width: 2,
               ),
             ),
-          ],
-        ),
+            child: selected
+                ? const Center(
+                    child: Icon(
+                      Icons.circle,
+                      color: ChaosColors.amber,
+                      size: 10,
+                    ),
+                  )
+                : null,
+          ),
+        ],
       ),
     );
   }

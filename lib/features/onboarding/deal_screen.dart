@@ -14,8 +14,8 @@ class DealScreen extends StatelessWidget {
     return ValueScreenScaffold(
       label: 'THE DEAL.',
       subtitle: 'Chaos is simple: one session, then one yes-or-no check-in.',
-      currentStep: 15,
-      totalSteps: 20,
+      currentStep: 4,
+      totalSteps: 6,
       backRoute: ChaosRoutes.onboardingMode,
       title: Text(
         'EVERY MORNING.\n'

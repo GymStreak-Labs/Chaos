@@ -15,8 +15,8 @@ class Intro01Screen extends StatelessWidget {
       label: 'WELCOME',
       subtitle:
           'Before you answer anything, here is what this app is and who it is for.',
-      currentStep: 2,
-      totalSteps: 20,
+      currentStep: 1,
+      totalSteps: 6,
       backRoute: ChaosRoutes.splash,
       title: Text(
         'BEFORE WE START.\nTHREE FACTS.',

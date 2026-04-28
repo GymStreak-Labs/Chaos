@@ -39,8 +39,8 @@ class _LieReflectionScreenState extends State<LieReflectionScreen> {
       label: 'LOGGED',
       subtitle:
           'Good. We can be direct because you have already said it out loud.',
-      currentStep: 11,
-      totalSteps: 20,
+      currentStep: 2,
+      totalSteps: 6,
       backRoute: ChaosRoutes.lie,
       title: Text('ON THE RECORD.', style: ChaosTypography.headline()),
       body: Column(

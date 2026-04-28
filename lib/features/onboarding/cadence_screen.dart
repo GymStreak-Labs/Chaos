@@ -14,8 +14,8 @@ class CadenceScreen extends StatelessWidget {
     return ValueScreenScaffold(
       label: 'TOMORROW.',
       subtitle: 'Here is when Chaos will check in with you first.',
-      currentStep: 17,
-      totalSteps: 20,
+      currentStep: 5,
+      totalSteps: 6,
       backRoute: ChaosRoutes.notifications,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

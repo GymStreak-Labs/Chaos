@@ -68,8 +68,8 @@ class _DurationScreenState extends State<DurationScreen> {
                   title: 'HOW LONG HAS THIS BEEN GOING ON?',
                   subtitle:
                       'Pick the closest answer. We use this to set the tone of your first session.',
-                  currentStep: 8,
-                  totalSteps: 20,
+                  currentStep: 2,
+                  totalSteps: 6,
                   onBack: () => context.go(ChaosRoutes.avoidingReflection),
                 ),
                 const SizedBox(height: ChaosSpacing.xl),

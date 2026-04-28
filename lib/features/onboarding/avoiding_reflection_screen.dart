@@ -41,8 +41,8 @@ class _AvoidingReflectionScreenState extends State<AvoidingReflectionScreen> {
       label: 'CONFIRMED.',
       subtitle:
           'We are going to build your sessions around the exact thing you entered.',
-      currentStep: 7,
-      totalSteps: 20,
+      currentStep: 2,
+      totalSteps: 6,
       backRoute: ChaosRoutes.onboardingAvoiding,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

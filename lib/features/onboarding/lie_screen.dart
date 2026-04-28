@@ -73,8 +73,8 @@ class _LieScreenState extends State<LieScreen> {
                   title: 'WHAT DO YOU TELL YOURSELF TO DELAY IT?',
                   subtitle:
                       'Choose the excuse you use most often, or write your own.',
-                  currentStep: 10,
-                  totalSteps: 20,
+                  currentStep: 2,
+                  totalSteps: 6,
                   onBack: () => context.go(ChaosRoutes.durationReflection),
                 ),
                 const SizedBox(height: ChaosSpacing.xl),

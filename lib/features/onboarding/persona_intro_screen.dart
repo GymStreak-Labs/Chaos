@@ -77,8 +77,8 @@ class _PersonaIntroScreenState extends State<PersonaIntroScreen> {
       label: 'VOICE LOCKED.',
       subtitle:
           'This is the voice Chaos will use to push you through your sessions.',
-      currentStep: 13,
-      totalSteps: 20,
+      currentStep: 3,
+      totalSteps: 6,
       backRoute: ChaosRoutes.onboardingPersona,
       title: Text(
         bio?.name ?? '—',

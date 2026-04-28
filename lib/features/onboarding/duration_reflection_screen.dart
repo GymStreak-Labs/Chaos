@@ -57,8 +57,8 @@ class _DurationReflectionScreenState extends State<DurationReflectionScreen> {
       label: 'TIME CHECK',
       subtitle:
           'This is the rough amount of time you have already given to avoidance.',
-      currentStep: 9,
-      totalSteps: 20,
+      currentStep: 2,
+      totalSteps: 6,
       backRoute: ChaosRoutes.duration,
       title: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

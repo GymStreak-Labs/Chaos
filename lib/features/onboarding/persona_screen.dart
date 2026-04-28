@@ -74,8 +74,8 @@ class _PersonaScreenState extends State<PersonaScreen> {
                   title: 'CHOOSE YOUR VOICE',
                   subtitle:
                       "Your voice. Your standard. It's not motivation. It's enforcement.",
-                  currentStep: 12,
-                  totalSteps: 20,
+                  currentStep: 3,
+                  totalSteps: 6,
                   onBack: () => context.go(ChaosRoutes.lieReflection),
                 ),
                 const SizedBox(height: ChaosSpacing.xl),

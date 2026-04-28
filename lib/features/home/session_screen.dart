@@ -18,36 +18,36 @@ class SessionScreen extends StatelessWidget {
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(ChaosSpacing.lg),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+            child: ListView(
+              padding: EdgeInsets.zero,
               children: [
                 ChaosPageHeader(
                   eyebrow: 'SESSION',
                   title: 'DRILL SERGEANT',
-                  subtitle: 'Lock-in session. Focus on the mission.',
+                  subtitle: 'Focus on the mission. No drift. No negotiation.',
                   onBack: () => context.go(ChaosRoutes.home),
                 ),
-                const SizedBox(height: ChaosSpacing.lg),
+                const SizedBox(height: ChaosSpacing.md),
                 ChaosCard(
-                  padding: const EdgeInsets.all(ChaosSpacing.lg),
+                  padding: const EdgeInsets.all(ChaosSpacing.md),
                   child: Column(
                     children: [
                       Text(
-                        'UPPER BODY SHUTDOWN',
+                        'LOCK-IN SESSION',
                         style: ChaosTypography.label().copyWith(
                           color: ChaosColors.text,
                         ),
                       ),
-                      const SizedBox(height: ChaosSpacing.lg),
+                      const SizedBox(height: ChaosSpacing.sm),
                       SizedBox(
-                        width: 210,
-                        height: 210,
+                        width: 140,
+                        height: 140,
                         child: Stack(
                           alignment: Alignment.center,
                           children: [
                             SizedBox(
-                              width: 190,
-                              height: 190,
+                              width: 128,
+                              height: 128,
                               child: CircularProgressIndicator(
                                 value: 0.42,
                                 strokeWidth: 12,
@@ -62,7 +62,7 @@ class SessionScreen extends StatelessWidget {
                                 Text(
                                   '18:27',
                                   style: ChaosTypography.headline().copyWith(
-                                    fontSize: 36,
+                                    fontSize: 30,
                                   ),
                                 ),
                                 Text(
@@ -77,9 +77,9 @@ class SessionScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const SizedBox(height: ChaosSpacing.md),
+                      const SizedBox(height: ChaosSpacing.sm),
                       const _Waveform(),
-                      const SizedBox(height: ChaosSpacing.lg),
+                      const SizedBox(height: ChaosSpacing.sm),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -98,18 +98,10 @@ class SessionScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: ChaosSpacing.lg),
-                      Text(
-                        'Generated audio placeholder. Gemini TTS wires in after this UI pass.',
-                        textAlign: TextAlign.center,
-                        style: ChaosTypography.body().copyWith(
-                          color: ChaosColors.textMuted,
-                        ),
-                      ),
                     ],
                   ),
                 ),
-                const Spacer(),
+                const SizedBox(height: ChaosSpacing.lg),
                 Text(
                   'Did you do the hard thing?',
                   style: ChaosTypography.headline().copyWith(fontSize: 26),
@@ -121,20 +113,31 @@ class SessionScreen extends StatelessWidget {
                     color: ChaosColors.textMuted,
                   ),
                 ),
-                const SizedBox(height: ChaosSpacing.lg),
-                StencilButton(
-                  label: 'YES',
-                  expand: true,
-                  filled: true,
-                  leadingIcon: Icons.check_rounded,
-                  onPressed: () => context.go(ChaosRoutes.home),
-                ),
-                const SizedBox(height: ChaosSpacing.sm),
-                StencilButton(
-                  label: 'NO',
-                  expand: true,
-                  leadingIcon: Icons.close_rounded,
-                  onPressed: () => context.go(ChaosRoutes.streakBreak),
+                const SizedBox(height: ChaosSpacing.md),
+                Row(
+                  children: [
+                    Expanded(
+                      child: StencilButton(
+                        label: 'YES',
+                        expand: true,
+                        filled: true,
+                        height: 56,
+                        leadingIcon: Icons.check_rounded,
+                        onPressed: () => context.go(ChaosRoutes.home),
+                      ),
+                    ),
+                    const SizedBox(width: ChaosSpacing.sm),
+                    Expanded(
+                      child: StencilButton(
+                        label: 'NO',
+                        expand: true,
+                        height: 56,
+                        accentColor: ChaosColors.alert,
+                        leadingIcon: Icons.close_rounded,
+                        onPressed: () => context.go(ChaosRoutes.streakBreak),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
