@@ -1,402 +1,315 @@
-# Chaos Core Loop
+# Chaos Core Loop — Strike Pivot
 
-_Last updated: 2026-04-28_
+_Last updated: 2026-04-29_
 
-## One-line product definition
+## Product definition
 
-**Chaos turns avoidance into a daily action ritual.**
+**Chaos is a live accountability strike app.**
 
-It is not a meditation library. It is not an aggressive podcast app. It is a state-change tool for the moment when a user knows the right thing to do and is about to avoid it.
+Pick a hard thing. Start a timed strike. Get a short voice ignition. Do the work. Prove it. Keep the streak alive alone or with a squad.
+
+Chaos is **not** an aggressive Calm and it is **not** a long-form audio library. Calm owns downshifting. Chaos owns the pre-action moment.
 
 ---
 
 ## The problem
 
-People do not usually need more advice. They need help crossing the gap between **knowing** and **starting**.
+People do not need another motivational content library. They need help crossing the gap between:
 
-Chaos exists for these moments:
+```text
+I KNOW WHAT I SHOULD DO  →  I AM ACTUALLY DOING IT
+```
+
+The painful moments:
 
 - snoozing instead of getting up
-- avoiding the call, email, workout, study block, sales outreach, or hard conversation
-- opening a phone to escape the thing they already know matters
-- wanting accountability without soft wellness language
+- avoiding the call, workout, outreach, study block, or hard conversation
+- opening the phone to dodge the next rep
+- wanting accountability but hating soft wellness language
+- needing someone else in the room so they do not fold
 
-The app solves **action initiation** for users who dislike gentle self-help.
+Chaos solves **action initiation under accountability**.
 
 ---
 
-## The core promise
+## Calm vs Chaos usage pattern
 
-> Open Chaos when you are about to avoid something. Chaos names the target, kills the excuse, pushes you into a short action window, and makes you prove whether you showed up.
+| Calm | Chaos |
+|---|---|
+| end-state app | transition app |
+| relax / sleep / stress relief | start / act / prove |
+| passive listening can be the goal | listening is only ignition |
+| long audio makes sense | long pre-action audio is suspicious |
+| solo content library | solo + squad accountability |
+| success = calm / asleep | success = showed up |
 
-If the product does not create action within the first session, it failed.
+Calm's content is the activity. Chaos's activity is the hard thing.
 
 ---
 
 ## Primary loop
 
 ```text
-DECLARE TARGET
+DECLARE MISSION
       ↓
-CHOOSE PRESSURE
+CHOOSE STRIKE TYPE
       ↓
-PERSONALISED AUDIO HIT
+SHORT AUDIO IGNITION
       ↓
-START THE STRIKE
+TIMED ACTION WINDOW
       ↓
-BINARY PROOF
+PROOF
       ↓
-IDENTITY / CONSEQUENCE
+STREAK / SQUAD STATUS
       ↓
-RETURN TOMORROW
+NEXT TRIGGER
 ```
 
-### 1. Declare target
+### 1. Declare mission
 
-The user states the hard thing in plain language.
+The user writes one concrete thing they are about to do.
+
+Good missions:
+
+- `Call Dad back`
+- `Send 20 sales DMs`
+- `Finish the pitch deck intro`
+- `Study for 20 minutes`
+- `Start the workout`
+
+Bad missions:
+
+- `Be better`
+- `Get my life together`
+- `Feel motivated`
+
+The app should push users toward verbs, timers, and proof.
+
+---
+
+### 2. Choose strike type
+
+Strike types are the real product modes.
+
+| Strike type | When used | MVP priority |
+|---|---|---|
+| Solo Strike | user needs immediate action | P0 |
+| Squad Strike | 2–5 people start together | P1 |
+| Duel | 1v1 challenge over 3/7 days | P1 |
+| 5am Global Strike | shared daily ritual | P2 |
+| Creator Room | hosted strikes by a coach/creator | P3 |
+
+Old audio modes become strike presets:
+
+- Wake Up = 2-minute ignition + get-out-of-bed proof
+- Lock In = 20-minute work strike
+- Workout = warm-up + first-set strike
+- Reset = 5-minute recovery-to-action strike
+
+---
+
+### 3. Short audio ignition
+
+Audio is a spark, not the product.
+
+Default lengths:
+
+- Wake Up: **60–120 sec**
+- Reset: **90 sec–3 min**
+- Lock In: **2–4 min**
+- Workout: **2–5 min**
+- Squad opener: **30–90 sec**
+
+Audio structure:
+
+```text
+target mirror → excuse confrontation → tactical first move → countdown → strike begins
+```
+
+The audio should make the user feel seen and then immediately move them into action.
+
+---
+
+### 4. Timed action window
+
+The strike window is the core unit.
+
+MVP timers:
+
+- 2 min — tiny action / wake-up
+- 5 min — call/message/first step
+- 20 min — work/study block
+- 45 min — deep work / workout, later
+
+During a strike, the app should feel like a live command room:
+
+- target visible
+- timer dominant
+- squad presence visible if multiplayer
+- no content browsing
+- no feed
+- no distractions
+
+Optional audio during the strike should be sparse: short interventions every few minutes, not constant monologue.
+
+---
+
+### 5. Proof
+
+At the end, the user submits proof.
+
+MVP proof ladder:
+
+1. binary honour proof: `DONE` / `FAILED`
+2. optional note: `what did you ship?`
+3. optional photo/screenshot proof for squads
+4. peer verification later
+
+The most important rule:
+
+> Listening never counts as winning. Action counts.
+
+---
+
+### 6. Streak / squad status
+
+After proof, the app updates identity.
+
+Solo:
+
+- current streak
+- longest streak
+- tier progress
+- failed missions
+
+Squad:
+
+- who showed up
+- who failed
+- squad streak
+- weak spots without harassment
+- next scheduled strike
+
+Tone:
+
+- allowed: `You missed. Re-enlist tomorrow.`
+- allowed: `3/5 showed up. Squad streak survived.`
+- not allowed: pile-ons, humiliation, worthlessness language
+
+---
+
+### 7. Next trigger
+
+The loop closes with a next strike invitation.
 
 Examples:
 
-- `Call Dad back`
-- `Finish the pitch deck`
-- `Go to the gym`
-- `Send the invoice`
-- `Study for 20 minutes`
-
-This is not journaling. It is target acquisition.
-
-**UX requirement:** The Today screen must always show one active mission. No mission = no loop.
-
----
-
-### 2. Choose pressure
-
-Modes are entry points into the same loop, not separate product worlds.
-
-| Mode | User intent | Session job |
-|---|---|---|
-| Wake Up | I am trying to get out of bed | break inertia immediately |
-| Lock In | I need to work/study | remove distraction and start focus |
-| Workout | I need to train | raise intensity and begin the set/session |
-| Reset | I am spiralling/drifting | cut noise and re-enter action |
-
-**UX requirement:** Mode choice should stay understandable and conventional: label, icon, description, selected state.
-
----
-
-### 3. Personalised audio hit
-
-Audio is the state-change mechanic.
-
-MVP length target:
-
-- **3–5 min** for Wake Up / Reset
-- **5–8 min** for Lock In / Workout
-
-The audio must reference:
-
-- target
-- persona
-- mode
-- prior outcome/streak
-- immediate command
-
-Bad audio: generic hype.
-
-Good audio: `You said you were going to call Dad back. You have delayed it for a year. We are not negotiating with discomfort today. When this ends, you make the call.`
-
-**UX requirement:** Player should feel like a mission instrument, not a content browsing screen.
-
----
-
-### 4. Start the strike
-
-The most important refinement: listening is not the finish line.
-
-After audio, the user must be launched into a concrete action window.
-
-MVP strike options:
-
-- `START 5-MIN STRIKE` for calls / messages / small starts
-- `START 20-MIN STRIKE` for work/study
-- `START WORKOUT` for training
-- `I DID IT ALREADY` escape hatch for real-world completion
-
-**Why this matters:** Without a strike window, the app becomes entertainment. With a strike window, it becomes behaviour change.
-
----
-
-### 5. Binary proof
-
-After the strike window, Chaos asks one question:
-
-> **Did you do the hard thing?**
-
-Allowed answers:
-
-- `YES`
-- `NO`
-
-No mood tracker. No journal. No essay.
-
-**UX requirement:** The app must never let the user feel that listening alone counts as victory. Victory is action.
-
----
-
-### 6. Identity / consequence
-
-The check-in updates the user identity system.
-
-If `YES`:
-
-- streak continues
-- tier progress advances
-- Today result becomes `SHOWED UP`
-- future audio can reference the win
-
-If `NO`:
-
-- streak breaks or mission is marked failed
-- user sees the red failure state
-- app offers `RE-ENLIST`
-- future audio references the miss without worthlessness language
-
-Tone rule:
-
-- Allowed: `You missed. Start again.`
-- Allowed: `Accountability is the standard.`
-- Not allowed: `You are worthless.`
-
----
-
-### 7. Return tomorrow
-
-The loop closes with a next trigger.
-
-Retention is not “come browse more audio.” Retention is:
-
-> `Tomorrow at the moment you usually fold, Chaos shows up.`
-
-Push notification examples:
-
-- `0600. No snooze. Get up.`
-- `You said 20 minutes. Start now.`
+- `0600. Wake strike starts in 5.`
+- `Your squad is waiting.`
+- `You said 20 DMs. Strike room open.`
 - `The call is still not made.`
-- `Your streak survives today or it does not.`
+
+Retention comes from scheduled action rituals, not browsing content.
+
+---
+
+## MVP product promise
+
+> **Do not fight avoidance alone. Start a strike. Prove you showed up.**
 
 ---
 
 ## MVP screen flow
 
-### First session
+### Solo first session
 
 ```text
 Splash
-  → Value screens
-  → Declare avoided thing
-  → Pick voice
-  → Pick mode
-  → Permission / cadence
+  → what are you avoiding?
+  → choose first strike preset
+  → choose voice/persona
   → Today mission
-  → Audio hit
-  → Strike window
-  → Yes/No proof
-  → Streak / paywall
+  → Start Strike
+  → 60–120 sec ignition
+  → timed action window
+  → DONE / FAILED
+  → streak result
+  → invite a squad / paywall
 ```
 
-### Daily repeat session
+### Squad session
 
 ```text
-Push / app open
-  → Today mission
-  → Start session
-  → Audio hit
-  → Strike window
-  → Yes/No proof
-  → Record updated
+Create / join squad
+  → each member declares mission
+  → room countdown
+  → shared ignition
+  → synced action timer
+  → each member submits proof
+  → squad result board
+  → next strike scheduled
 ```
 
 ---
 
-## What the main app should become
+## Main app information architecture
 
-### Today
+Recommended tabs:
 
-Purpose: start the loop.
+1. **Today** — active mission + next strike
+2. **Squad** — private cell / room / invites
+3. **Record** — streak, proof history, adherence
+4. **Profile** — persona, tier, intensity, subscription
 
-Required blocks:
-
-1. `TODAY'S MISSION` — the target
-2. `PRESSURE MODE` — Wake Up / Lock In / Workout / Reset
-3. `START SESSION` — one dominant CTA
-4. `STRIKE STATUS` — not started / in progress / awaiting proof / complete
-5. current streak summary
-
-### Session player
-
-Purpose: state-change.
-
-Required blocks:
-
-1. persona
-2. mission target
-3. progress ring / waveform
-4. controls
-5. next action: `START THE STRIKE`
-
-### Strike
-
-Purpose: bridge audio into real action.
-
-Required blocks:
-
-1. timer
-2. target
-3. `I DID IT` / `I FAILED` / `ADD 5 MIN`
-4. clear exit back to proof
-
-### Record
-
-Purpose: identity reinforcement.
-
-Required blocks:
-
-1. current streak
-2. longest streak
-3. adherence
-4. last 30 days
-5. tier progression
-
-### Profile
-
-Purpose: progression and persona.
-
-Required blocks:
-
-1. current voice
-2. tier
-3. unlocks
-4. reminder cadence
-5. tone/intensity setting later for safety/App Store review
-
+Avoid a content-library tab for MVP.
 
 ---
 
-## Multiplayer extension
+## Metrics that prove the product
 
-Multiplayer should extend the loop, not turn Chaos into a feed.
+P0 metrics:
 
-The multiplayer loop is:
+- `mission_declared_rate`
+- `strike_started_rate`
+- `strike_completed_rate`
+- `proof_submitted_rate`
+- `done_rate`
+- D1 / D3 / D7 return
 
-```text
-DECLARE MISSION -> ENTER SQUAD ROOM -> LISTEN TOGETHER -> STRIKE TOGETHER -> SUBMIT PROOF -> SQUAD RECORD UPDATES
-```
+P1 multiplayer metrics:
 
-### Recommended MVP multiplayer shape: squads
+- `squad_created_rate`
+- `invite_sent_rate`
+- `invite_accepted_rate`
+- `squad_strike_started_rate`
+- `squad_repeat_strike_rate`
+- squad D7 retention vs solo D7 retention
 
-Small private groups of **2-5 people**. Friends, gym partners, founder circles, sales teams, study groups. Not public followers.
-
-Required mechanics:
-
-1. each member declares one mission
-2. room starts one shared pressure hit
-3. everyone enters the same strike timer
-4. each member submits `DONE` or `FAILED`
-5. squad streak and individual streaks update
-
-### Why squads beat a social feed
-
-- small-group accountability is felt; public feeds become performative
-- private cells avoid moderation complexity early
-- synchronous starts create the cult moment without needing a massive network
-- failure has social weight without needing public shame
-
-### Multiplayer formats to test
-
-1. **2-person duel** - seven-day challenge against one friend
-2. **Squad strike** - 2-5 people start a 20-minute strike together
-3. **5am global lock-in** - everyone hears the same opener and starts the same window
-4. **Creator squads** - invite-only rooms around a coach / founder / fitness creator
-
-### Tone guardrail
-
-Multiplayer can create pressure, but it must not create harassment.
-
-Allowed:
-
-- `3/5 showed up.`
-- `Squad streak survived.`
-- `Joe missed. Re-enlist tomorrow.`
-
-Not allowed:
-
-- pile-ons
-- public humiliation
-- comments on bodies, worth, mental health, or identity
-- open chat in MVP unless moderation is solved
-
-The multiplayer promise:
-
-> **Don't fight avoidance alone. Enlist a squad. Start together. Prove it together.**
+If audio completion is high but strike/proof is low, the app is failing.
 
 ---
 
-## Metrics that prove the loop
+## What to defer
 
-The app is working if these move:
+Defer until strikes work:
 
-1. `target_declared_rate` — users who create a real mission
-2. `first_audio_started_rate`
-3. `first_audio_completed_rate`
-4. `strike_started_rate` — the most important new metric
-5. `proof_submitted_rate`
-6. `hard_thing_yes_rate`
-7. D1 / D3 / D7 return
-8. streak survival rate
-9. paywall conversion after first proof or day two
-
-If `audio_completed_rate` is high but `strike_started_rate` is low, Chaos is becoming content, not action. Fix the loop.
-
----
-
-## Monetisation fit
-
-Paywall should appear after the product has proven the loop once.
-
-Best MVP moments to test:
-
-1. after first `YES` proof — “keep this system alive”
-2. day two before regeneration — “today's pressure is ready”
-3. after user tries to change persona or regenerate
-
-Avoid paywalling before the first action proof unless acquisition economics demand it.
-
----
-
-## What not to build yet
-
-Do not widen before this loop works.
-
-Defer:
-
-- large audio library browsing
-- social leaderboards
-- multi-speaker excuses dialogue
-- 70-language rollout
-- advanced earned-peace content
-- complex analytics dashboards
-- too many modes
-
-A narrow habit beats a broad content app.
+- long audio library
+- 70-language catalogue
+- Sleep/earned-peace library
+- public social feed
+- open chat
+- creator marketplace
+- complex proof verification
+- multi-speaker “excuses” episodes
 
 ---
 
 ## Product thesis
 
-Chaos wins if users feel:
+Chaos wins if the user says:
 
-1. `This app sees the thing I am avoiding.`
-2. `The audio made me move.`
-3. `I want to keep proving I am the kind of person who shows up.`
+1. `This app caught me right before I folded.`
+2. `The strike made me start.`
+3. `My squad/streak makes it harder to disappear.`
 
-That is the loop.
+That is the product.

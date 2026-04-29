@@ -1,146 +1,185 @@
 # Chaos
 
 ## Overview
-The anti-Calm. A weaponised audio app that drags users out of bed instead of tucking them in. Where Calm/Headspace sell peace, Chaos sells **output**. Feelings are not the point — the work is the point.
 
-**Tagline:** _Who needs Calm when you can have Chaos._
+Chaos has pivoted from “aggressive Calm” to a **live accountability strike app**.
+
+The anti-Calm positioning still matters for marketing, but the product is no longer a long-form AI audio library. Calm owns downshifting. Chaos owns the moment before action.
+
+**Current product definition:** _Pick a hard thing. Start a timed strike. Get a short voice ignition. Do the work. Prove it. Keep the streak alive alone or with a squad._
+
+**Tagline direction:** _Who needs Calm when you can have Chaos._
 
 ## Core Positioning
-- Calm puts you to sleep. Chaos wakes you up.
-- Peace is earned, not granted.
-- Every feature of Calm, structurally inverted.
-- Male-skewing wellness/performance app (the underserved 70% of the meditation market).
-- Powered by Gemini 3.1 Flash TTS — persistent "voice in your head" Audio Profile, multi-speaker dialogue, 70 languages at launch.
 
-## Content Library (all TTS-generated)
-- **Rage-up alarms** — morning narration, personalised to the user's avoided thing
-- **Pre-workout hype tracks** — 5–15 min voiced intensity, generated daily, never repeats
-- **Lock-in sessions** — study/work focus pressure audio
-- **You vs. Your Excuses** — multi-speaker dialogue, two voices (one is your excuses, one crushes them)
-- **Rage meditation** — aggressive mantras
-- **Cold shower / post-rejection fuel** — short hit audio
-- **Earned peace tracks** — locked behind streaks (the only calm content, reward tier)
+- Calm helps users relax / sleep / downshift.
+- Chaos helps users start / act / prove.
+- Audio is the spark, not the product.
+- The core unit is a **Strike**: a timed, accountable action window.
+- Multiplayer is private accountability: squads, duels, and shared rituals — not a public feed.
+- Success is not “audio played”; success is “hard thing done.”
 
-## Voice Personas (picked at onboarding)
+## Core Loop
+
+```text
+DECLARE MISSION
+  → CHOOSE STRIKE TYPE
+  → SHORT AUDIO IGNITION
+  → TIMED ACTION WINDOW
+  → PROOF
+  → STREAK / SQUAD STATUS
+  → NEXT TRIGGER
+```
+
+See:
+- `docs/plans/core-loop.md`
+- `docs/plans/roadmap.md`
+
+## Strike Types
+
+- **Solo Strike** — immediate personal action window.
+- **Squad Strike** — 2–5 people declare missions and start together.
+- **Duel** — 1v1 challenge over 3/7 days.
+- **5am Global Strike** — shared daily ritual / cult moment.
+- **Creator Room** — future hosted strikes by coaches/creators.
+
+Old audio modes are now strike presets:
+
+- **Wake Up** — 2-min get-out-of-bed strike, 60–120 sec ignition.
+- **Lock In** — 20-min work/study strike, 2–4 min ignition.
+- **Workout** — warm-up / first-set strike, 2–5 min ignition.
+- **Reset** — 5-min recovery-to-action strike, 90 sec–3 min ignition.
+
+## Audio Strategy
+
+Audio should be short and functional.
+
+Default structure:
+
+```text
+mission mirror → avoidance callout → identity reframe → exact first move → countdown → strike begins
+```
+
+Long audio libraries are deferred. 20-minute audio should only exist as optional in-strike ambience / sparse cues, not pre-action content.
+
+## Voice Personas
+
+Personas are flavour and retention, not the whole product.
+
 - Drill Sergeant
 - Cold Mentor
 - Street General
-- The Monk (locked — unlocks at tier 3)
+- The Monk (locked / earned peace later)
 
 ## Product Principles
-1. No mood tracker. No journaling. No "how are you feeling today?"
-2. Onboarding Q1: "What are you avoiding?" (not how you feel)
-3. Single daily metric: _Did you do the hard thing?_ Yes/No. Streak.
-4. Streak break screen: "You quit on yourself. Again." (inverse of Duolingo owl cuteness)
-5. Tier system: Recruit → Savage → Legion → Forged — visible on profile
-6. Shared 5am global lock-in — all users listening to the same track at the same time (cult moment)
-7. Voice persona speaks to the user between sessions via push notifications in their chosen voice
+
+1. Action beats content.
+2. Listening never counts as victory.
+3. No mood tracker. No journaling. No “how are you feeling today?”
+4. Mission declaration must be concrete and visible.
+5. Proof is binary first: `DONE` / `FAILED`.
+6. Multiplayer is accountability, not social browsing.
+7. Tone is pressure, not abuse: capable-of-more, never worthless.
+8. Every screen should answer one question: what are you doing, who is with you, did you prove it?
+
+## MVP Scope
+
+### P0 — Solo Strike Loop
+
+1. Onboarding asks: “What are you avoiding?”
+2. User picks strike preset: Wake Up / Lock In / Workout / Reset.
+3. User picks voice persona.
+4. Today screen shows one active mission.
+5. User starts a strike.
+6. App plays a short personalised ignition.
+7. Timer starts.
+8. User submits `DONE` or `FAILED`.
+9. Streak/tier updates.
+10. Paywall appears after proof or repeat use.
+
+### P1 — Squads
+
+- create squad
+- invite link
+- squad room
+- each member declares mission
+- synced countdown/timer
+- `DONE` / `FAILED` result board
+- squad streak
+
+No open public feed. No open chat in MVP unless moderation is solved.
 
 ## Tech Stack
+
 - **Framework**: Flutter
 - **Platform**: iOS + Android
-- **TTS**: Gemini 3.1 Flash TTS (70+ languages, Audio Profiles, multi-speaker)
-- **Script generation**: Gemini 3.1 Pro (for story/session script writing)
+- **TTS**: Gemini 3.1 Flash TTS for short ignition / persona voice
+- **Script generation**: Gemini 3.1 Pro for short ignition scripts
 - **Subscriptions**: RevenueCat
 - **Analytics**: Firebase Analytics + Crashlytics
 - **Error/feedback**: Gleap
 - **Attribution**: AppRefer + Facebook SDK
 
 ## Project Structure
-```
+
+```text
 lib/
 ├── app/                  # router, env, services wiring
-├── design/               # brutalist-military design system
+├── design/               # Concept 02 / premium brutalist design system
 │   ├── tokens.dart       # ChaosColors / ChaosTypography / ChaosSpacing
 │   ├── theme.dart
-│   └── components/       # AsciiBox, StencilButton (supports `filled:`),
-│                         # StatusMarker, GridBackground, OptionRow
+│   └── components/       # ChaosCard, ChaosPageHeader, StencilButton, etc.
 └── features/
-    ├── onboarding/       # 20-screen enlistment flow (see below)
-    │   ├── onboarding_prefs.dart          # SharedPreferences keys
-    │   └── components/value_screen_scaffold.dart
-    ├── shell/            # Stage 2A main app shell — 3 sections behind a
-    │   │                                  # brutalist bottom tab bar,
-    │   │                                  # IndexedStack preserving per-tab state.
-    │   ├── main_shell.dart                # Scaffold + IndexedStack
-    │   ├── bottom_tab_bar.dart            # custom 3-tab brutalist bar
-    │   ├── mock_record.dart               # mock streak/adherence data
-    │   └── sections/                      # today / record / profile
-    ├── home/             # session + streak-break (reached from shell)
+    ├── onboarding/       # current onboarding flow; needs strike-pivot simplification
+    ├── shell/            # main app shell; currently Today / Record / Profile
+    ├── home/             # session, strike, streak-break screens
     └── paywall/
 ```
 
-### Onboarding flow (20 screens, 4 acts)
-Order matches roadmap tone rules — confrontational, never cruel.
+## Current Implementation Notes
 
-1. **Splash** (`/splash`) — existing brand promise.
-2. **Act 1 — Confrontation** (value screens): `intro-01` → `intro-02` → `intro-03` → `intro-04`. Three facts framing Chaos as a draft notice. Ends with amber-filled `ENLIST ▸`.
-3. **Act 2 — Diagnostic** (inputs + reflections): `avoiding` → `avoiding-reflection` → `duration` → `duration-reflection` → `lie` → `lie-reflection`. Every input is echoed back at the user with a gut-punch.
-4. **Act 3 — Assignment**: `persona` → `persona-intro` → `mode` → `deal` → `notifications` → `cadence`. The notifications screen stores a pref only (real permission API is Stage 3+).
-5. **Act 4 — Enlistment**: `commit` → `/paywall`. Amber-filled `I AGREE ▸`. Secondary `BACK OUT` routes to `/splash`.
+- Branch `ui/clarity-pass` contains the Concept 02 redesign and the first Strike screen.
+- Existing UI still has audio-era remnants. Next redesign should become strike-first:
+  - Today
+  - Squad
+  - Record
+  - Profile
+- Current route debug shortcut:
 
-### Onboarding data
-All keys live in `OnboardingPrefs`:
-- `chaos.onboarding.avoiding` — free-text
-- `chaos.onboarding.duration` — `AvoidanceDuration` enum name (`oneWeek`, `oneMonth`, `sixMonths`, `oneYearPlus`, `threeYearsPlus`, `lostCount`)
-- `chaos.onboarding.lie` — preset or user-written string
-- `chaos.persona` — `drill_sergeant` / `cold_mentor` / `street_general` / `the_monk` (locked)
-- `chaos.onboarding.mode` — `wake_up` / `lock_in` / `workout` / `reset`
-- `chaos.onboarding.notifications` — `granted` / `declined`
-- `chaos.operative_id` — stable 16-char hex ID (first 8 shown on profile). Generated once by the PROFILE section on first render. Stage 2A mock.
-
-### Main app shell (Stage 2A)
-`/home` renders `MainShell` — three sections behind a brutalist bottom tab bar, `IndexedStack` preserving per-tab state:
-
-```
-[■] TODAY    [□] RECORD    [□] PROFILE
+```bash
+flutter run --dart-define=CHAOS_INITIAL_ROUTE=/strike
+flutter run --dart-define=CHAOS_INITIAL_ROUTE=/home
 ```
 
-- `TodaySection` — today's brief, giant amber-filled `LOCK IN ▸` CTA, last-session block, ghost `REGENERATE`.
-- `RecordSection` — monospace adherence readout + 30-day ✓/✗/· grid.
-- `ProfileSection` — operative dossier, tier ladder (Recruit → Forged), earned-peace placeholder, and the `DEBUG · STREAK BREAK` button.
+## Design Language
 
-Navigation: tap a tab. No swipe, no top strip, no drawer. The bottom bar is a custom widget (`ChaosBottomTabBar`) — matte-black background, 1px olive hairline across the top, a 2px amber indicator segment animating above the active tab over 120ms linear. No icons, no badges, no ripple. Tabs trigger `HapticFeedback.selectionClick()`. All data is mock (`MockRecord`) until Stage 3 wires real session history.
+- Dark-first. No pastels. No soft gradients.
+- Premium brutalist / performance aesthetic.
+- Typography: heavy, condensed, uppercase accents.
+- One dominant action per screen.
+- Clear, conventional navigation where needed.
+- Confrontational copy, but never cruel.
 
-### Debug shortcut
-`CHAOS_INITIAL_ROUTE` (dart-define or env var, debug only) jumps to any route. Examples:
-```
-flutter run --dart-define=CHAOS_INITIAL_ROUTE=/onboarding/intro-04
-flutter run --dart-define=CHAOS_INITIAL_ROUTE=/onboarding/duration-reflection
-```
+## Ad Marketing Angles
+
+Marketing can still use the anti-Calm inversion, but product truth is now strike/accountability.
+
+1. **Anti-therapy** — no mood tracker; start the thing.
+2. **Masculine reclamation** — direct, performance-coded accountability.
+3. **Results-coded** — track strikes completed, not feelings logged.
+4. **Cult-like belonging** — squads, duels, 5am global strike.
+5. **Forbidden / edgy** — pressure and proof, safely framed.
+6. **Inversion** — Calm puts you down; Chaos gets you moving.
 
 ## Commands
+
 ```bash
-# Development
 flutter run
 flutter build ios --release
 flutter build appbundle --release
-
-# Dart MCP
-# Use `run_tests` (agent-optimised) instead of `flutter test`
 ```
 
-## Environment Variables
-_To be filled (Gemini API key, RevenueCat keys, Firebase config, etc.)_
-
-## Design Language
-- Dark-first. No pastels. No soft gradients.
-- Typography: heavy, condensed, uppercase accents
-- Single dominant action per screen (LOCK IN button)
-- Audio-first — UI is minimal on purpose
-- Confrontational copy throughout
-
-## Ad Marketing Angles (drives product)
-The marketing came first; the product must deliver on each angle:
-1. **Anti-therapy** — "Your therapist says sit with your feelings. Chaos says weaponise them."
-2. **Masculine reclamation** — "Men aren't broken. They're bored."
-3. **Results-coded** — "Calm users sleep 7.2hrs. Chaos users built 7-figure businesses."
-4. **Cult-like belonging** — "You don't download Chaos. You enlist."
-5. **Forbidden** — "The app Apple almost didn't approve."
-6. **Inversion** — "Calm puts you to sleep. Chaos wakes you up."
-
-Each angle maps to a real product feature. No bait-and-switch.
-
 ## Links
+
 - GitHub: https://github.com/GymStreak-Labs/Chaos
 - Slack: #chaos
