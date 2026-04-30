@@ -23,25 +23,25 @@ class _ModeScreenState extends State<ModeScreen> {
     _Mode(
       id: 'wake_up',
       label: 'WAKE UP',
-      description: 'Start the day. No snooze. No softness.',
+      description: '2 min strike. Get upright and moving.',
       icon: Icons.wb_sunny_outlined,
     ),
     _Mode(
       id: 'lock_in',
       label: 'LOCK IN',
-      description: 'Focus, eliminate noise, get to work.',
+      description: '20 min work block. One task only.',
       icon: Icons.gps_fixed_rounded,
     ),
     _Mode(
       id: 'workout',
       label: 'WORKOUT',
-      description: 'Train harder. Push through limits.',
+      description: 'Warm up and hit the first working set.',
       icon: Icons.fitness_center_rounded,
     ),
     _Mode(
       id: 'reset',
       label: 'RESET',
-      description: 'Clear the mental noise and move.',
+      description: '5 min recovery-to-action window.',
       icon: Icons.refresh_rounded,
     ),
   ];
@@ -53,7 +53,7 @@ class _ModeScreenState extends State<ModeScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(OnboardingPrefs.mode, _selected!);
     if (!mounted) return;
-    context.go(ChaosRoutes.deal);
+    context.go(ChaosRoutes.onboardingPersona);
   }
 
   @override
@@ -67,13 +67,13 @@ class _ModeScreenState extends State<ModeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ChaosPageHeader(
-                  eyebrow: 'ASSIGNMENT',
-                  title: 'CHOOSE YOUR MODE',
+                  eyebrow: 'STRIKE TYPE',
+                  title: 'CHOOSE THE WINDOW',
                   subtitle:
-                      'What do you need right now? You can change this later.',
-                  currentStep: 4,
-                  totalSteps: 6,
-                  onBack: () => context.go(ChaosRoutes.personaIntro),
+                      'Pick the format that matches the action you are about to take.',
+                  currentStep: 2,
+                  totalSteps: 4,
+                  onBack: () => context.go(ChaosRoutes.onboardingAvoiding),
                 ),
                 const SizedBox(height: ChaosSpacing.xl),
                 Expanded(

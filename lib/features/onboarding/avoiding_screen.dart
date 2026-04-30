@@ -32,7 +32,7 @@ class _AvoidingScreenState extends State<AvoidingScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(OnboardingPrefs.avoiding, text);
     if (!mounted) return;
-    context.go(ChaosRoutes.avoidingReflection);
+    context.go(ChaosRoutes.onboardingMode);
   }
 
   @override
@@ -47,13 +47,13 @@ class _AvoidingScreenState extends State<AvoidingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ChaosPageHeader(
-                  eyebrow: 'DIAGNOSTIC',
-                  title: 'WHAT ARE YOU AVOIDING?',
+                  eyebrow: 'FIRST STRIKE',
+                  title: 'DECLARE YOUR MISSION',
                   subtitle:
-                      'Type the one thing you keep putting off. This answer shapes your first session.',
-                  currentStep: 2,
-                  totalSteps: 6,
-                  onBack: () => context.go(ChaosRoutes.intro04),
+                      'Type the one thing you keep putting off. This becomes the target.',
+                  currentStep: 1,
+                  totalSteps: 4,
+                  onBack: () => context.go(ChaosRoutes.splash),
                 ),
                 const SizedBox(height: ChaosSpacing.xl),
                 ChaosCard(

@@ -22,7 +22,7 @@ class ProfileSection extends StatefulWidget {
 
 class _ProfileSectionState extends State<ProfileSection> {
   String _personaLabel = 'UNASSIGNED';
-  String _modeLabel = 'RAGE-UP';
+  String _modeLabel = 'WAKE UP';
   String _operativeId = '--------';
 
   @override
@@ -200,15 +200,15 @@ class _ProfileSectionState extends State<ProfileSection> {
   String _modeName(String? key) {
     switch (key) {
       case 'wake_up':
-        return 'RAGE-UP';
+        return 'WAKE UP';
       case 'lock_in':
-        return 'LOCK-IN';
+        return 'LOCK IN';
       case 'workout':
-        return 'PRE-WORKOUT';
+        return 'WORKOUT';
       case 'reset':
         return 'RESET';
       default:
-        return 'RAGE-UP';
+        return 'WAKE UP';
     }
   }
 }

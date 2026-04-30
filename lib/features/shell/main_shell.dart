@@ -9,28 +9,30 @@ import '../../design/tokens.dart';
 import 'bottom_tab_bar.dart';
 import 'sections/profile_section.dart';
 import 'sections/record_section.dart';
+import 'sections/squad_section.dart';
 import 'sections/today_section.dart';
 
 /// Debug-only: pick which shell section to land on at startup.
-/// `CHAOS_INITIAL_SECTION=0|1|2` (today|record|profile). Ignored in release.
+/// `CHAOS_INITIAL_SECTION=0|1|2|3` (today|squad|record|profile).
+/// Ignored in release.
 int _debugInitialSection() {
   if (kReleaseMode) return 0;
   const dartDefine = String.fromEnvironment('CHAOS_INITIAL_SECTION');
   if (dartDefine.isNotEmpty) {
-    return int.tryParse(dartDefine)?.clamp(0, 2) ?? 0;
+    return int.tryParse(dartDefine)?.clamp(0, 3) ?? 0;
   }
   try {
     final env = Platform.environment['CHAOS_INITIAL_SECTION'];
     if (env != null && env.isNotEmpty) {
-      return int.tryParse(env)?.clamp(0, 2) ?? 0;
+      return int.tryParse(env)?.clamp(0, 3) ?? 0;
     }
   } catch (_) {}
   return 0;
 }
 
-/// Main app shell — three sections behind a brutalist bottom tab bar.
+/// Main app shell — four strike-first sections behind a bottom tab bar.
 ///
-///   [■] TODAY    [□] RECORD    [□] PROFILE
+///   [■] TODAY    [□] SQUAD    [□] RECORD    [□] PROFILE
 ///
 /// Tabs are backed by an [IndexedStack] so each section keeps its own
 /// scroll + widget state across switches. No swipe, no top strip.
@@ -62,6 +64,7 @@ class _MainShellState extends State<MainShell> {
             index: _index,
             children: const [
               _SectionPadding(child: TodaySection()),
+              _SectionPadding(child: SquadSection()),
               _SectionPadding(child: RecordSection()),
               _SectionPadding(child: ProfileSection()),
             ],

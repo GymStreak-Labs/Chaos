@@ -1,40 +1,99 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/router.dart';
+import '../../design/components/ascii_box.dart';
 import '../../design/tokens.dart';
 import 'components/value_screen_scaffold.dart';
+import 'onboarding_prefs.dart';
 
-/// Act 4 — Screen 18. Final commitment beat. Climactic amber-filled CTA.
-class CommitScreen extends StatelessWidget {
+/// Final first-strike setup beat.
+class CommitScreen extends StatefulWidget {
   const CommitScreen({super.key});
+
+  @override
+  State<CommitScreen> createState() => _CommitScreenState();
+}
+
+class _CommitScreenState extends State<CommitScreen> {
+  String _mission = 'THE HARD THING';
+  String _mode = 'WAKE UP';
+  String _persona = 'DRILL SERGEANT';
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final prefs = await SharedPreferences.getInstance();
+    if (!mounted) return;
+    setState(() {
+      final mission = prefs.getString(OnboardingPrefs.avoiding)?.trim();
+      if (mission != null && mission.isNotEmpty) {
+        _mission = mission.toUpperCase();
+      }
+      _mode = _modeName(prefs.getString(OnboardingPrefs.mode));
+      _persona = _personaName(prefs.getString(OnboardingPrefs.persona));
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return ValueScreenScaffold(
-      label: 'FINAL STEP.',
-      subtitle: 'You are about to finish onboarding and enter the app.',
-      currentStep: 6,
-      totalSteps: 6,
-      backRoute: ChaosRoutes.cadence,
-      title: Text("YOU'RE ABOUT TO ENLIST.", style: ChaosTypography.headline()),
-      body: Text(
-        'BY CONTINUING YOU AGREE\n'
-        'THAT FROM TOMORROW\n'
-        'YOU ARE ACCOUNTABLE\n'
-        'TO YOURSELF.\n\n'
-        'NO ONE ELSE WILL\n'
-        'HOLD THE LINE.',
-        style: ChaosTypography.data().copyWith(
-          color: ChaosColors.textMuted,
-          fontSize: 16,
+      label: 'READY.',
+      subtitle: 'Your first strike is set. The app opens on this mission.',
+      currentStep: 4,
+      totalSteps: 4,
+      backRoute: ChaosRoutes.onboardingPersona,
+      title: Text('FIRST STRIKE\nIS READY.', style: ChaosTypography.headline()),
+      body: AsciiBox(
+        label: 'BRIEF',
+        child: Text(
+          'MISSION..... $_mission\n'
+          'TYPE........ $_mode\n'
+          'VOICE....... $_persona\n'
+          'PROOF....... DONE / FAILED',
+          style: ChaosTypography.dataLarge(),
         ),
       ),
-      ctaLabel: 'I AGREE',
+      ctaLabel: 'ENTER TODAY',
       ctaFilled: true,
-      onContinue: () => context.go(ChaosRoutes.paywall),
-      secondaryLabel: 'BACK OUT',
-      onSecondary: () => context.go(ChaosRoutes.splash),
+      onContinue: () => context.go(ChaosRoutes.home),
+      secondaryLabel: 'CHANGE MISSION',
+      onSecondary: () => context.go(ChaosRoutes.onboardingAvoiding),
     );
+  }
+
+  String _modeName(String? key) {
+    switch (key) {
+      case 'wake_up':
+        return 'WAKE UP';
+      case 'lock_in':
+        return 'LOCK IN';
+      case 'workout':
+        return 'WORKOUT';
+      case 'reset':
+        return 'RESET';
+      default:
+        return 'WAKE UP';
+    }
+  }
+
+  String _personaName(String? key) {
+    switch (key) {
+      case 'drill_sergeant':
+        return 'DRILL SERGEANT';
+      case 'cold_mentor':
+        return 'COLD MENTOR';
+      case 'street_general':
+        return 'STREET GENERAL';
+      case 'the_monk':
+        return 'THE MONK';
+      default:
+        return 'DRILL SERGEANT';
+    }
   }
 }

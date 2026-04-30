@@ -28,7 +28,7 @@ import '../features/onboarding/splash_screen.dart';
 import '../features/paywall/paywall_screen.dart';
 import '../features/shell/main_shell.dart';
 
-/// Route constants for the 20-screen onboarding flow + core app.
+/// Route constants for first-strike onboarding + core app.
 class ChaosRoutes {
   ChaosRoutes._();
 

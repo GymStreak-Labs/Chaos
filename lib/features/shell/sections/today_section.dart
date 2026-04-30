@@ -12,8 +12,7 @@ import '../mock_record.dart';
 
 /// TODAY — the default landing section.
 ///
-/// Mirrors the "Morning Brief" pattern from roadmap §2:
-///   DATE · DAY N OF OPERATION · TODAY'S BRIEF · LOCK IN · LAST SESSION.
+/// The solo strike dashboard: mission, ignition, action window, proof.
 /// All values are mock for Stage 2A. Hooked up to real data in Stage 3.
 class TodaySection extends StatefulWidget {
   const TodaySection({super.key});
@@ -24,7 +23,7 @@ class TodaySection extends StatefulWidget {
 
 class _TodaySectionState extends State<TodaySection> {
   String _persona = 'CHAOS';
-  String _mode = 'RAGE-UP';
+  String _mode = 'WAKE UP';
   String _mission = 'CALL DAD BACK';
 
   @override
@@ -62,7 +61,7 @@ class _TodaySectionState extends State<TodaySection> {
         ChaosPageHeader(
           eyebrow: 'TODAY',
           title: "TODAY'S MISSION",
-          subtitle: 'One target. One pressure hit. One proof.',
+          subtitle: 'Declare it. Ignite. Work the window. Prove it.',
         ),
         const SizedBox(height: ChaosSpacing.lg),
         ChaosCard(
@@ -75,10 +74,7 @@ class _TodaySectionState extends State<TodaySection> {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const ChaosIconTile(
-                      icon: Icons.graphic_eq_rounded,
-                      size: 72,
-                    ),
+                    const ChaosIconTile(icon: Icons.flag_outlined, size: 72),
                     const SizedBox(width: ChaosSpacing.md),
                     Expanded(
                       child: Column(
@@ -118,8 +114,8 @@ class _TodaySectionState extends State<TodaySection> {
                   ChaosSpacing.md,
                 ),
                 child: StencilButton(
-                  label: 'START PRESSURE HIT',
-                  leadingIcon: Icons.play_arrow_rounded,
+                  label: 'START SOLO STRIKE',
+                  leadingIcon: Icons.flag_outlined,
                   trailing: '›',
                   expand: true,
                   filled: true,
@@ -247,15 +243,15 @@ class _TodaySectionState extends State<TodaySection> {
   String _modeLabel(String? key) {
     switch (key) {
       case 'wake_up':
-        return 'RAGE-UP';
+        return 'WAKE UP';
       case 'lock_in':
-        return 'LOCK-IN';
+        return 'LOCK IN';
       case 'workout':
-        return 'PRE-WORKOUT';
+        return 'WORKOUT';
       case 'reset':
         return 'RESET';
       default:
-        return 'RAGE-UP';
+        return 'WAKE UP';
     }
   }
 
@@ -300,7 +296,7 @@ class _AppHeader extends StatelessWidget {
                 ),
               ),
               Text(
-                'Anti-calm. Output over feelings.',
+                'Pick a hard thing. Start the strike.',
                 style: ChaosTypography.body().copyWith(
                   color: ChaosColors.textMuted,
                 ),

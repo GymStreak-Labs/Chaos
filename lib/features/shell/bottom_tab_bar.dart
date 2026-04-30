@@ -11,7 +11,7 @@ class ChaosBottomTabBar extends StatelessWidget {
     super.key,
   });
 
-  /// Currently-selected tab (0 = TODAY, 1 = RECORD, 2 = PROFILE).
+  /// Currently-selected tab (0 = TODAY, 1 = SQUAD, 2 = RECORD, 3 = PROFILE).
   final int index;
 
   /// Called with the tapped tab index. The parent owns state.
@@ -19,6 +19,7 @@ class ChaosBottomTabBar extends StatelessWidget {
 
   static const _items = <_NavItem>[
     _NavItem('TODAY', Icons.gps_fixed_rounded),
+    _NavItem('SQUAD', Icons.groups_2_rounded),
     _NavItem('RECORD', Icons.bar_chart_rounded),
     _NavItem('PROFILE', Icons.person_outline_rounded),
   ];

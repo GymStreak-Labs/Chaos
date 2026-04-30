@@ -24,34 +24,34 @@ class PaywallScreen extends StatelessWidget {
               children: [
                 ChaosPageHeader(
                   eyebrow: 'UPGRADE',
-                  title: 'UNLOCK YOUR FULL POTENTIAL',
+                  title: 'UNLOCK ACCOUNTABILITY',
                   subtitle:
-                      'More voices. Longer sessions. Unlimited regeneration. Earn your peace.',
-                  onBack: () => context.go(ChaosRoutes.commit),
+                      'More strikes, private squads, duels, and sharper voice ignitions.',
+                  onBack: () => context.go(ChaosRoutes.home),
                 ),
                 const SizedBox(height: ChaosSpacing.lg),
                 ChaosCard(
                   child: Column(
                     children: const [
                       _UnlockRow(
+                        icon: Icons.flag_outlined,
+                        title: 'Unlimited strikes',
+                        subtitle: 'Solo strike whenever avoidance shows up',
+                      ),
+                      _UnlockRow(
+                        icon: Icons.groups_2_rounded,
+                        title: 'Private squads',
+                        subtitle: 'Start together and prove it together',
+                      ),
+                      _UnlockRow(
+                        icon: Icons.sports_mma_rounded,
+                        title: 'Duels',
+                        subtitle: 'One-on-one accountability over 3 or 7 days',
+                      ),
+                      _UnlockRow(
                         icon: Icons.record_voice_over_rounded,
-                        title: 'All voices',
-                        subtitle: 'Four voices to choose from',
-                      ),
-                      _UnlockRow(
-                        icon: Icons.timer_outlined,
-                        title: 'Longer sessions',
-                        subtitle: 'Up to 90 minutes',
-                      ),
-                      _UnlockRow(
-                        icon: Icons.refresh_rounded,
-                        title: 'Unlimited regeneration',
-                        subtitle: 'Regenerate any session',
-                      ),
-                      _UnlockRow(
-                        icon: Icons.gps_fixed_rounded,
-                        title: 'Progression and earned peace',
-                        subtitle: 'Unlock at Legion and beyond',
+                        title: 'Voice ignitions',
+                        subtitle: 'Persona pressure before every action window',
                       ),
                     ],
                   ),

@@ -50,7 +50,7 @@ class SplashScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: ChaosSpacing.md),
                 Text(
-                  'Anti-calm.\nOutput over feelings.',
+                  'Live accountability strikes.\nStart the thing.',
                   textAlign: TextAlign.center,
                   style: ChaosTypography.headline().copyWith(fontSize: 26),
                 ),
@@ -59,30 +59,30 @@ class SplashScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       _SplashFeature(
-                        icon: Icons.graphic_eq_rounded,
-                        title: 'AI-generated pressure audio',
-                        subtitle: 'Voices that demand you show up.',
+                        icon: Icons.flag_outlined,
+                        title: 'Declare the target',
+                        subtitle: 'Name the hard thing you are avoiding.',
                       ),
                       SizedBox(height: ChaosSpacing.md),
                       _SplashFeature(
                         icon: Icons.check_circle_outline_rounded,
-                        title: 'One question that matters',
-                        subtitle: 'Did you do the hard thing?',
+                        title: 'Prove the strike',
+                        subtitle: 'Done or failed. No mood tracker.',
                       ),
                     ],
                   ),
                 ),
                 const Spacer(),
                 StencilButton(
-                  label: 'START ONBOARDING',
+                  label: 'START FIRST STRIKE',
                   trailing: '▸',
                   filled: true,
                   expand: true,
-                  onPressed: () => context.go(ChaosRoutes.intro01),
+                  onPressed: () => context.go(ChaosRoutes.onboardingAvoiding),
                 ),
                 const SizedBox(height: ChaosSpacing.lg),
                 Text(
-                  "THIS ISN'T MOTIVATION. THIS IS ENFORCEMENT.",
+                  "WHO NEEDS CALM WHEN YOU CAN HAVE CHAOS.",
                   textAlign: TextAlign.center,
                   style: ChaosTypography.body().copyWith(
                     color: ChaosColors.textMuted,

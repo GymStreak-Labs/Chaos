@@ -22,9 +22,9 @@ class SessionScreen extends StatelessWidget {
               padding: EdgeInsets.zero,
               children: [
                 ChaosPageHeader(
-                  eyebrow: 'SESSION',
+                  eyebrow: 'IGNITION',
                   title: 'DRILL SERGEANT',
-                  subtitle: 'Focus on the mission. No drift. No negotiation.',
+                  subtitle: 'A short voice hit before the strike window opens.',
                   onBack: () => context.go(ChaosRoutes.home),
                 ),
                 const SizedBox(height: ChaosSpacing.md),
@@ -33,7 +33,7 @@ class SessionScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'LOCK-IN SESSION',
+                        'SHORT IGNITION',
                         style: ChaosTypography.label().copyWith(
                           color: ChaosColors.text,
                         ),
@@ -60,13 +60,13 @@ class SessionScreen extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  '18:27',
+                                  '02:18',
                                   style: ChaosTypography.headline().copyWith(
                                     fontSize: 30,
                                   ),
                                 ),
                                 Text(
-                                  'OF 45:00',
+                                  'OF 03:00',
                                   style: ChaosTypography.body().copyWith(
                                     color: ChaosColors.textMuted,
                                     fontWeight: FontWeight.w700,

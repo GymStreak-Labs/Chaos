@@ -130,8 +130,8 @@ lib/
 │   ├── theme.dart
 │   └── components/       # ChaosCard, ChaosPageHeader, StencilButton, etc.
 └── features/
-    ├── onboarding/       # current onboarding flow; needs strike-pivot simplification
-    ├── shell/            # main app shell; currently Today / Record / Profile
+    ├── onboarding/       # first-strike setup: mission, strike type, voice, ready
+    ├── shell/            # main app shell: Today / Squad / Record / Profile
     ├── home/             # session, strike, streak-break screens
     └── paywall/
 ```
@@ -139,11 +139,12 @@ lib/
 ## Current Implementation Notes
 
 - Branch `ui/clarity-pass` contains the Concept 02 redesign and the first Strike screen.
-- Existing UI still has audio-era remnants. Next redesign should become strike-first:
+- Current app IA is strike-first:
   - Today
   - Squad
   - Record
   - Profile
+- Onboarding now creates the first strike instead of running a long enlistment flow.
 - Current route debug shortcut:
 
 ```bash

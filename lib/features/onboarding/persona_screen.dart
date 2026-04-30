@@ -22,28 +22,28 @@ class _PersonaScreenState extends State<PersonaScreen> {
     _PersonaOption(
       id: 'drill_sergeant',
       label: 'DRILL SERGEANT',
-      description: 'No excuses. Only execution.',
+      description: 'Loud, direct, no drift.',
       icon: Icons.military_tech_rounded,
       locked: false,
     ),
     _PersonaOption(
       id: 'cold_mentor',
       label: 'COLD MENTOR',
-      description: 'Discipline over feelings.',
+      description: 'Quiet pressure. Clear standards.',
       icon: Icons.psychology_alt_rounded,
       locked: false,
     ),
     _PersonaOption(
       id: 'street_general',
       label: 'STREET GENERAL',
-      description: 'Real talk. Results or get left.',
+      description: 'Street-level truth. Move now.',
       icon: Icons.groups_rounded,
       locked: false,
     ),
     _PersonaOption(
       id: 'the_monk',
       label: 'THE MONK',
-      description: 'Earn peace. Unlocks at Forged.',
+      description: 'Earned peace. Locked for later.',
       icon: Icons.self_improvement_rounded,
       locked: true,
     ),
@@ -56,7 +56,7 @@ class _PersonaScreenState extends State<PersonaScreen> {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(OnboardingPrefs.persona, _selected!);
     if (!mounted) return;
-    context.go(ChaosRoutes.personaIntro);
+    context.go(ChaosRoutes.commit);
   }
 
   @override
@@ -70,13 +70,13 @@ class _PersonaScreenState extends State<PersonaScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ChaosPageHeader(
-                  eyebrow: 'ASSIGNMENT',
-                  title: 'CHOOSE YOUR VOICE',
+                  eyebrow: 'IGNITION VOICE',
+                  title: 'CHOOSE THE VOICE',
                   subtitle:
-                      "Your voice. Your standard. It's not motivation. It's enforcement.",
+                      'This voice opens the strike and tells you the first move.',
                   currentStep: 3,
-                  totalSteps: 6,
-                  onBack: () => context.go(ChaosRoutes.lieReflection),
+                  totalSteps: 4,
+                  onBack: () => context.go(ChaosRoutes.onboardingMode),
                 ),
                 const SizedBox(height: ChaosSpacing.xl),
                 Expanded(
