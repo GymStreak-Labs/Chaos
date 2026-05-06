@@ -18,6 +18,8 @@ DECLARE MISSION → CHOOSE STRIKE TYPE → SHORT AUDIO IGNITION → TIMED ACTION
 
 Audio is no longer the product. Audio is the ignition. The product is the strike: a timed, accountable action window that ends in proof.
 
+The user-objection pass is captured in [`docs/plans/user-objections-product-improvements.md`](user-objections-product-improvements.md). Use it as the friction checklist before adding new surfaces.
+
 ---
 
 ## 1) Why this is stronger
@@ -91,6 +93,14 @@ The smallest shippable product:
 9. Streak/tier updates
 10. Paywall appears after proof or repeat use
 
+P0 friction fixes:
+
+- instant `START 5-MIN STRIKE` path for users already in avoidance
+- mission templates and mission-shaping so blank input does not stall
+- `SKIP TO STRIKE` after first use so audio never becomes procrastination
+- recovery flow after `FAILED`: `RE-STRIKE FOR 5 MIN`
+- visible intensity setting so pressure does not become contempt
+
 ### P1 — Squads
 
 Small private groups of 2–5.
@@ -104,6 +114,8 @@ Must-have:
 - synced countdown/timer
 - `DONE` / `FAILED` result board
 - squad streak
+- mission privacy levels: full mission / category only / private
+- async squad windows for groups that cannot coordinate live
 
 No open chat in MVP unless moderation is solved.
 
