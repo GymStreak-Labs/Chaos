@@ -24,6 +24,7 @@ class _ProfileSectionState extends State<ProfileSection> {
   String _personaLabel = 'UNASSIGNED';
   String _modeLabel = 'WAKE UP';
   String _operativeId = '--------';
+  String _intensity = 'direct';
 
   @override
   void initState() {
@@ -42,12 +43,14 @@ class _ProfileSectionState extends State<ProfileSection> {
 
     final personaKey = prefs.getString(OnboardingPrefs.persona);
     final modeKey = prefs.getString(OnboardingPrefs.mode);
+    final intensity = prefs.getString(OnboardingPrefs.intensity);
 
     if (!mounted) return;
     setState(() {
       _operativeId = id!.substring(0, 8).toUpperCase();
       _personaLabel = _personaName(personaKey);
       _modeLabel = _modeName(modeKey);
+      _intensity = intensity ?? 'direct';
     });
   }
 
@@ -55,6 +58,13 @@ class _ProfileSectionState extends State<ProfileSection> {
     final rng = Random.secure();
     const chars = '0123456789abcdef';
     return List.generate(16, (_) => chars[rng.nextInt(chars.length)]).join();
+  }
+
+  Future<void> _saveIntensity(String value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(OnboardingPrefs.intensity, value);
+    if (!mounted) return;
+    setState(() => _intensity = value);
   }
 
   @override
@@ -92,6 +102,43 @@ class _ProfileSectionState extends State<ProfileSection> {
                     ),
                   ],
                 ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: ChaosSpacing.md),
+        ChaosCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ChaosSectionLabel('Pressure level'),
+              const SizedBox(height: ChaosSpacing.xs),
+              Text(
+                'Pressure should move you, not bury you.',
+                style: ChaosTypography.body().copyWith(
+                  color: ChaosColors.textMuted,
+                ),
+              ),
+              const SizedBox(height: ChaosSpacing.md),
+              _IntensityOption(
+                label: 'Calm pressure',
+                description: 'Firm, low-drama, still direct.',
+                selected: _intensity == 'calm',
+                onTap: () => _saveIntensity('calm'),
+              ),
+              const SizedBox(height: ChaosSpacing.sm),
+              _IntensityOption(
+                label: 'Direct',
+                description: 'Blunt accountability without contempt.',
+                selected: _intensity == 'direct',
+                onTap: () => _saveIntensity('direct'),
+              ),
+              const SizedBox(height: ChaosSpacing.sm),
+              _IntensityOption(
+                label: 'Hard',
+                description: 'Sharper pressure. Never worthlessness.',
+                selected: _intensity == 'hard',
+                onTap: () => _saveIntensity('hard'),
               ),
             ],
           ),
@@ -210,6 +257,71 @@ class _ProfileSectionState extends State<ProfileSection> {
       default:
         return 'WAKE UP';
     }
+  }
+}
+
+class _IntensityOption extends StatelessWidget {
+  const _IntensityOption({
+    required this.label,
+    required this.description,
+    required this.selected,
+    required this.onTap,
+  });
+
+  final String label;
+  final String description;
+  final bool selected;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final color = selected ? ChaosColors.amber : ChaosColors.border;
+    return InkWell(
+      borderRadius: BorderRadius.circular(8),
+      splashColor: Colors.transparent,
+      highlightColor: ChaosColors.amber.withValues(alpha: 0.12),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(ChaosSpacing.md),
+        decoration: BoxDecoration(
+          color: selected
+              ? ChaosColors.amber.withValues(alpha: 0.08)
+              : ChaosColors.surfaceRaised,
+          border: Border.all(color: color),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          children: [
+            Icon(
+              selected ? Icons.radio_button_checked : Icons.radio_button_off,
+              color: selected ? ChaosColors.amber : ChaosColors.textMuted,
+              size: 22,
+            ),
+            const SizedBox(width: ChaosSpacing.md),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    label.toUpperCase(),
+                    style: ChaosTypography.body().copyWith(
+                      color: selected ? ChaosColors.amber : ChaosColors.text,
+                      fontWeight: FontWeight.w800,
+                    ),
+                  ),
+                  Text(
+                    description,
+                    style: ChaosTypography.body().copyWith(
+                      color: ChaosColors.textMuted,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

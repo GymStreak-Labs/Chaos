@@ -52,8 +52,26 @@ class _ModeScreenState extends State<ModeScreen> {
     if (_selected == null) return;
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(OnboardingPrefs.mode, _selected!);
+    await prefs.setInt(
+      OnboardingPrefs.strikeMinutes,
+      _defaultMinutesForMode(_selected),
+    );
     if (!mounted) return;
     context.go(ChaosRoutes.onboardingPersona);
+  }
+
+  int _defaultMinutesForMode(String? key) {
+    switch (key) {
+      case 'wake_up':
+        return 2;
+      case 'reset':
+        return 5;
+      case 'lock_in':
+      case 'workout':
+        return 20;
+      default:
+        return 2;
+    }
   }
 
   @override

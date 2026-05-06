@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/router.dart';
 import '../../design/components/chaos_card.dart';
 import '../../design/components/stencil_button.dart';
 import '../../design/tokens.dart';
+import '../onboarding/onboarding_prefs.dart';
 
 class StreakBreakScreen extends StatelessWidget {
   const StreakBreakScreen({super.key});
+
+  Future<void> _restrike(BuildContext context) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(OnboardingPrefs.strikeMinutes, 5);
+    if (!context.mounted) return;
+    context.go(ChaosRoutes.strike);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +44,7 @@ class StreakBreakScreen extends StatelessWidget {
               ),
               const SizedBox(height: ChaosSpacing.xl),
               Text(
-                'YOU QUIT\nON YOURSELF.\nAGAIN.',
+                'YOU MISSED.\nRE-STRIKE.',
                 textAlign: TextAlign.center,
                 style: ChaosTypography.headline().copyWith(
                   fontSize: 50,
@@ -45,7 +54,7 @@ class StreakBreakScreen extends StatelessWidget {
               ),
               const SizedBox(height: ChaosSpacing.md),
               Text(
-                'Accountability is the standard.',
+                'No pile-on. No story. Take the next five minutes back.',
                 textAlign: TextAlign.center,
                 style: ChaosTypography.body().copyWith(
                   color: ChaosColors.textMuted,
@@ -69,12 +78,12 @@ class StreakBreakScreen extends StatelessWidget {
               ),
               const SizedBox(height: ChaosSpacing.md),
               StencilButton(
-                label: 'RE-ENLIST',
+                label: 'RE-STRIKE FOR 5 MIN',
                 trailing: '›',
                 expand: true,
                 filled: true,
                 accentColor: ChaosColors.alert,
-                onPressed: () => context.go(ChaosRoutes.home),
+                onPressed: () => _restrike(context),
               ),
               const SizedBox(height: ChaosSpacing.sm),
               StencilButton(

@@ -145,6 +145,12 @@ lib/
   - Record
   - Profile
 - Onboarding now creates the first strike instead of running a long enlistment flow.
+- P0 friction fixes are now implemented in the UI:
+  - Today has an instant 5-minute strike path and quick-start mission templates.
+  - Returning users can skip the ignition and go straight to the strike window.
+  - Failed strikes route to a 5-minute re-strike recovery instead of shame copy.
+  - Profile includes pressure/intensity calibration: Calm Pressure / Direct / Hard.
+  - Squad mockup shows mission privacy levels and async strike windows.
 - Current route debug shortcut:
 
 ```bash

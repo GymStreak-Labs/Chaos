@@ -25,6 +25,39 @@ class _TodaySectionState extends State<TodaySection> {
   String _persona = 'CHAOS';
   String _mode = 'WAKE UP';
   String _mission = 'CALL DAD BACK';
+  int _minutes = 2;
+  bool _hasPlayedIgnition = false;
+
+  static const _quickStarts = <_QuickStrike>[
+    _QuickStrike(
+      label: 'Send the message',
+      mission: 'Send the message',
+      minutes: 5,
+      mode: 'reset',
+      icon: Icons.send_rounded,
+    ),
+    _QuickStrike(
+      label: 'Open the file',
+      mission: 'Open the file and write one line',
+      minutes: 5,
+      mode: 'reset',
+      icon: Icons.description_outlined,
+    ),
+    _QuickStrike(
+      label: 'Start workout',
+      mission: 'Start the workout',
+      minutes: 20,
+      mode: 'workout',
+      icon: Icons.fitness_center_rounded,
+    ),
+    _QuickStrike(
+      label: 'Clean for 5',
+      mission: 'Clean one visible surface',
+      minutes: 5,
+      mode: 'reset',
+      icon: Icons.cleaning_services_outlined,
+    ),
+  ];
 
   @override
   void initState() {
@@ -37,14 +70,62 @@ class _TodaySectionState extends State<TodaySection> {
     final personaKey = prefs.getString(OnboardingPrefs.persona);
     final modeKey = prefs.getString(OnboardingPrefs.mode);
     final mission = prefs.getString(OnboardingPrefs.avoiding)?.trim();
+    final minutes = prefs.getInt(OnboardingPrefs.strikeMinutes);
+    final hasPlayedIgnition =
+        prefs.getBool(OnboardingPrefs.hasPlayedIgnition) ?? false;
     if (!mounted) return;
     setState(() {
       _persona = _personaLabel(personaKey);
       _mode = _modeLabel(modeKey);
+      _minutes = minutes ?? _defaultMinutesForMode(modeKey);
+      _hasPlayedIgnition = hasPlayedIgnition;
       if (mission != null && mission.isNotEmpty) {
         _mission = mission.toUpperCase();
       }
     });
+  }
+
+  Future<void> _saveStrike({
+    required String mission,
+    required int minutes,
+    String? mode,
+  }) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setString(OnboardingPrefs.avoiding, mission);
+    await prefs.setInt(OnboardingPrefs.strikeMinutes, minutes);
+    if (mode != null) {
+      await prefs.setString(OnboardingPrefs.mode, mode);
+    }
+    if (!mounted) return;
+    setState(() {
+      _mission = mission.toUpperCase();
+      _minutes = minutes;
+      if (mode != null) {
+        _mode = _modeLabel(mode);
+      }
+    });
+  }
+
+  Future<void> _startInstantStrike() async {
+    await _saveStrike(mission: _mission, minutes: 5, mode: 'reset');
+    if (!mounted) return;
+    context.go(ChaosRoutes.strike);
+  }
+
+  Future<void> _startCurrentStrike({required bool withIgnition}) async {
+    await _saveStrike(mission: _mission, minutes: _minutes);
+    if (!mounted) return;
+    context.go(withIgnition ? ChaosRoutes.session : ChaosRoutes.strike);
+  }
+
+  Future<void> _startTemplate(_QuickStrike strike) async {
+    await _saveStrike(
+      mission: strike.mission,
+      minutes: strike.minutes,
+      mode: strike.mode,
+    );
+    if (!mounted) return;
+    context.go(ChaosRoutes.strike);
   }
 
   @override
@@ -90,7 +171,7 @@ class _TodaySectionState extends State<TodaySection> {
                           ),
                           const SizedBox(height: ChaosSpacing.xs),
                           Text(
-                            '$_mode · $_persona · 20 min',
+                            '$_mode · $_persona · $_minutes min',
                             style: ChaosTypography.body().copyWith(
                               color: ChaosColors.textMuted,
                               fontWeight: FontWeight.w600,
@@ -113,16 +194,78 @@ class _TodaySectionState extends State<TodaySection> {
                   ChaosSpacing.md,
                   ChaosSpacing.md,
                 ),
-                child: StencilButton(
-                  label: 'START SOLO STRIKE',
-                  leadingIcon: Icons.flag_outlined,
-                  trailing: '›',
-                  expand: true,
-                  filled: true,
-                  height: 58,
-                  onPressed: () => context.go(ChaosRoutes.session),
+                child: Column(
+                  children: [
+                    StencilButton(
+                      label: 'START 5-MIN STRIKE',
+                      leadingIcon: Icons.bolt_rounded,
+                      trailing: '›',
+                      expand: true,
+                      filled: true,
+                      height: 58,
+                      onPressed: _startInstantStrike,
+                    ),
+                    const SizedBox(height: ChaosSpacing.sm),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: StencilButton(
+                            label: _hasPlayedIgnition
+                                ? 'START SAVED STRIKE'
+                                : 'PLAY IGNITION',
+                            leadingIcon: _hasPlayedIgnition
+                                ? Icons.flag_outlined
+                                : Icons.volume_up_outlined,
+                            expand: true,
+                            height: 52,
+                            onPressed: () => _startCurrentStrike(
+                              withIgnition: !_hasPlayedIgnition,
+                            ),
+                          ),
+                        ),
+                        if (_hasPlayedIgnition) ...[
+                          const SizedBox(width: ChaosSpacing.sm),
+                          Expanded(
+                            child: StencilButton(
+                              label: 'IGNITION',
+                              leadingIcon: Icons.volume_up_outlined,
+                              expand: true,
+                              height: 52,
+                              onPressed: () =>
+                                  _startCurrentStrike(withIgnition: true),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ],
                 ),
               ),
+            ],
+          ),
+        ),
+        const SizedBox(height: ChaosSpacing.md),
+        ChaosCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ChaosSectionLabel('Quick starts'),
+              const SizedBox(height: ChaosSpacing.sm),
+              Text(
+                'No blank-page ritual. Pick the closest action and move.',
+                style: ChaosTypography.body().copyWith(
+                  color: ChaosColors.textMuted,
+                ),
+              ),
+              const SizedBox(height: ChaosSpacing.md),
+              for (final strike in _quickStarts) ...[
+                _QuickStrikeTile(
+                  strike: strike,
+                  onTap: () => _startTemplate(strike),
+                ),
+                if (strike != _quickStarts.last)
+                  const SizedBox(height: ChaosSpacing.sm),
+              ],
             ],
           ),
         ),
@@ -255,6 +398,20 @@ class _TodaySectionState extends State<TodaySection> {
     }
   }
 
+  int _defaultMinutesForMode(String? key) {
+    switch (key) {
+      case 'wake_up':
+        return 2;
+      case 'reset':
+        return 5;
+      case 'lock_in':
+      case 'workout':
+        return 20;
+      default:
+        return 2;
+    }
+  }
+
   String _formatDate(DateTime d) {
     const months = [
       'JAN',
@@ -272,6 +429,73 @@ class _TodaySectionState extends State<TodaySection> {
     ];
     final dd = d.day.toString().padLeft(2, '0');
     return '$dd ${months[d.month - 1]} ${d.year}';
+  }
+}
+
+class _QuickStrike {
+  const _QuickStrike({
+    required this.label,
+    required this.mission,
+    required this.minutes,
+    required this.mode,
+    required this.icon,
+  });
+
+  final String label;
+  final String mission;
+  final int minutes;
+  final String mode;
+  final IconData icon;
+}
+
+class _QuickStrikeTile extends StatelessWidget {
+  const _QuickStrikeTile({required this.strike, required this.onTap});
+
+  final _QuickStrike strike;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(8),
+      splashColor: Colors.transparent,
+      highlightColor: ChaosColors.amber.withValues(alpha: 0.12),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.all(ChaosSpacing.sm),
+        decoration: BoxDecoration(
+          color: ChaosColors.surfaceRaised,
+          border: Border.all(color: ChaosColors.grid),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          children: [
+            ChaosIconTile(
+              icon: strike.icon,
+              color: ChaosColors.textMuted,
+              size: 42,
+            ),
+            const SizedBox(width: ChaosSpacing.md),
+            Expanded(
+              child: Text(
+                strike.label.toUpperCase(),
+                style: ChaosTypography.body().copyWith(
+                  color: ChaosColors.text,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+            ),
+            Text(
+              '${strike.minutes} MIN',
+              style: ChaosTypography.label().copyWith(
+                color: ChaosColors.amber,
+                fontSize: 13,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 

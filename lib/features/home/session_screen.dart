@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../app/router.dart';
 import '../../design/components/chaos_card.dart';
@@ -7,9 +8,57 @@ import '../../design/components/chaos_page_header.dart';
 import '../../design/components/grid_background.dart';
 import '../../design/components/stencil_button.dart';
 import '../../design/tokens.dart';
+import '../onboarding/onboarding_prefs.dart';
 
-class SessionScreen extends StatelessWidget {
+class SessionScreen extends StatefulWidget {
   const SessionScreen({super.key});
+
+  @override
+  State<SessionScreen> createState() => _SessionScreenState();
+}
+
+class _SessionScreenState extends State<SessionScreen> {
+  int _minutes = 20;
+  String _persona = 'DRILL SERGEANT';
+
+  @override
+  void initState() {
+    super.initState();
+    _load();
+  }
+
+  Future<void> _load() async {
+    final prefs = await SharedPreferences.getInstance();
+    final minutes = prefs.getInt(OnboardingPrefs.strikeMinutes);
+    final persona = _personaName(prefs.getString(OnboardingPrefs.persona));
+    if (!mounted) return;
+    setState(() {
+      _minutes = minutes ?? 20;
+      _persona = persona;
+    });
+  }
+
+  Future<void> _startStrike() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(OnboardingPrefs.hasPlayedIgnition, true);
+    if (!mounted) return;
+    context.go(ChaosRoutes.strike);
+  }
+
+  String _personaName(String? key) {
+    switch (key) {
+      case 'drill_sergeant':
+        return 'DRILL SERGEANT';
+      case 'cold_mentor':
+        return 'COLD MENTOR';
+      case 'street_general':
+        return 'STREET GENERAL';
+      case 'the_monk':
+        return 'THE MONK';
+      default:
+        return 'DRILL SERGEANT';
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +72,9 @@ class SessionScreen extends StatelessWidget {
               children: [
                 ChaosPageHeader(
                   eyebrow: 'IGNITION',
-                  title: 'DRILL SERGEANT',
-                  subtitle: 'A short voice hit before the strike window opens.',
+                  title: _persona,
+                  subtitle:
+                      'A short voice hit. Useful once. Optional after that.',
                   onBack: () => context.go(ChaosRoutes.home),
                 ),
                 const SizedBox(height: ChaosSpacing.md),
@@ -115,21 +165,21 @@ class SessionScreen extends StatelessWidget {
                 ),
                 const SizedBox(height: ChaosSpacing.md),
                 StencilButton(
-                  label: 'START 20-MIN STRIKE',
+                  label: 'START $_minutes-MIN STRIKE',
                   trailing: '›',
                   expand: true,
                   filled: true,
                   height: 58,
                   leadingIcon: Icons.flag_outlined,
-                  onPressed: () => context.go(ChaosRoutes.strike),
+                  onPressed: _startStrike,
                 ),
                 const SizedBox(height: ChaosSpacing.sm),
                 StencilButton(
-                  label: 'I DID IT ALREADY',
+                  label: 'SKIP IGNITION',
                   expand: true,
                   height: 54,
-                  leadingIcon: Icons.check_rounded,
-                  onPressed: () => context.go(ChaosRoutes.home),
+                  leadingIcon: Icons.fast_forward_rounded,
+                  onPressed: () => context.go(ChaosRoutes.strike),
                 ),
               ],
             ),

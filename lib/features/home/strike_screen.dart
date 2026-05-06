@@ -34,14 +34,24 @@ class _StrikeScreenState extends State<StrikeScreen> {
   Future<void> _loadMission() async {
     final prefs = await SharedPreferences.getInstance();
     final mission = prefs.getString(OnboardingPrefs.avoiding)?.trim();
+    final minutes = prefs.getInt(OnboardingPrefs.strikeMinutes);
     if (!mounted) return;
-    if (mission != null && mission.isNotEmpty) {
-      setState(() => _mission = mission.toUpperCase());
-    }
+    setState(() {
+      if (mission != null && mission.isNotEmpty) {
+        _mission = mission.toUpperCase();
+      }
+      if (minutes != null) {
+        _minutes = minutes;
+      }
+    });
   }
 
-  void _addFive() {
-    setState(() => _minutes += 5);
+  Future<void> _addFive() async {
+    final nextMinutes = _minutes + 5;
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setInt(OnboardingPrefs.strikeMinutes, nextMinutes);
+    if (!mounted) return;
+    setState(() => _minutes = nextMinutes);
   }
 
   @override

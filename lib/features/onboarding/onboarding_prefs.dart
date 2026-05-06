@@ -9,6 +9,9 @@ class OnboardingPrefs {
   static const persona = 'chaos.persona';
   static const mode = 'chaos.onboarding.mode';
   static const notifications = 'chaos.onboarding.notifications';
+  static const strikeMinutes = 'chaos.strike.minutes';
+  static const hasPlayedIgnition = 'chaos.ignition.played';
+  static const intensity = 'chaos.pressure.intensity';
 
   /// Operative ID — generated once on first render of the profile section
   /// and reused forever. Stage 2A mock; Stage 3 will replace with a real

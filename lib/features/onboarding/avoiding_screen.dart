@@ -20,6 +20,22 @@ class AvoidingScreen extends StatefulWidget {
 class _AvoidingScreenState extends State<AvoidingScreen> {
   final _controller = TextEditingController();
 
+  static const _templates = <_MissionTemplate>[
+    _MissionTemplate(
+      label: 'Send the message',
+      mission: 'Send the message I am avoiding',
+    ),
+    _MissionTemplate(
+      label: 'Open the file',
+      mission: 'Open the file and make one edit',
+    ),
+    _MissionTemplate(label: 'Start workout', mission: 'Start the workout'),
+    _MissionTemplate(
+      label: 'Clean for 5',
+      mission: 'Clean one visible surface for 5 minutes',
+    ),
+  ];
+
   @override
   void dispose() {
     _controller.dispose();
@@ -56,60 +72,95 @@ class _AvoidingScreenState extends State<AvoidingScreen> {
                   onBack: () => context.go(ChaosRoutes.splash),
                 ),
                 const SizedBox(height: ChaosSpacing.xl),
-                ChaosCard(
-                  borderColor: ChaosColors.border,
-                  backgroundColor: ChaosColors.surface,
-                  child: TextField(
-                    controller: _controller,
-                    style: ChaosTypography.body().copyWith(
-                      fontSize: 17,
-                      height: 1.45,
-                      color: ChaosColors.text,
-                    ),
-                    cursorColor: ChaosColors.amber,
-                    cursorWidth: 2,
-                    minLines: 7,
-                    maxLines: 7,
-                    textCapitalization: TextCapitalization.sentences,
-                    onChanged: (_) => setState(() {}),
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      enabledBorder: InputBorder.none,
-                      hintText: 'Type your answer here...',
-                      hintStyle: ChaosTypography.body().copyWith(
-                        color: ChaosColors.textMuted,
-                        fontSize: 17,
-                      ),
-                      contentPadding: EdgeInsets.zero,
-                      isCollapsed: true,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: ChaosSpacing.md),
-                const ChaosCard(
-                  backgroundColor: ChaosColors.surfaceRaised,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                Expanded(
+                  child: ListView(
+                    padding: EdgeInsets.zero,
                     children: [
-                      ChaosIconTile(
-                        icon: Icons.error_outline_rounded,
-                        size: 42,
-                      ),
-                      SizedBox(width: ChaosSpacing.md),
-                      Expanded(
-                        child: Text(
-                          'Examples: the work you keep delaying, the call you avoid, the habit you keep justifying.',
-                          style: TextStyle(
-                            color: ChaosColors.textMuted,
-                            height: 1.35,
+                      ChaosCard(
+                        borderColor: ChaosColors.border,
+                        backgroundColor: ChaosColors.surface,
+                        child: TextField(
+                          controller: _controller,
+                          style: ChaosTypography.body().copyWith(
+                            fontSize: 17,
+                            height: 1.45,
+                            color: ChaosColors.text,
                           ),
+                          cursorColor: ChaosColors.amber,
+                          cursorWidth: 2,
+                          minLines: 5,
+                          maxLines: 5,
+                          textCapitalization: TextCapitalization.sentences,
+                          onChanged: (_) => setState(() {}),
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            focusedBorder: InputBorder.none,
+                            enabledBorder: InputBorder.none,
+                            hintText:
+                                'Verb + object + next window. Example: Send the invoice in 20 minutes.',
+                            hintStyle: ChaosTypography.body().copyWith(
+                              color: ChaosColors.textMuted,
+                              fontSize: 17,
+                            ),
+                            contentPadding: EdgeInsets.zero,
+                            isCollapsed: true,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: ChaosSpacing.md),
+                      Text(
+                        'FAST STARTS',
+                        style: ChaosTypography.label().copyWith(
+                          color: ChaosColors.text,
+                          fontSize: 14,
+                        ),
+                      ),
+                      const SizedBox(height: ChaosSpacing.sm),
+                      Wrap(
+                        spacing: ChaosSpacing.sm,
+                        runSpacing: ChaosSpacing.sm,
+                        children: [
+                          for (final template in _templates)
+                            _TemplateChip(
+                              template: template,
+                              onTap: () {
+                                _controller.text = template.mission;
+                                _controller
+                                    .selection = TextSelection.fromPosition(
+                                  TextPosition(offset: _controller.text.length),
+                                );
+                                setState(() {});
+                              },
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: ChaosSpacing.md),
+                      const ChaosCard(
+                        backgroundColor: ChaosColors.surfaceRaised,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ChaosIconTile(
+                              icon: Icons.error_outline_rounded,
+                              size: 42,
+                            ),
+                            SizedBox(width: ChaosSpacing.md),
+                            Expanded(
+                              child: Text(
+                                'Bad mission: get my life together. Good mission: open the bill, send the message, start the first set.',
+                                style: TextStyle(
+                                  color: ChaosColors.textMuted,
+                                  height: 1.35,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
                   ),
                 ),
-                const Spacer(),
+                const SizedBox(height: ChaosSpacing.md),
                 StencilButton(
                   label: 'CONTINUE',
                   trailing: '▸',
@@ -119,6 +170,49 @@ class _AvoidingScreenState extends State<AvoidingScreen> {
                 ),
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _MissionTemplate {
+  const _MissionTemplate({required this.label, required this.mission});
+
+  final String label;
+  final String mission;
+}
+
+class _TemplateChip extends StatelessWidget {
+  const _TemplateChip({required this.template, required this.onTap});
+
+  final _MissionTemplate template;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      borderRadius: BorderRadius.circular(8),
+      splashColor: Colors.transparent,
+      highlightColor: ChaosColors.amber.withValues(alpha: 0.12),
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(
+          horizontal: ChaosSpacing.md,
+          vertical: ChaosSpacing.sm,
+        ),
+        decoration: BoxDecoration(
+          color: ChaosColors.surfaceRaised,
+          border: Border.all(color: ChaosColors.border),
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Text(
+          template.label.toUpperCase(),
+          style: ChaosTypography.body().copyWith(
+            color: ChaosColors.text,
+            fontWeight: FontWeight.w800,
+            fontSize: 12,
           ),
         ),
       ),

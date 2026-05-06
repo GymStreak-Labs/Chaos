@@ -20,6 +20,7 @@ class _CommitScreenState extends State<CommitScreen> {
   String _mission = 'THE HARD THING';
   String _mode = 'WAKE UP';
   String _persona = 'DRILL SERGEANT';
+  int _minutes = 2;
 
   @override
   void initState() {
@@ -32,11 +33,15 @@ class _CommitScreenState extends State<CommitScreen> {
     if (!mounted) return;
     setState(() {
       final mission = prefs.getString(OnboardingPrefs.avoiding)?.trim();
+      final modeKey = prefs.getString(OnboardingPrefs.mode);
       if (mission != null && mission.isNotEmpty) {
         _mission = mission.toUpperCase();
       }
-      _mode = _modeName(prefs.getString(OnboardingPrefs.mode));
+      _mode = _modeName(modeKey);
       _persona = _personaName(prefs.getString(OnboardingPrefs.persona));
+      _minutes =
+          prefs.getInt(OnboardingPrefs.strikeMinutes) ??
+          _defaultMinutesForMode(modeKey);
     });
   }
 
@@ -54,6 +59,7 @@ class _CommitScreenState extends State<CommitScreen> {
         child: Text(
           'MISSION..... $_mission\n'
           'TYPE........ $_mode\n'
+          'WINDOW...... $_minutes MIN\n'
           'VOICE....... $_persona\n'
           'PROOF....... DONE / FAILED',
           style: ChaosTypography.dataLarge(),
@@ -94,6 +100,20 @@ class _CommitScreenState extends State<CommitScreen> {
         return 'THE MONK';
       default:
         return 'DRILL SERGEANT';
+    }
+  }
+
+  int _defaultMinutesForMode(String? key) {
+    switch (key) {
+      case 'wake_up':
+        return 2;
+      case 'reset':
+        return 5;
+      case 'lock_in':
+      case 'workout':
+        return 20;
+      default:
+        return 2;
     }
   }
 }

@@ -84,20 +84,51 @@ class SquadSection extends StatelessWidget {
               _MemberRow(
                 name: 'JOE',
                 mission: 'Send 20 sales DMs',
+                visibility: 'FULL',
                 status: 'READY',
                 color: ChaosColors.amber,
               ),
               _MemberRow(
                 name: 'ALEX',
-                mission: 'Finish the pitch deck',
+                mission: 'WORK',
+                visibility: 'CATEGORY',
                 status: 'READY',
                 color: ChaosColors.amber,
               ),
               _MemberRow(
                 name: 'SAM',
-                mission: 'Gym. First working set.',
+                mission: 'PRIVATE MISSION',
+                visibility: 'PRIVATE',
                 status: 'WAITING',
                 color: ChaosColors.textMuted,
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: ChaosSpacing.md),
+        ChaosCard(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ChaosSectionLabel('Room rules'),
+              const SizedBox(height: ChaosSpacing.md),
+              const _RoomRuleRow(
+                icon: Icons.schedule_rounded,
+                label: 'Strike window',
+                value: '06:00-08:00 async',
+              ),
+              const SizedBox(height: ChaosSpacing.sm),
+              const _RoomRuleRow(
+                icon: Icons.visibility_off_outlined,
+                label: 'Mission privacy',
+                value: 'Full / category / private',
+              ),
+              const SizedBox(height: ChaosSpacing.sm),
+              Text(
+                'Live rooms still hit hardest. Async windows keep the squad useful when calendars do not line up.',
+                style: ChaosTypography.body().copyWith(
+                  color: ChaosColors.textMuted,
+                ),
               ),
             ],
           ),
@@ -191,12 +222,14 @@ class _MemberRow extends StatelessWidget {
   const _MemberRow({
     required this.name,
     required this.mission,
+    required this.visibility,
     required this.status,
     required this.color,
   });
 
   final String name;
   final String mission;
+  final String visibility;
   final String status;
   final Color color;
 
@@ -240,6 +273,14 @@ class _MemberRow extends StatelessWidget {
                     color: ChaosColors.textMuted,
                   ),
                 ),
+                Text(
+                  visibility,
+                  style: ChaosTypography.body().copyWith(
+                    color: ChaosColors.textMuted,
+                    fontSize: 10,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
               ],
             ),
           ),
@@ -247,6 +288,51 @@ class _MemberRow extends StatelessWidget {
           _StatusBadge(label: status, color: color),
         ],
       ),
+    );
+  }
+}
+
+class _RoomRuleRow extends StatelessWidget {
+  const _RoomRuleRow({
+    required this.icon,
+    required this.label,
+    required this.value,
+  });
+
+  final IconData icon;
+  final String label;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: ChaosColors.amber, size: 24),
+        const SizedBox(width: ChaosSpacing.md),
+        Expanded(
+          child: Text(
+            label.toUpperCase(),
+            style: ChaosTypography.body().copyWith(
+              color: ChaosColors.textMuted,
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+        Flexible(
+          child: Text(
+            value.toUpperCase(),
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.right,
+            style: ChaosTypography.body().copyWith(
+              color: ChaosColors.text,
+              fontSize: 12,
+              fontWeight: FontWeight.w800,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
